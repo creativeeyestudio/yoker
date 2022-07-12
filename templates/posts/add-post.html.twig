@@ -1,0 +1,30 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Ajouter un article{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <h2>Ajouter un article</h2>
+        <ul>
+            <li><a href="#content-page">Contenu de page</a></li>
+            <li><a href="#seo-page">SEO de la page</a></li>
+        </ul>
+        {{ form_start(form) }}
+            <div id="content-page" class="tab">
+                <p>{{ form_label(form.page_name) }}<br />
+                {{ form_widget(form.page_name) }}</p>
+                <p>{{ form_label(form.page_url) }}<br />
+                {{ form_widget(form.page_url) }}</p>
+                <p>{{ form_label(form.page_content) }}<br />
+                {{ form_widget(form.page_content) }}</p>
+            </div>
+            <div id="seo-page" class="tab">
+                <p>{{ form_label(form.page_meta_title) }}<br />
+                {{ form_widget(form.page_meta_title) }}</p>
+                <p>{{ form_label(form.page_meta_desc) }}<br />
+                {{ form_widget(form.page_meta_desc) }}</p>
+            </div>
+            {{ form_row(form.page_submit) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

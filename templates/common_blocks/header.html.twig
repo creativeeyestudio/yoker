@@ -1,0 +1,11 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Modifier l'en-tête du site{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <h2>Modifier l'en-tête du site</h2>
+        <p>{{ form_widget(form.common_block) }}</p>
+        {{ form_row(form.common_submit) }}
+    </section>
+{% endblock %}

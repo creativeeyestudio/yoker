@@ -1,0 +1,23 @@
+.navigation{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $nav-width;
+    height: 100vh;
+    background-color: $p-color;
+    font: 400 1em/1em "Lato";
+    ul{
+        list-style-type: none;
+        margin: 0;
+        padding-left: 0;
+    }
+    li{
+        border-bottom: .0625rem solid white;
+    }
+    a{
+        display: block;
+        padding: 1.5rem;
+        color: white;
+        text-decoration: none;
+    }
+}

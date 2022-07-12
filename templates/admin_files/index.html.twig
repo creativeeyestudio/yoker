@@ -1,0 +1,10 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Gestionnaire des médias{% endblock %}
+
+{% block body %}
+<section class="block">
+        <h2>Modifier le pied de page du site</h2>
+        {{ form_row(form.file_upload) }}
+    </section>
+{% endblock %}

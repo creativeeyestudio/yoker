@@ -1,0 +1,18 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Modifier une page{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <h2>Modifier une page</h2>
+        {{ form_start(form) }}
+            <p>{{ form_label(form.page_name) }}<br />
+            {{ form_widget(form.page_name) }}</p>
+            <p>{{ form_label(form.page_url) }}<br />
+            {{ form_widget(form.page_url) }}</p>
+            <p>{{ form_label(form.page_content) }}<br />
+            {{ form_widget(form.page_content) }}</p>
+            {{ form_row(form.page_submit) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app-admin') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app-admin') }}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <h1>Interface d'administration</h1>
+        </header>
+        <nav class="navigation">
+            <ul>
+                <li>
+                    <a href="{{ path('app_admin') }}">Accueil</a>
+                </li>
+                <li>
+                    <a>Voir le site</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_files') }}">Médias</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_pages') }}">Pages du site</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_posts') }}">Actualités</a>
+                </li>
+                <li>
+                    <a href="{{ path('add_admin_header') }}">En-tête du site</a>
+                </li>
+                <li>
+                    <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
+                </li>
+                <li>
+                    <a>Utilisateurs</a>
+                </li>
+                <li>
+                    <a>Matomo</a>
+                </li>
+                <li>
+                    <a>Google Search Console</a>
+                </li>
+                <li>
+                    <a>Se déconnecter</a>
+                </li>
+            </ul>
+        </nav>
+        
+        {% block body %}{% endblock %}
+
+        <footer>
+            <p>Conception et développement : Creative Eye Studio</p>
+        </footer>
+    </body>
+</html>
