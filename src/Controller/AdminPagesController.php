@@ -21,6 +21,8 @@ class AdminPagesController extends AbstractController
         ]);
     }
 
+    /* AJOUTER UNE PAGE
+    ------------------------------------------------------- */
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
     public function add_page(ManagerRegistry $doctrine, Request $request) {
         $form = $this->createForm(PagesAdminFormType::class);
@@ -72,6 +74,8 @@ class AdminPagesController extends AbstractController
         ]);
     }
 
+    /* MODIFIER UNE PAGE
+    ------------------------------------------------------- */
     #[Route('/admin/pages/modifier', name: 'admin_pages_modify')]
     public function modify_page() {
         $form = $this->createForm(PagesAdminFormType::class);
@@ -80,5 +84,28 @@ class AdminPagesController extends AbstractController
             'form' => $form->createView(),
             'controller_name' => 'PagesController',
         ]);
+    }
+
+    /* SUPPRIMER UNE PAGE
+    ------------------------------------------------------- */
+    #[Route('/admin/pages/supprimer/{page_id}', name: 'admin_pages_delete')]
+    public function delete_page(ManagerRegistry $doctrine, String $page_id) {
+        // Suppression de la valeur dans la BDD
+        $entityManager = $doctrine->getManager();
+        $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+
+        if(!$page) {
+            throw $this->createNotFoundException(
+                "Aucune page n'a été trouvée"
+            );
+        }
+
+        $entityManager->remove($page);
+        $entityManager->flush();
+
+        // Suppression du fichier
+        unlink("../templates/webpages/pages/" . $page_id . ".html.twig");
+
+        return $this->redirectToRoute('admin_pages');
     }
 }
