@@ -7,11 +7,27 @@
         <h2>Modifier une page</h2>
         {{ form_start(form) }}
             <p>{{ form_label(form.page_name) }}<br />
-            {{ form_widget(form.page_name) }}</p>
+            {{ form_widget(form.page_name, {
+                'value': pageName
+            }) }}</p>
             <p>{{ form_label(form.page_url) }}<br />
-            {{ form_widget(form.page_url) }}</p>
+            {{ form_widget(form.page_url, {
+                'value': pageUrl
+            }) }}</p>
+
             <p>{{ form_label(form.page_content) }}<br />
-            {{ form_widget(form.page_content) }}</p>
+            {{ form_widget(form.page_content, {
+                'value': pageContent
+            }) }}</p>
+
+            <p>{{ form_label(form.page_meta_title) }}<br />
+            {{ form_widget(form.page_meta_title, {
+                'value': pageMetaTitle
+            }) }}</p>
+            <p>{{ form_label(form.page_meta_desc) }}<br />
+            {{ form_widget(form.page_meta_desc, {
+                'value': pageMetaDesc
+            }) }}</p>
             {{ form_row(form.page_submit) }}
         {{ form_end(form) }}
     </section>

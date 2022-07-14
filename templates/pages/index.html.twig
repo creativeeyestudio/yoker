@@ -6,5 +6,15 @@
     <section class="block">
         <a class="btn-link float-right" href="{{ path('admin_pages_add') }}">Créer une page</a>
         <h2>Liste des pages</h2>
+        {% for page in pages %}
+        <div class="line">
+            <p>{{ page.pagename }}</p>
+            <ul>
+                <li><a href="" target="_blank" rel="noopener">Voir</a></li>
+                <li><a href="{{ path('admin_pages_modify', {page_id: page.pageid}) }}">Modifier</a></li>
+                <li><a href="{{ path('admin_pages_delete', {page_id: page.pageid}) }}">Supprimer</a></li>
+            </ul>
+        </div>
+        {% endfor %}
     </section>
 {% endblock %}
