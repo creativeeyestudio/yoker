@@ -14,10 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminPagesController extends AbstractController
 {
     #[Route('/admin/pages', name: 'admin_pages')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
+        $pagesRepo = $entityManager->getRepository(PagesList::class);
+        $pages = $pagesRepo->findAll();
+
         return $this->render('pages/index.html.twig', [
             'controller_name' => 'PagesController',
+            "pages" => $pages
         ]);
     }
 
