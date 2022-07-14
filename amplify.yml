@@ -1,9 +1,14 @@
 version: 1
 frontend:
   phases:
+    proBuild:
+      - composer install
+      - npm install
+      - yarn install
     # IMPORTANT - Please verify your build commands
     build:
-      commands: []
+      commands:
+        - symfony server:start
   artifacts:
     # IMPORTANT - Please verify your build output directory
     baseDirectory: /public
