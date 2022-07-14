@@ -76,12 +76,66 @@ class AdminPagesController extends AbstractController
 
     /* MODIFIER UNE PAGE
     ------------------------------------------------------- */
-    #[Route('/admin/pages/modifier', name: 'admin_pages_modify')]
-    public function modify_page() {
+    #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
+    public function modify_page(ManagerRegistry $doctrine, Request $request, String $page_id) {
         $form = $this->createForm(PagesAdminFormType::class);
-        
+        $form->handleRequest($request);
+
+        // Récupération de la page souhaitée
+        $entityManager = $doctrine->getManager();
+        $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+        if(!$page) {
+            throw $this->createNotFoundException(
+                "Aucune page n'a été trouvée"
+            );
+        }
+
+        // Récupération du contenu de la page
+        $pageContent = file_get_contents("../templates/webpages/pages/" . $page_id . ".html.twig");
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération des données du formulaire
+            $data = $form->getData();
+            $pageName = $data['page_name'];
+            $pageUrl = $data['page_url'];
+            $pageId = $page->getPageId();
+            $pageContent = $data['page_content'];
+            $pageMetaTitle = $data['page_meta_title'];
+            $pageMetaDesc = $data['page_meta_desc'];
+            $pageFileName = $pageId . ".html.twig";
+
+            // Modification des données de la page
+            $entityManager = $doctrine->getManager();
+            $page->setPageName($pageName);
+            if($pageUrl != null){
+                $page->setPageUrl($pageUrl);
+            } else {
+                $page->setPageUrl($pageId);
+            }
+            if ($pageMetaTitle != null) {
+                $page->setPageMetaTitle($pageMetaTitle);
+            } else {
+                $page->setPageMetaTitle($pageName);
+            }
+            $page->setPageMetaDesc($pageMetaDesc);
+            $entityManager->persist($page);
+            $entityManager->flush();
+            
+            // Modification du contenu de la page
+            unlink("../templates/webpages/pages/" . $page_id . ".html.twig");
+            $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
+            fwrite($file, $pageContent);
+            fclose($file);
+        }
+
         return $this->render('pages/modify-page.html.twig', [
             'form' => $form->createView(),
+            'pageName' => $page->getPageName(),
+            'pageUrl' => $page->getPageUrl(),
+            'pageId' => $page->getPageId(),
+            'pageContent' => $pageContent,
+            'pageMetaTitle' => $page->getPageMetaTitle(),
+            'pageMetaDesc' => $page->getPageMetaDesc(),
             'controller_name' => 'PagesController',
         ]);
     }
