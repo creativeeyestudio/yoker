@@ -65,7 +65,7 @@ class AdminPagesController extends AbstractController
             fclose($file);
 
             // Redirection vers la page crée
-            return $this->redirectToRoute('admin_pages');
+            return $this->redirectToRoute('admin_pages_modify', array('page_id' => $pageId));
         }
 
         return $this->render('pages/add-page.html.twig', [
@@ -126,6 +126,9 @@ class AdminPagesController extends AbstractController
             $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
             fwrite($file, $pageContent);
             fclose($file);
+
+            // Redirection vers la page crée
+            return $this->redirectToRoute('admin_pages_modify', array('page_id' => $pageId));
         }
 
         return $this->render('pages/modify-page.html.twig', [
