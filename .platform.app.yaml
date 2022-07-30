@@ -13,6 +13,8 @@ build:
 dependencies:
     php:
         composer/composer: '^2'
+    nodejs:
+        yarn: "*"
 
 variables:
     env:
@@ -25,11 +27,15 @@ hooks:
     build: |
         set -e
         composer install
+        yarn install
+        yarn encore dev
         bin/console assets:install --no-debug
         bin/console cache:clear
     deploy: |
         set -e
         composer install
+        yarn install
+        yarn encore dev
         bin/console assets:install --no-debug
         bin/console cache:clear
 
