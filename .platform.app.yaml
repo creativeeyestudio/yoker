@@ -25,14 +25,16 @@ hooks:
     build: |
         set -e
         composer install
+        yarn install
         yarn encore dev
         bin/console assets:install --no-debug
         bin/console cache:clear
     deploy: |
         set -e
         composer install
+        yarn install
         yarn encore dev
-        bin/console assets:install --symlink --relative public
+        bin/console assets:install --no-debug
         bin/console cache:clear
 
 # The relationships of the application with services or other applications.
