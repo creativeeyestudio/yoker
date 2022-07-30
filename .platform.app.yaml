@@ -26,10 +26,12 @@ hooks:
         set -e
         bin/console assets:install --no-debug
         bin/console cache:clear
+        yarn encore dev
     deploy: |
         set -e
         bin/console assets:install --symlink --relative public
         bin/console cache:clear
+        yarn encore dev
 
 # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
