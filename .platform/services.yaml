@@ -1,3 +1,13 @@
 db:
     type: mariadb:10.4
     disk: 2048
+    configuration:
+        schemas:
+            - main
+        endpoints:
+            mysql:
+                default_schema: main
+                privileges:
+                    main: admin
+        properties:
+            max_allowed_packet: 64
