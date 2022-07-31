@@ -36,6 +36,8 @@ hooks:
         composer install
         yarn install
         yarn encore dev
+        php bin/console make:migration
+        php bin/console doctrine:migrations:migrate
         bin/console assets:install --no-debug
         bin/console cache:clear
 
