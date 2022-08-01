@@ -1,10 +1,10 @@
 FROM php:8.1-apache
+FROM node:${NODE_VERSION}-alpine AS symfony_assets_builder
 
 RUN a2enmod rewrite
  
 RUN apt-get update \
   && apt-get install -y libzip-dev git wget --no-install-recommends \
-  && apt-get install -y nodejs \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
  
@@ -20,5 +20,7 @@ WORKDIR /var/www
 
 RUN composer install
 RUN composer update
+RUN yarn install
+RUN npm install
  
 CMD ["apache2-foreground"]
