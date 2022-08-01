@@ -21,4 +21,4 @@ RUN composer install
 RUN composer update
 RUN npm install
  
-CMD ["apache2-foreground"]
+CMD ["apache2-foreground", "npm", "yarn", "composer"]
