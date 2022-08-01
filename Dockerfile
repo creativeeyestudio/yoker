@@ -4,8 +4,10 @@ RUN a2enmod rewrite
  
 RUN apt-get update \
   && apt-get install -y libzip-dev git wget --no-install-recommends \
+  && apt-get install -y nodejs \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && npm
  
 RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
  
