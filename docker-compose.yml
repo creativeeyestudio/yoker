@@ -4,10 +4,10 @@ services:
     db:
         image: mysql:5.7
         environment:
-            - MYSQL_ROOT_PASSWORD=somerootpass
-            - MYSQL_PASSWORD=somepass
-            - MYSQL_DATABASE=dockerizeme_db
-            - MYSQL_USER=someuser
+            - MYSQL_ROOT_PASSWORD=@cu1t3-D1git@Le_202X
+            - MYSQL_PASSWORD=Cre@t1ve-3ye_202X
+            - MYSQL_DATABASE=cms-db
+            - MYSQL_USER=cms-manager
     web:
         build: .
         ports:
