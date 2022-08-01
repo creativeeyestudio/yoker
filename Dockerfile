@@ -4,6 +4,7 @@ RUN a2enmod rewrite
  
 RUN apt-get update \
   && apt-get install -y libzip-dev git wget --no-install-recommends \
+  && apt-get update && sudo apt-get install -y yarn \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
  
