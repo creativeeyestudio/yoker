@@ -20,6 +20,9 @@ WORKDIR /var/www
 
 RUN composer install
 RUN composer update
+
+FROM node:16
 RUN npm install
+RUN npm install -g yarn
  
 CMD ["apache2-foreground", "npm", "yarn", "composer"]
