@@ -1,5 +1,4 @@
 FROM php:8.1-apache
-FROM node:${NODE_VERSION}-alpine AS symfony_assets_builder
 
 RUN a2enmod rewrite
  
@@ -20,7 +19,5 @@ WORKDIR /var/www
 
 RUN composer install
 RUN composer update
-RUN yarn install
-RUN npm install
  
 CMD ["apache2-foreground"]
