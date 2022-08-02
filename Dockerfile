@@ -20,9 +20,8 @@ COPY . /var/www
 # YARN
 #--------------------------------------------------------------------------
 FROM node:10
-COPY package.json /var/www
-COPY package-lock.json /var/www
 RUN npm install
+RUN npm update
  
 WORKDIR /var/www
  
