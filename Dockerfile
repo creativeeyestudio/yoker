@@ -9,26 +9,17 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-FROM node:8
-
-RUN apt-get update && \
-	apt-get install -y \
-		curl \
-		apt-transport-https
-
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-	echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN apt-get update && apt-get install yarn
-
 RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
 
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y nodejs && \
-    apt-get update && apt-get install yarn
+    apt-get install -y nodejs
  
 RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
+
+FROM node:6-alpine
+
+RUN npm install
  
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY . /var/www
