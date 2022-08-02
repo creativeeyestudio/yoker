@@ -33,3 +33,5 @@ RUN bin/console doc:fix:load --no-interaction
 FROM node:10
 RUN npm install
 RUN npm update
+
+EXPOSE 8000
