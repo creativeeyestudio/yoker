@@ -17,12 +17,24 @@ RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY . /var/www
 
+
+
+# COMPOSER
+#--------------------------------------------------------------------------
+RUN composer install -n
+RUN bin/console doc:mig:mig --no-interaction
+RUN bin/console doc:fix:load --no-interaction
+
+
 # YARN
 #--------------------------------------------------------------------------
 FROM node:10
 RUN npm install
 RUN npm update
+
+
+# MISE EN FONCTION
+#--------------------------------------------------------------------------
  
 WORKDIR /var/www
- 
 CMD ["apache2-foreground"]
