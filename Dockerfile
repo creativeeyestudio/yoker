@@ -20,7 +20,7 @@ RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY . /var/www
 WORKDIR /var/www
-CMD ["apache2-foreground", "npm", "yarn"]
+CMD ["apache2-foreground"]
 
 
 
