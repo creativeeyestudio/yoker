@@ -5,14 +5,18 @@ FROM php:8.1-apache
 RUN a2enmod rewrite
  
 RUN apt-get update \
-  && apt-get install -y libzip-dev git wget --no-install-recommends \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
- 
+    && apt-get install -y libzip-dev git wget --no-install-recommends \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+	echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
 RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
 
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs && \
+    apt-get update && apt-get install yarn
  
 RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer

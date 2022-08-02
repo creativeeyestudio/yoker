@@ -23,6 +23,12 @@ services:
             PMA_HOST: db
         networks:
             - dev
+    
+    node:
+        build: docker/node
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/symfony
+        command: bash -c "yarn && yarn dev"
 
     web:
         build: .
