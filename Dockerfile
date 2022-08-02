@@ -27,11 +27,4 @@ RUN composer install -n
 RUN bin/console doc:mig:mig --no-interaction
 RUN bin/console doc:fix:load --no-interaction
 
-
-# YARN
-#--------------------------------------------------------------------------
-FROM node:10
-RUN npm install
-RUN npm update
-
 EXPOSE 8000
