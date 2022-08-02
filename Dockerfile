@@ -10,6 +10,10 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
  
 RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
+
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y nodejs \
+    npm                       # note this one
  
 RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
