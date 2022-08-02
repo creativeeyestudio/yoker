@@ -24,7 +24,7 @@ CMD ["apache2-foreground"]
 # COMPOSER
 #--------------------------------------------------------------------------
 RUN composer install -n
-RUN bin/console doc:mig:mig --no-interaction
-RUN bin/console doc:fix:load --no-interaction
+#RUN bin/console doc:mig:mig --no-interaction
+#RUN bin/console doc:fix:load --no-interaction
 
 EXPOSE 8000
