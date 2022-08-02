@@ -1,3 +1,5 @@
+# SYMFONY
+#--------------------------------------------------------------------------
 FROM php:8.1-apache
 
 RUN a2enmod rewrite
@@ -18,3 +20,13 @@ COPY . /var/www
 WORKDIR /var/www
  
 CMD ["apache2-foreground"]
+
+# YARN
+#--------------------------------------------------------------------------
+FROM node:7 
+WORKDIR /var/www
+COPY package.json /var/www
+COPY yarn.lock /var/www
+RUN yarn install 
+CMD npm run develop 
+EXPOSE 8000
