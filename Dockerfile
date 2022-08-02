@@ -24,5 +24,7 @@ RUN npm install
 RUN npm update
  
 WORKDIR /var/www
+
+EXPOSE 8000
  
 CMD ["apache2-foreground"]
