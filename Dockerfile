@@ -31,7 +31,7 @@ COPY yarn.lock package.json webpack.config.js ./
 COPY assets ./assets
 
 RUN yarn install
-RUN yarn encore dev --watch
+RUN yarn encore dev
 
 RUN npm install
 
