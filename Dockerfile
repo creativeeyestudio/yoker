@@ -1,36 +1,61 @@
 FROM node:6-alpine
 RUN npm install
 
+# COMPOSER
+#--------------------------------------------------------------------------
+FROM composer:2 as composer_stage
+
+RUN rm -rf /var/www && mkdir -p /var/www/html
+WORKDIR /var/www/html
+
+COPY composer.json composer.lock symfony.lock .env ./
+COPY public public/
+
+RUN composer install --ignore-platform-reqs --prefer-dist --no-scripts --no-progress --no-suggest --no-interaction --no-dev --no-autoloader
+
+RUN composer dump-autoload --optimize --apcu --no-dev
+
+COPY bin bin/
+COPY config config/
+COPY src src/
+
+RUN composer run-script $NODEV post-install-cmd; \
+    chmod +x bin/console;
+
+
+# NPM
+#--------------------------------------------------------------------------
+FROM node:12 as npm_builder
+
+COPY --from=composer_stage /var/www/html /var/www/html
+
+WORKDIR /var/www/html
+COPY yarn.lock package.json webpack.config.js ./
+COPY assets ./assets
+
+RUN yarn install
+RUN yarn encore prod
+
+
 # SYMFONY
 #--------------------------------------------------------------------------
 FROM php:8.1-apache
 
-RUN a2enmod rewrite
- 
-RUN apt-get update \
-    && apt-get install -y libzip-dev git wget --no-install-recommends \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get -y update && apt-get upgrade -y
 
-RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
+COPY --from=npm_builder /var/www/html /var/www/html
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y nodejs
- 
-RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
-    && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
- 
-COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
-COPY . /var/www
-WORKDIR /var/www
-CMD ["apache2-foreground"]
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        npm \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
+# Enable apache modules
+RUN a2enmod rewrite headers
 
+EXPOSE 80
 
-# COMPOSER
-#--------------------------------------------------------------------------
-RUN composer install -n
-#RUN bin/console doc:mig:mig --no-interaction
-#RUN bin/console doc:fix:load --no-interaction
-
-EXPOSE 8000
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
