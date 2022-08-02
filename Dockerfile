@@ -12,8 +12,7 @@ RUN apt-get update \
 RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
 
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y nodejs \
-    npm                       # note this one
+    apt-get install -y nodejs
  
 RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
@@ -21,7 +20,7 @@ RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY . /var/www
 WORKDIR /var/www
-CMD ["apache2-foreground"]
+CMD ["apache2-foreground", "npm", "yarn"]
 
 
 
