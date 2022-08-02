@@ -1,3 +1,6 @@
+FROM node:6-alpine
+RUN npm install
+
 # SYMFONY
 #--------------------------------------------------------------------------
 FROM php:8.1-apache
@@ -16,10 +19,6 @@ RUN apt-get update && apt-get upgrade -y && \
  
 RUN wget https://getcomposer.org/download/2.3.10/composer.phar \
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
-
-FROM node:6-alpine
-
-RUN npm install
  
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY . /var/www
