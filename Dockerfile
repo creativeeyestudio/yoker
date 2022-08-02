@@ -16,6 +16,8 @@ RUN wget https://getcomposer.org/download/2.0.9/composer.phar \
  
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY . /var/www
+WORKDIR /var/www
+CMD ["apache2-foreground"]
 
 
 
@@ -31,9 +33,3 @@ RUN bin/console doc:fix:load --no-interaction
 FROM node:10
 RUN npm install
 RUN npm update
-
-
-# MISE EN FONCTION
-#--------------------------------------------------------------------------
-WORKDIR /var/www
-CMD ["apache2-foreground"]
