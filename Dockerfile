@@ -24,7 +24,7 @@ RUN composer run-script $NODEV post-install-cmd; \
 #--------------------------------------------------------------------------
 FROM node:12 as npm_builder
 
-COPY --from=composer_stage /var/www/html /var/www/html
+COPY --from=composer_stage /var/www/ /var/www/
 
 WORKDIR /var/www/html
 COPY yarn.lock package.json webpack.config.js ./
@@ -42,7 +42,7 @@ FROM php:8.1-apache
 
 RUN apt-get -y update && apt-get upgrade -y
 
-COPY --from=npm_builder /var/www/html /var/www/html
+COPY --from=npm_builder /var/www/ /var/www/
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
