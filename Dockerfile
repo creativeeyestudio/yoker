@@ -19,8 +19,10 @@ COPY . /var/www
 
 # YARN
 #--------------------------------------------------------------------------
-FROM node:6.7.0
-RUN npm install -g yarn
+FROM node:10
+COPY package.json /var/www
+COPY package-lock.json /var/www
+RUN npm install
  
 WORKDIR /var/www
  
