@@ -8,6 +8,8 @@ services:
             - MYSQL_PASSWORD=Cre@t1ve-3ye_202X
             - MYSQL_DATABASE=cms-db
             - MYSQL_USER=cms-manager
+        ports:
+            - 3306:3306
     web:
         build: .
         ports:
