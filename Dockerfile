@@ -23,10 +23,6 @@ CMD ["apache2-foreground"]
 
 # YARN
 #--------------------------------------------------------------------------
-FROM node:7 
-WORKDIR /var/www
-COPY package.json /var/www
-COPY yarn.lock /var/www
-RUN yarn install 
-CMD npm run develop 
-EXPOSE 8000
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && sudo apt-get install -y yarn
