@@ -1,6 +1,3 @@
-FROM node:6-alpine
-RUN npm install
-
 # COMPOSER
 #--------------------------------------------------------------------------
 FROM composer:2 as composer_stage
@@ -34,7 +31,9 @@ COPY yarn.lock package.json webpack.config.js ./
 COPY assets ./assets
 
 RUN yarn install
-RUN yarn encore prod
+RUN yarn encore dev --watch
+
+RUN npm install
 
 
 # SYMFONY
