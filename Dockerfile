@@ -2,8 +2,7 @@
 #--------------------------------------------------------------------------
 FROM composer:2 as composer_stage
 
-RUN rm -rf /var/www && mkdir -p /var/www/html
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 COPY composer.json composer.lock symfony.lock .env ./
 COPY public public/
@@ -24,9 +23,9 @@ RUN composer run-script $NODEV post-install-cmd; \
 #--------------------------------------------------------------------------
 FROM node:12 as npm_builder
 
-COPY --from=composer_stage /var/www/ /var/www/
+COPY --from=composer_stage /var/www /var/www
 
-WORKDIR /var/www/html
+WORKDIR /var/www
 COPY yarn.lock package.json webpack.config.js ./
 COPY assets ./assets
 
@@ -42,7 +41,7 @@ FROM php:8.1-apache
 
 RUN apt-get -y update && apt-get upgrade -y
 
-COPY --from=npm_builder /var/www/ /var/www/
+COPY --from=npm_builder /var/www /var/www
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
