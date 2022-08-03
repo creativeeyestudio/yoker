@@ -1,30 +1,37 @@
 version: '3.8'
- 
+
 services:
     db:
+        container_name: database
         image: mysql:5.7
         environment:
-            - MYSQL_ROOT_PASSWORD=@cu1t3-D1git@Le_202X
-            - MYSQL_PASSWORD=Cre@t1ve-3ye_202X
-            - MYSQL_DATABASE=cms-db
-            - MYSQL_USER=cms-manager
+            MYSQL_ROOT_PASSWORD: root-test
+            MYSQL_PASSWORD: root
+            MYSQL_USER: cms-user
+            MYSQL_DATABASE: test_cms
         ports:
-            - 3306:3306
+            - "3306:3306"
+        volumes:
+            - dbdata:/var/lib/mysql
     
     phpmyadmin:
-        image: phpmyadmin
-        container_name: phpmyadmin_docker_symfony
-        restart: always
-        depends_on:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        links:
             - db
-        ports:
-            - 8090:80
         environment:
             PMA_HOST: db
-        networks:
-            - dev
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        restart: always
+        ports:
+            - 8100:80
 
     web:
+        container_name: cms
         build: .
         ports:
-            - 8080:80
+            - 8000:80
+
+volumes:
+    dbdata:
