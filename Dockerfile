@@ -56,4 +56,4 @@ WORKDIR /var/www
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["apache2-foreground", "yarn", "composer", "npm"]
