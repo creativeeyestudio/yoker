@@ -42,6 +42,7 @@ FROM php:8.1-apache
 RUN apt-get -y update && apt-get upgrade -y
 
 COPY --from=npm_builder /var/www /var/www
+COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
