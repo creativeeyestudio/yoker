@@ -39,22 +39,21 @@ RUN npm install
 #--------------------------------------------------------------------------
 FROM php:8.1-apache
 
-RUN apt-get -y update && apt-get upgrade -y
+RUN a2enmod rewrite
+ 
+RUN apt-get update \
+  && apt-get install -y libzip-dev git wget --no-install-recommends \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ 
+RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
 
 COPY --from=npm_builder /var/www /var/www
 COPY docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
+COPY . /var/www
 
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        npm \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
-
-# Enable apache modules
-RUN a2enmod rewrite headers
+WORKDIR /var/www
 
 EXPOSE 80
 
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]
