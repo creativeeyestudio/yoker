@@ -3,14 +3,14 @@
 {% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
-    <section class="block">
+    <section class="block tab-container">
         <h2>Ajouter un article</h2>
-        <ul>
-            <li><a href="#content-page">Contenu de page</a></li>
-            <li><a href="#seo-page">SEO de la page</a></li>
+        <ul class="tabs tabs-btn">
+            <li><a class="tab active">Contenu de page</a></li>
+            <li><a class="tab">SEO de la page</a></li>
         </ul>
-        {{ form_start(form) }}
-            <div id="content-page" class="tab">
+        {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
+            <div id="content-page" class="tab-pane active">
                 <p>{{ form_label(form.page_name) }}<br />
                 {{ form_widget(form.page_name) }}</p>
                 <p>{{ form_label(form.page_url) }}<br />
@@ -18,7 +18,7 @@
                 <p>{{ form_label(form.page_content) }}<br />
                 {{ form_widget(form.page_content) }}</p>
             </div>
-            <div id="seo-page" class="tab">
+            <div id="seo-page" class="tab-pane">
                 <p>{{ form_label(form.page_meta_title) }}<br />
                 {{ form_widget(form.page_meta_title) }}</p>
                 <p>{{ form_label(form.page_meta_desc) }}<br />
