@@ -10,3 +10,10 @@ import './styles/admin/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+/* TABS
+--------------------------------------------*/
+var tabs = require('tabs');
+
+var container=document.querySelector('.tab-container')
+tabs(container);
