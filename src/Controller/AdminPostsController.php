@@ -14,15 +14,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminPostsController extends AbstractController
 {
     #[Route('/admin/posts', name: 'app_admin_posts')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
+        $postsRepo = $entityManager->getRepository(PostsList::class);
+        $posts = $postsRepo->findAll();
+
         return $this->render('posts/index.html.twig', [
             'controller_name' => 'AdminPostsController',
+            "posts" => $posts
         ]);
     }
 
+    /* AJOUTER UN POST
+    ------------------------------------------------------- */
     #[Route('/admin/posts/ajouter', name: 'admin_posts_add')]
-    public function add_page(ManagerRegistry $doctrine, Request $request) {
+    public function add_post(ManagerRegistry $doctrine, Request $request) {
         $form = $this->createForm(PagesAdminFormType::class);
         $form->handleRequest($request);
 
@@ -77,15 +84,39 @@ class AdminPostsController extends AbstractController
         ]);
     }
 
-    /* MODIFIER UNE PAGE
+    /* MODIFIER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/posts/modifier/{post_id}', name: 'admin_posts_modify')]
-    public function modify_page() {
+    public function modify_post() {
         $form = $this->createForm(PagesAdminFormType::class);
         
         return $this->render('posts/modify-post.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PagesController',
         ]);
+    }
+
+    /* SUPPRIMER UN POST
+    ------------------------------------------------------- */
+    #[Route('/admin/post/supprimer/{post_id}', name: 'admin_posts_delete')]
+    public function delete_post(ManagerRegistry $doctrine, String $post_id)
+    {
+        // Suppression de la valeur dans la BDD
+        $entityManager = $doctrine->getManager();
+        $post = $entityManager->getRepository(PostsList::class)->findOneBy(['post_id' => $post_id]);
+
+        if(!$post) {
+            throw $this->createNotFoundException(
+                "Aucune post n'a été trouvé"
+            );
+        }
+
+        $entityManager->remove($post);
+        $entityManager->flush();
+
+        // Suppression du fichier
+        unlink("../templates/webpages/posts/" . $post_id . ".html.twig");
+
+        return $this->redirectToRoute('app_admin_posts');
     }
 }
