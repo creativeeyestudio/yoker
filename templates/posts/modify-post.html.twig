@@ -3,15 +3,27 @@
 {% block title %}Modifier un article{% endblock %}
 
 {% block body %}
-    <section class="block">
+    <section class="block tab-container">
         <h2>Modifier un article</h2>
-        {{ form_start(form) }}
-            <p>{{ form_label(form.page_name) }}<br />
-            {{ form_widget(form.page_name) }}</p>
-            <p>{{ form_label(form.page_url) }}<br />
-            {{ form_widget(form.page_url) }}</p>
-            <p>{{ form_label(form.page_content) }}<br />
-            {{ form_widget(form.page_content) }}</p>
+        <ul class="tabs tabs-btn">
+            <li><a class="tab active">Contenu de page</a></li>
+            <li><a class="tab">SEO de la page</a></li>
+        </ul>
+        {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
+            <div id="content-page" class="tab-pane active">
+                <p>{{ form_label(form.page_name) }}<br />
+                {{ form_widget(form.page_name) }}</p>
+                <p>{{ form_label(form.page_url) }}<br />
+                {{ form_widget(form.page_url) }}</p>
+                <p>{{ form_label(form.page_content) }}<br />
+                {{ form_widget(form.page_content) }}</p>
+            </div>
+            <div id="seo-page" class="tab-pane">
+                <p>{{ form_label(form.page_meta_title) }}<br />
+                {{ form_widget(form.page_meta_title) }}</p>
+                <p>{{ form_label(form.page_meta_desc) }}<br />
+                {{ form_widget(form.page_meta_desc) }}</p>
+            </div>
             {{ form_row(form.page_submit) }}
         {{ form_end(form) }}
     </section>
