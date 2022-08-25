@@ -25,4 +25,9 @@ class WebPagesIndexController extends AbstractController
             'controller_name' => 'WebPagesIndexController',
         ]);
     }
+
+    #[Route('/fr/index', name: 'web_index_redirect')]
+    public function redirectIndex(){
+        return $this->redirectToRoute('web_index');
+    }
 }
