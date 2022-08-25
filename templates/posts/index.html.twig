@@ -6,5 +6,15 @@
     <section class="block">
         <a class="btn-link float-right" href="{{ path('admin_posts_add') }}">Créer un article</a>
         <h2>Liste des articles</h2>
+        {% for post in posts %}
+        <div class="line">
+            <p>{{ post.postname }}</p>
+            <ul>
+                <li><a href="" target="_blank" rel="noopener">Voir</a></li>
+                <li><a href="{{ path('admin_posts_modify', {post_id: post.postid}) }}">Modifier</a></li>
+                <li><a href="{{ path('admin_posts_delete', {post_id: post.postid}) }}">Supprimer</a></li>
+            </ul>
+        </div>
+        {% endfor %}
     </section>
 {% endblock %}

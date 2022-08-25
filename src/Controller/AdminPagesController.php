@@ -21,7 +21,7 @@ class AdminPagesController extends AbstractController
         $pages = $pagesRepo->findAll();
 
         return $this->render('pages/index.html.twig', [
-            'controller_name' => 'PagesController',
+            'controller_name' => 'AdminPagesController',
             "pages" => $pages
         ]);
     }
@@ -75,7 +75,7 @@ class AdminPagesController extends AbstractController
 
         return $this->render('pages/add-page.html.twig', [
             'form' => $form->createView(),
-            'controller_name' => 'PagesController',
+            'controller_name' => 'AdminPagesController',
         ]);
     }
 
@@ -144,7 +144,7 @@ class AdminPagesController extends AbstractController
             'pageContent' => $pageContent,
             'pageMetaTitle' => $page->getPageMetaTitle(),
             'pageMetaDesc' => $page->getPageMetaDesc(),
-            'controller_name' => 'PagesController',
+            'controller_name' => 'AdminPagesController',
         ]);
     }
 
