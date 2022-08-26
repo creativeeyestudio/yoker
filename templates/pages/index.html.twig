@@ -12,7 +12,9 @@
             <ul>
                 <li><a href="" target="_blank" rel="noopener">Voir</a></li>
                 <li><a href="{{ path('admin_pages_modify', {page_id: page.pageid}) }}">Modifier</a></li>
+                {% if page.blockedpage == 0 %}
                 <li><a href="{{ path('admin_pages_delete', {page_id: page.pageid}) }}">Supprimer</a></li>
+                {% endif %}
             </ul>
         </div>
         {% endfor %}

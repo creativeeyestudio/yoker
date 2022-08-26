@@ -17,7 +17,7 @@ class WebPagesIndexController extends AbstractController
 
         if (!$index_page) {
             throw $this->createNotFoundException(
-                'La page d\'accueil du site est introuvable. Contactez le webmaster du site pour remédier au problème'
+                'La page d\'accueil du site est introuvable. Contactez le webmaster du site pour remédier au problème.'
             );
         }
 

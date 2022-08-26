@@ -28,6 +28,9 @@ class PagesList
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $page_meta_desc;
 
+    #[ORM\Column]
+    private ?bool $blocked_page = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class PagesList
     public function setPageMetaDesc(string $page_meta_desc): self
     {
         $this->page_meta_desc = $page_meta_desc;
+
+        return $this;
+    }
+
+    public function isBlockedPage(): ?bool
+    {
+        return $this->blocked_page;
+    }
+
+    public function setBlockedPage(bool $blocked_page): self
+    {
+        $this->blocked_page = $blocked_page;
 
         return $this;
     }
