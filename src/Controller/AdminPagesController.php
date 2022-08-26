@@ -61,6 +61,7 @@ class AdminPagesController extends AbstractController
                 $page->setPageMetaTitle($pageName);
             }
             $page->setPageMetaDesc($pageMetaDesc);
+            $page->setBlockedPage('0');
             $entityManager->persist($page);
             $entityManager->flush();
 
