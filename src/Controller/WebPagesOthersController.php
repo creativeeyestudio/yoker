@@ -13,7 +13,7 @@ class WebPagesOthersController extends AbstractController
     #[Route('/fr/{page_slug}', name: 'app_web_pages_others')]
     public function index(ManagerRegistry $doctrine, string $page_slug): Response
     {
-        $selected_page = $doctrine->getRepository(PagesList::class)->findBy(["page_url" => $page_slug]);
+        $selected_page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_slug]);
 
         if (!$selected_page) {
             throw $this->createNotFoundException(
@@ -23,6 +23,7 @@ class WebPagesOthersController extends AbstractController
 
         return $this->render('web_pages_others/index.html.twig', [
             'controller_name' => 'WebPagesOthersController',
+            'page_id' => $selected_page->getPageId()
         ]);
     }
 }
