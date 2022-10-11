@@ -19,6 +19,7 @@ class AdminRegisterController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
+        $notif = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
@@ -29,10 +30,13 @@ class AdminRegisterController extends AbstractController
             $doctrine = $doctrine->getManager();
             $doctrine->persist($user);
             $doctrine->flush();
+
+            $notif = "Le compte a bien été crée";
         }
 
         return $this->render('admin_register/index.html.twig', [
             'form' => $form->createView(),
+            'notif' => $notif
         ]);
     }
 }

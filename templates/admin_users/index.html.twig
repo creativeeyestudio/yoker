@@ -1,0 +1,18 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <h2>Liste des utilisateurs</h2>
+        {% for user in users %}
+        <div class="line">
+            <p>{{ user.firstname }} {{ user.lastname }}</p>
+            <ul>
+                <li><a href="">Modifier</a></li>
+                <li><a href="">Supprimer</a></li>
+            </ul>
+        </div>
+        {% endfor %}
+    </section>
+{% endblock %}
