@@ -13,7 +13,7 @@
             {{ encore_entry_script_tags('app-admin') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="admin-page">
         <header>
             <h1>Interface d'administration</h1>
         </header>
@@ -51,7 +51,7 @@
                     <a>Google Search Console</a>
                 </li>
                 <li>
-                    <a>Se déconnecter</a>
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
             </ul>
         </nav>

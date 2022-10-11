@@ -3,9 +3,11 @@
 }
 
 body{
-    margin: 0 0 0 $nav-width;
     padding: 3rem;
     font: 400 1em/1.5em "Lato";
+    &.admin-page{
+        margin: 0 0 0 $nav-width;
+    }
 }
 
 .float-right{
