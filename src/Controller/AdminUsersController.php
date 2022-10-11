@@ -20,4 +20,15 @@ class AdminUsersController extends AbstractController
             'users' => $users
         ]);
     }
+
+    #[Route('/admin/users/delete/{id}', name: 'admin_users_delete')]
+    public function deleteUser(ManagerRegistry $doctrine, String $id){
+        $entityManager = $doctrine->getManager();
+        $user = $entityManager->getRepository(User::class)->findOneBy([ 'id' => $id ]);
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_users');
+    }
 }
