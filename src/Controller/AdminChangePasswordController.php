@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminChangePasswordController extends AbstractController
 {
-    #[Route('/admin/change-password', name: 'app_admin_change_password')]
+    #[Route('/admin/manage-infos', name: 'app_admin_change_password')]
     public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $encoder): Response
     {
         $user = $this->getUser();
