@@ -13,6 +13,7 @@ class PagesService extends AbstractController{
     
     function PageManager(ManagerRegistry $doctrine, Request $request, bool $newPage, String $page_id = null){
 
+        // Création / Récupération d'une page
         if ($newPage) {
             $page = new PagesList();
         } else {

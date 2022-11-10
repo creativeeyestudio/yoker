@@ -5,7 +5,12 @@
 {% block body %}
     <section class="block">
         <h2>Modifier le pied de page du site</h2>
-        <p>{{ form_widget(form.common_block) }}</p>
-        {{ form_row(form.common_submit) }}
+        {{ form_start(form) }}
+            <p>{{ form_widget(form.common_block, {
+                'value': content
+            }) }}</p>
+            
+            {{ form_row(form.common_submit) }}
+        {{ form_end(form) }}
     </section>
 {% endblock %}
