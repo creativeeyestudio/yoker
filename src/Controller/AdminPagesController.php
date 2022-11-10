@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PagesList;
-use App\Form\PagesAdminFormType;
-use Cocur\Slugify\Slugify;
+use App\Services\PagesService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,123 +28,33 @@ class AdminPagesController extends AbstractController
     /* AJOUTER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
-    public function add_page(ManagerRegistry $doctrine, Request $request) {
-        $page = new PagesList();
-        $form = $this->createForm(PagesAdminFormType::class, $page);
-        $form->handleRequest($request);
+    public function add_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request) {
+        
+        $form = $pageService->PageManager($doctrine, $request, true);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération des données du formulaire
-            $page = $form->getData();
-
-            // Création du slug
-            $slugify = new Slugify();
-            $slugName = $slugify->slugify($form->get('page_name')->getData());
-            $slugUrl = $slugify->slugify($form->get('page_url')->getData());
-
-            // Création de l'ID Page
-            $page->setPageId($slugName);
-
-            // Création de l'URL
-            if (!$form->get('page_meta_title')->getData()) {
-                $page->setPageUrl($slugName);
-            } else {
-                $page->setPageMetaTitle($slugUrl);
-            }
-
-            // Création du Meta Title
-            if (!$form->get('page_meta_title')->getData()) {
-                $page->setPageMetaTitle($form->get('page_name')->getData());
-            } else {
-                $page->setPageMetaTitle($form->get('page_meta_title')->getData());
-            }
-
-            // Page bloquée
-            $page->setBlockedPage(0);
-
-            // Envoi des données vers la BDD
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($page);
-            $entityManager->flush();
-
-            // Création du fichier
-            $file = fopen("../templates/webpages/pages/" . $slugName . '.html.twig', 'w');
-            fwrite($file, $form->get('page_content')->getData());
-            fclose($file);
-
-            // Redirection vers la page crée
-            return $this->redirectToRoute('admin_pages_modify', ['page_id' => $page->getPageId($slugName)]);
+            return $this->redirectToRoute('admin_pages');
         }
 
         return $this->render('pages/add-page.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
     /* MODIFIER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
-    public function modify_page(ManagerRegistry $doctrine, Request $request, String $page_id) {
-
-        // Récupération de la page souhaitée
-        $entityManager = $doctrine->getManager();
-        $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
-        if(!$page) {
-            throw $this->createNotFoundException(
-                "Aucune page n'a été trouvée"
-            );
-        }
-
-        $form = $this->createForm(PagesAdminFormType::class, $page);
-        $form->handleRequest($request);
+    public function modify_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request, String $page_id) {
 
         // Récupération du contenu de la page
         $pageContent = file_get_contents("../templates/webpages/pages/" . $page_id . ".html.twig");
 
+        $form = $pageService->PageManager($doctrine, $request, false, $page_id);
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération des données du formulaire
-            $page = $form->getData();
-            $pageId = $page->getPageId();
-            $pageFileName = $page->getPageId() . '.html.twig';
-
-            // Création du slug
-            $slugify = new Slugify();
-            $slugName = $slugify->slugify($form->get('page_name')->getData());
-            $slugUrl = $slugify->slugify($form->get('page_url')->getData());
-
-            // Création de l'ID Page
-            $page->setPageId($slugName);
-
-            // Création de l'URL
-            if (!$form->get('page_url')->getData()) {
-                $page->setPageUrl($slugName);
-            } else {
-                $page->setPageMetaTitle($slugUrl);
-            }
-
-            // Création du Meta Title
-            if (!$form->get('page_meta_title')->getData()) {
-                $page->setPageMetaTitle($form->get('page_name')->getData());
-            } else {
-                $page->setPageMetaTitle($form->get('page_meta_title')->getData());
-            }
-
-            // Page bloquée
-            $page->setBlockedPage(0);
-
-            // Envoi des données vers la BDD
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($page);
-            $entityManager->flush();
-            
-            // Modification du contenu de la page
-            unlink("../templates/webpages/pages/" . $pageFileName);
-            $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
-            fwrite($file, $form->get('page_content')->getData());
-            fclose($file);
-
-            // Redirection vers la page crée
-            return $this->redirectToRoute('admin_pages_modify', ['page_id' => $pageId]);
+            return $this->redirectToRoute('admin_pages_modify', [
+                'page_id' => $page_id
+            ]);
         }
 
         return $this->render('pages/modify-page.html.twig', [
