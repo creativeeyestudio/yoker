@@ -30,53 +30,55 @@ class AdminPagesController extends AbstractController
     ------------------------------------------------------- */
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
     public function add_page(ManagerRegistry $doctrine, Request $request) {
-        $form = $this->createForm(PagesAdminFormType::class);
+        $page = new PagesList();
+        $form = $this->createForm(PagesAdminFormType::class, $page);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupération des données du formulaire
+            $page = $form->getData();
+
+            // Création du slug
             $slugify = new Slugify();
-            $data = $form->getData();
-            $pageName = $data['page_name'];
-            $pageUrl = $data['page_url'];
-            $pageId = $slugify->slugify($pageName);
-            $pageContent = $data['page_content'];
-            $pageMetaTitle = $data['page_meta_title'];
-            $pageMetaDesc = $data['page_meta_desc'];
-            $pageFileName = $pageId . ".html.twig";
+            $slugName = $slugify->slugify($form->get('page_name')->getData());
+            $slugUrl = $slugify->slugify($form->get('page_url')->getData());
+
+            // Création de l'ID Page
+            $page->setPageId($slugName);
+
+            // Création de l'URL
+            if (!$form->get('page_meta_title')->getData()) {
+                $page->setPageUrl($slugName);
+            } else {
+                $page->setPageMetaTitle($slugUrl);
+            }
+
+            // Création du Meta Title
+            if (!$form->get('page_meta_title')->getData()) {
+                $page->setPageMetaTitle($form->get('page_name')->getData());
+            } else {
+                $page->setPageMetaTitle($form->get('page_meta_title')->getData());
+            }
+
+            // Page bloquée
+            $page->setBlockedPage(0);
 
             // Envoi des données vers la BDD
             $entityManager = $doctrine->getManager();
-            $page = new PagesList();
-            $page->setPageName($pageName);
-            if($pageUrl != null){
-                $page->setPageUrl($pageUrl);
-            } else {
-                $page->setPageUrl($pageId);
-            }
-            $page->setPageId($pageId);
-            if ($pageMetaTitle != null) {
-                $page->setPageMetaTitle($pageMetaTitle);
-            } else {
-                $page->setPageMetaTitle($pageName);
-            }
-            $page->setPageMetaDesc($pageMetaDesc);
-            $page->setBlockedPage('0');
             $entityManager->persist($page);
             $entityManager->flush();
 
             // Création du fichier
-            $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
-            fwrite($file, $pageContent);
+            $file = fopen("../templates/webpages/pages/" . $slugName . '.html.twig', 'w');
+            fwrite($file, $form->get('page_content')->getData());
             fclose($file);
 
             // Redirection vers la page crée
-            return $this->redirectToRoute('admin_pages_modify', array('page_id' => $pageId));
+            return $this->redirectToRoute('admin_pages_modify', ['page_id' => $page->getPageId($slugName)]);
         }
 
         return $this->render('pages/add-page.html.twig', [
             'form' => $form->createView(),
-            'controller_name' => 'AdminPagesController',
         ]);
     }
 
@@ -84,8 +86,6 @@ class AdminPagesController extends AbstractController
     ------------------------------------------------------- */
     #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
     public function modify_page(ManagerRegistry $doctrine, Request $request, String $page_id) {
-        $form = $this->createForm(PagesAdminFormType::class);
-        $form->handleRequest($request);
 
         // Récupération de la page souhaitée
         $entityManager = $doctrine->getManager();
@@ -96,56 +96,61 @@ class AdminPagesController extends AbstractController
             );
         }
 
+        $form = $this->createForm(PagesAdminFormType::class, $page);
+        $form->handleRequest($request);
+
         // Récupération du contenu de la page
         $pageContent = file_get_contents("../templates/webpages/pages/" . $page_id . ".html.twig");
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupération des données du formulaire
-            $data = $form->getData();
-            $pageName = $data['page_name'];
-            $pageUrl = $data['page_url'];
+            $page = $form->getData();
             $pageId = $page->getPageId();
-            $pageContent = $data['page_content'];
-            $pageMetaTitle = $data['page_meta_title'];
-            $pageMetaDesc = $data['page_meta_desc'];
-            $pageFileName = $pageId . ".html.twig";
+            $pageFileName = $page->getPageId() . '.html.twig';
 
-            // Modification des données de la page
+            // Création du slug
+            $slugify = new Slugify();
+            $slugName = $slugify->slugify($form->get('page_name')->getData());
+            $slugUrl = $slugify->slugify($form->get('page_url')->getData());
+
+            // Création de l'ID Page
+            $page->setPageId($slugName);
+
+            // Création de l'URL
+            if (!$form->get('page_url')->getData()) {
+                $page->setPageUrl($slugName);
+            } else {
+                $page->setPageMetaTitle($slugUrl);
+            }
+
+            // Création du Meta Title
+            if (!$form->get('page_meta_title')->getData()) {
+                $page->setPageMetaTitle($form->get('page_name')->getData());
+            } else {
+                $page->setPageMetaTitle($form->get('page_meta_title')->getData());
+            }
+
+            // Page bloquée
+            $page->setBlockedPage(0);
+
+            // Envoi des données vers la BDD
             $entityManager = $doctrine->getManager();
-            $page->setPageName($pageName);
-            if($pageUrl != null){
-                $page->setPageUrl($pageUrl);
-            } else {
-                $page->setPageUrl($pageId);
-            }
-            if ($pageMetaTitle != null) {
-                $page->setPageMetaTitle($pageMetaTitle);
-            } else {
-                $page->setPageMetaTitle($pageName);
-            }
-            $page->setPageMetaDesc($pageMetaDesc);
             $entityManager->persist($page);
             $entityManager->flush();
             
             // Modification du contenu de la page
-            unlink("../templates/webpages/pages/" . $page_id . ".html.twig");
+            unlink("../templates/webpages/pages/" . $pageFileName);
             $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
-            fwrite($file, $pageContent);
+            fwrite($file, $form->get('page_content')->getData());
             fclose($file);
 
             // Redirection vers la page crée
-            return $this->redirectToRoute('admin_pages_modify', array('page_id' => $pageId));
+            return $this->redirectToRoute('admin_pages_modify', ['page_id' => $pageId]);
         }
 
         return $this->render('pages/modify-page.html.twig', [
             'form' => $form->createView(),
-            'pageName' => $page->getPageName(),
-            'pageUrl' => $page->getPageUrl(),
-            'pageId' => $page->getPageId(),
             'pageContent' => $pageContent,
-            'pageMetaTitle' => $page->getPageMetaTitle(),
-            'pageMetaDesc' => $page->getPageMetaDesc(),
-            'controller_name' => 'AdminPagesController',
         ]);
     }
 

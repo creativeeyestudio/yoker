@@ -23,7 +23,8 @@ class PagesAdminFormType extends AbstractType
                 'required' => false,
             ])
             ->add('page_content', CKEditorType::class, [
-                'label' => 'Contenu de la page'
+                'label' => 'Contenu de la page',
+                'mapped' => false
             ])
             ->add('page_meta_title', TextType::class, [
                 'label' => 'Balise Meta Title',
