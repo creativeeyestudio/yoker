@@ -11,30 +11,25 @@
         </ul>
         {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
             <div id="content-page" class="tab-pane active">
-                <p>{{ form_label(form.page_name) }}<br />
-                {{ form_widget(form.page_name, {
-                    'value': postName
-                }) }}</p>
-                <p>{{ form_label(form.page_url) }}<br />
-                {{ form_widget(form.page_url, {
-                    'value': postUrl
-                }) }}</p>
-                <p>{{ form_label(form.page_content) }}<br />
-                {{ form_widget(form.page_content, {
-                    'value': postContent
+                <p>{{ form_label(form.post_name) }}<br />
+                {{ form_widget(form.post_name) }}</p>
+
+                <p>{{ form_label(form.post_url) }}<br />
+                {{ form_widget(form.post_url) }}</p>
+
+                <p>{{ form_label(form.post_content) }}<br />
+                {{ form_widget(form.post_content, {
+                    'value': content
                 }) }}</p>
             </div>
             <div id="seo-page" class="tab-pane">
-                <p>{{ form_label(form.page_meta_title) }}<br />
-                {{ form_widget(form.page_meta_title, {
-                    'value': postMetaTitle
-                }) }}</p>
-                <p>{{ form_label(form.page_meta_desc) }}<br />
-                {{ form_widget(form.page_meta_desc, {
-                    'value': postMetaDesc
-                }) }}</p>
+                <p>{{ form_label(form.post_meta_title) }}<br />
+                {{ form_widget(form.post_meta_title) }}</p>
+
+                <p>{{ form_label(form.post_meta_desc) }}<br />
+                {{ form_widget(form.post_meta_desc) }}</p>
             </div>
-            {{ form_row(form.page_submit) }}
+            {{ form_row(form.submit) }}
         {{ form_end(form) }}
     </section>
 {% endblock %}
