@@ -67,7 +67,6 @@ class AdminPagesController extends AbstractController
     ------------------------------------------------------- */
     #[Route('/admin/pages/supprimer/{page_id}', name: 'admin_pages_delete')]
     public function delete_page(ManagerRegistry $doctrine, String $page_id) {
-        // Suppression de la valeur dans la BDD
         $entityManager = $doctrine->getManager();
         $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
 
