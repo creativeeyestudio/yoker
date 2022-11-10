@@ -14,6 +14,7 @@ class PagesService extends AbstractController{
     function PageManager(ManagerRegistry $doctrine, Request $request, bool $newPage, String $page_id = null){
 
         // Création / Récupération d'une page
+        // --------------------------------------------------------
         if ($newPage) {
             $page = new PagesList();
         } else {
@@ -26,9 +27,15 @@ class PagesService extends AbstractController{
             }
         }
 
+
+        // Initialisation du formulaire
+        // --------------------------------------------------------
         $form = $this->createForm(PagesAdminFormType::class, $page);
         $form->handleRequest($request);
 
+        
+        // Envoi du formulaire
+        // --------------------------------------------------------
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupération des données du formulaire
             $page = $form->getData();
