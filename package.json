@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "dropzone": "^6.0.0-beta.2",
+        "loader-utils": "^3.2.1",
         "tabs": "^0.2.0"
     }
 }
