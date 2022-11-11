@@ -33,7 +33,7 @@ class PagesService extends AbstractController{
         $form = $this->createForm(PagesAdminFormType::class, $page);
         $form->handleRequest($request);
 
-        
+
         // Envoi du formulaire
         // --------------------------------------------------------
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,15 +77,13 @@ class PagesService extends AbstractController{
             // Création / Modification du fichier TWIG
             if ($newPage) {
                 $file = fopen("../templates/webpages/pages/" . $slugName . '.html.twig', 'w');
-                fwrite($file, $form->get('page_content')->getData());
-                fclose($file);
             } else {
                 $pageFileName = $page->getPageId() . '.html.twig';
                 unlink("../templates/webpages/pages/" . $pageFileName);
                 $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
-                fwrite($file, $form->get('page_content')->getData());
-                fclose($file);
             }
+            fwrite($file, $form->get('page_content')->getData());
+            fclose($file);
         }
 
         return $form;
