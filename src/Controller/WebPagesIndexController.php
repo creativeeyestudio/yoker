@@ -13,16 +13,17 @@ class WebPagesIndexController extends AbstractController
     #[Route('/fr', name: 'web_index')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $index_page = $doctrine->getRepository(PagesList::class)->findBy(["page_url" => "index"]);
+        $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => "index"]);
 
-        if (!$index_page) {
+        if (!$page) {
             throw $this->createNotFoundException(
                 'La page d\'accueil du site est introuvable. Contactez le webmaster du site pour remédier au problème.'
             );
         }
 
-        return $this->render('webpages/pages/accueil.html.twig', [
-            'controller_name' => 'WebPagesIndexController',
+        return $this->render('web_pages_index/index.html.twig', [
+            'meta_title' => $page->getPageMetaTitle(),
+            'meta_desc' => $page->getPageMetaDesc(),
         ]);
     }
 

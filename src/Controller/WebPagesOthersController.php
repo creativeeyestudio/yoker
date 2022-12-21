@@ -10,20 +10,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WebPagesOthersController extends AbstractController
 {
-    #[Route('/fr/{page_slug}', name: 'app_web_pages_others')]
+    #[Route('/fr/{page_slug}', name: 'web_page')]
     public function index(ManagerRegistry $doctrine, string $page_slug): Response
     {
-        $selected_page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_slug]);
+        $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_slug]);
 
-        if (!$selected_page) {
+        if (!$page) {
             throw $this->createNotFoundException(
                 'La page demandée est introuvable. Contactez le webmaster du site pour remédier au problème.'
             );
         }
 
         return $this->render('web_pages_others/index.html.twig', [
-            'controller_name' => 'WebPagesOthersController',
-            'page_id' => $selected_page->getPageId()
+            'page_id' => $page->getPageId(),
+            'meta_title' => $page->getPageMetaTitle(),
+            'meta_desc' => $page->getPageMetaDesc(),
         ]);
     }
 }
