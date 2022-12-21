@@ -10,3 +10,10 @@ import './styles/web/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+// Initialisation de VueJS
+// -----------------------------------------------
+new Vue({
+    el: '#website',
+    delimiters: ['${', '}$']
+})
