@@ -30,4 +30,9 @@ class WebPagesIndexController extends AbstractController
     public function redirectIndex(){
         return $this->redirectToRoute('web_index');
     }
+
+    #[Route('/', name: 'web_index_redirect')]
+    public function redirectIndexBase(){
+        return $this->redirectToRoute('web_index');
+    }
 }
