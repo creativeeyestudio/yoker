@@ -1,0 +1,18 @@
+.login-page{
+    form{
+        width: 350px;
+        border: .0625rem solid grey;
+        padding: 1rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    footer{
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        text-align: right;
+    }
+}
