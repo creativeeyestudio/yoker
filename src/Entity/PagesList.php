@@ -31,6 +31,12 @@ class PagesList
     #[ORM\Column]
     private ?bool $blocked_page = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $page_meta_title_en = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $page_meta_desc_en = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +110,30 @@ class PagesList
     public function setBlockedPage(bool $blocked_page): self
     {
         $this->blocked_page = $blocked_page;
+
+        return $this;
+    }
+
+    public function getPageMetaTitleEn(): ?string
+    {
+        return $this->page_meta_title_en;
+    }
+
+    public function setPageMetaTitleEn(?string $page_meta_title_en): self
+    {
+        $this->page_meta_title_en = $page_meta_title_en;
+
+        return $this;
+    }
+
+    public function getPageMetaDescEn(): ?string
+    {
+        return $this->page_meta_desc_en;
+    }
+
+    public function setPageMetaDescEn(?string $page_meta_desc_en): self
+    {
+        $this->page_meta_desc_en = $page_meta_desc_en;
 
         return $this;
     }

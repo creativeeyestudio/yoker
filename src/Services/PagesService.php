@@ -76,14 +76,19 @@ class PagesService extends AbstractController{
 
             // Création / Modification du fichier TWIG
             if ($newPage) {
-                $file = fopen("../templates/webpages/pages/" . $slugName . '.html.twig', 'w');
+                $file = fopen("../templates/webpages/pages/fr/" . $slugName . '.html.twig', 'w');
+                $file_en = fopen("../templates/webpages/pages/en/" . $slugName . '.html.twig', 'w');
             } else {
                 $pageFileName = $page->getPageId() . '.html.twig';
-                unlink("../templates/webpages/pages/" . $pageFileName);
-                $file = fopen("../templates/webpages/pages/" . $pageFileName, 'w');
+                unlink("../templates/webpages/pages/fr/" . $pageFileName);
+                unlink("../templates/webpages/pages/en/" . $pageFileName);
+                $file = fopen("../templates/webpages/pages/fr/" . $pageFileName, 'w');
+                $file_en = fopen("../templates/webpages/pages/en/" . $pageFileName, 'w');
             }
             fwrite($file, $form->get('page_content')->getData());
             fclose($file);
+            fwrite($file_en, $form->get('page_content_en')->getData());
+            fclose($file_en);
         }
 
         return $form;
