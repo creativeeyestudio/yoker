@@ -14,36 +14,34 @@ class AdminCommonBlocksController extends AbstractController
     #[Route('/admin/header', name: 'add_admin_header')]
     public function header_manage(CommonBlocksService $block, Request $request): Response
     {
-        $file = '../templates/webpages/blocks/header.html.twig';
-        $content = file_get_contents($file);
-        $form = $block->BlockManager($request, $file);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('add_admin_header');
-        }
-
-        return $this->render('common_blocks/header.html.twig', [
-            'form' => $form->createView(),
-            'content' => $content,
-            'controller_name' => 'AdminCommonBlocksController',
-        ]);
+        $block_manager = $this->BlockManager($block, $request, "header.html.twig", 'add_admin_header');
+        return $block_manager;
     }
 
     #[Route('/admin/footer', name: 'add_admin_footer')]
     public function footer_manage(CommonBlocksService $block, Request $request): Response
     {
-        $file = '../templates/webpages/blocks/footer.html.twig';
-        $content = file_get_contents($file);
-        $form = $block->BlockManager($request, $file);
+        $block_manager = $this->BlockManager($block, $request, "footer.html.twig", 'add_admin_footer');
+        return $block_manager;
+    }
 
+    private function BlockManager(CommonBlocksService $block, Request $request, String $block_html, String $redirect_route){
+        // Fichiers
+        $file = '../templates/webpages/blocks/fr/' . $block_html;
+        $file_en = '../templates/webpages/blocks/en/' . $block_html;
+        // Contenu
+        $content = file_get_contents($file);
+        $content_en = file_get_contents($file_en);
+        $form = $block->BlockManager($request, $file, $file_en);
+        // Submit du form
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('add_admin_footer');
+            return $this->redirectToRoute($redirect_route);
         }
-        
-        return $this->render('common_blocks/footer.html.twig', [
+        // Return
+        return $this->render('common_blocks/' . $block_html, [
             'form' => $form->createView(),
             'content' => $content,
-            'controller_name' => 'AdminCommonBlocksController',
+            'content_en' => $content_en,
         ]);
     }
 }
