@@ -3,6 +3,8 @@
 }
 
 body{
+    min-height: 100vh;
+    position: relative;
     padding: 3rem;
     font: 400 1em/1.5em "Lato";
     &.admin-page{
