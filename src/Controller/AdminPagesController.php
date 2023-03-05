@@ -20,7 +20,6 @@ class AdminPagesController extends AbstractController
         $pages = $pagesRepo->findAll();
 
         return $this->render('pages/index.html.twig', [
-            'controller_name' => 'AdminPagesController',
             "pages" => $pages
         ]);
     }
