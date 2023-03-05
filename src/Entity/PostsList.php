@@ -28,6 +28,15 @@ class PostsList
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $post_meta_desc;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $post_meta_title_en = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $post_meta_desc_en = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $post_name_en = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +98,42 @@ class PostsList
     public function setPostMetaDesc(?string $post_meta_desc): self
     {
         $this->post_meta_desc = $post_meta_desc;
+
+        return $this;
+    }
+
+    public function getPostMetaTitleEn(): ?string
+    {
+        return $this->post_meta_title_en;
+    }
+
+    public function setPostMetaTitleEn(?string $post_meta_title_en): self
+    {
+        $this->post_meta_title_en = $post_meta_title_en;
+
+        return $this;
+    }
+
+    public function getPostMetaDescEn(): ?string
+    {
+        return $this->post_meta_desc_en;
+    }
+
+    public function setPostMetaDescEn(?string $post_meta_desc_en): self
+    {
+        $this->post_meta_desc_en = $post_meta_desc_en;
+
+        return $this;
+    }
+
+    public function getPostNameEn(): ?string
+    {
+        return $this->post_name_en;
+    }
+
+    public function setPostNameEn(?string $post_name_en): self
+    {
+        $this->post_name_en = $post_name_en;
 
         return $this;
     }

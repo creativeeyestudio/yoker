@@ -24,15 +24,14 @@
                     <a href="{{ path('app_admin') }}">Accueil</a>
                 </li>
                 <li>
-                    <a>Voir le site</a>
+                    <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
                 </li>
                 <li>
                     <a href="{{ path('app_admin_files') }}">Médias</a>
                 </li>
                 <li>
-                    <a href="{{ path('app_admin_posts') }}">Actualités</a>
+                    <a href="{{ path('admin_posts') }}">Actualités</a>
                 </li>
-                {% if is_granted('ROLE_ADMIN') %}
                 <li>
                     <a href="{{ path('admin_pages') }}">Pages du site</a>
                 </li>
@@ -42,7 +41,6 @@
                 <li>
                     <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
                 </li>
-                {% endif %}
                 <li>
                     <a href="{{ path('admin_users') }}">Utilisateurs</a>
                 </li>
