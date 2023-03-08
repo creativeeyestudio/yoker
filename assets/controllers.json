@@ -8,6 +8,12 @@
                     "@symfony/ux-dropzone/src/style.css": false
                 }
             }
+        },
+        "@symfony/ux-vue": {
+            "vue": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []

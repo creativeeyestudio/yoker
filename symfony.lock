@@ -267,6 +267,9 @@
     "symfony/ux-dropzone": {
         "version": "v2.2.0"
     },
+    "symfony/ux-vue": {
+        "version": "v2.7.1"
+    },
     "symfony/validator": {
         "version": "6.0",
         "recipe": {
