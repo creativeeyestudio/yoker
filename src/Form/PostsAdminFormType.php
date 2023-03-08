@@ -17,22 +17,37 @@ class PostsAdminFormType extends AbstractType
     {
         $builder
             ->add('post_name', TextType::class, [
-                'label' => "Nom de l'article"
+                'label' => "Nom de l'article (FR)"
+            ])
+            ->add('post_name_en', TextType::class, [
+                'label' => "Nom de l'article (EN)"
             ])
             ->add('post_url', TextType::class, [
                 'label' => "URL de l'article (Optionnel)",
                 'required' => false
             ])
             ->add('post_content', CKEditorType::class, [
-                'label' => "Contenu de l'article",
+                'label' => "Contenu de l'article (FR)",
                 'mapped' => false
             ])
             ->add('post_meta_title', TextType::class, [
-                'label' => "Meta Title de l'article (Optionnel)",
+                'label' => "Meta Title de l'article (FR)",
                 'required' => false
             ])
             ->add('post_meta_desc', TextareaType::class, [
-                'label' => "Meta Description de l'article (Optionnel)",
+                'label' => "Meta Description de l'article (FR)",
+                'required' => false
+            ])
+            ->add('post_content_en', CKEditorType::class, [
+                'label' => "Contenu de l'article (EN)",
+                'mapped' => false
+            ])
+            ->add('post_meta_title_en', TextType::class, [
+                'label' => "Meta Title de l'article (EN)",
+                'required' => false
+            ])
+            ->add('post_meta_desc_en', TextareaType::class, [
+                'label' => "Meta Description de l'article (EN)",
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [

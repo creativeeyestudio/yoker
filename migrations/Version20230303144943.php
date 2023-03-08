@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220706193810 extends AbstractMigration
+final class Version20230303144943 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20220706193810 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE pages_list CHANGE page_meta_title page_meta_title VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE pages_list ADD page_meta_title_en VARCHAR(255) DEFAULT NULL, ADD page_meta_desc_en VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE pages_list CHANGE page_meta_title page_meta_title VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE pages_list DROP page_meta_title_en, DROP page_meta_desc_en');
     }
 }

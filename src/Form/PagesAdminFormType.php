@@ -23,18 +23,29 @@ class PagesAdminFormType extends AbstractType
                 'required' => false,
             ])
             ->add('page_content', CKEditorType::class, [
-                'label' => 'Contenu de la page',
+                'label' => 'Contenu de la page (FR)',
                 'mapped' => false
             ])
             ->add('page_meta_title', TextType::class, [
-                'label' => 'Balise Meta Title',
+                'label' => 'Balise Meta Title (FR)',
                 'required' => false,
             ])
             ->add('page_meta_desc', TextareaType::class, [
-                'label' => 'Balise Meta Description',
+                'label' => 'Balise Meta Description (FR)',
                 'required' => false,
             ])
-
+            ->add('page_content_en', CKEditorType::class, [
+                'label' => 'Contenu de la page (EN)',
+                'mapped' => false
+            ])
+            ->add('page_meta_title_en', TextType::class, [
+                'label' => 'Balise Meta Title (EN)',
+                'required' => false,
+            ])
+            ->add('page_meta_desc_en', TextareaType::class, [
+                'label' => 'Balise Meta Description (EN)',
+                'required' => false,
+            ])
             ->add('page_submit', SubmitType::class, [
                 'label' => 'Envoyer'
             ])

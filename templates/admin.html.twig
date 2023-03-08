@@ -13,59 +13,56 @@
         {% endblock %}
     </head>
     <body class="admin-page">
-        <div id="website">
-            <header>
-                <h1>Interface d'administration</h1>
-            </header>
-            <nav class="navigation">
-                <span class="website-title">Nom du site</span>
-                <ul>
-                    <li>
-                        <a href="{{ path('app_admin') }}">Accueil</a>
-                    </li>
-                    <li>
-                        <a>Voir le site</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_admin_files') }}">Médias</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_admin_posts') }}">Actualités</a>
-                    </li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li>
-                        <a href="{{ path('admin_pages') }}">Pages du site</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('add_admin_header') }}">En-tête du site</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
-                    </li>
-                    {% endif %}
-                    <li>
-                        <a href="{{ path('admin_users') }}">Utilisateurs</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
-                    </li>
-                    <li>
-                        <a>Matomo</a>
-                    </li>
-                    <li>
-                        <a>Google Search Console</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                    </li>
-                </ul>
-            </nav>
-            
-            {% block body %}{% endblock %}
+        <header>
+            <h1>Interface d'administration</h1>
+        </header>
+        <nav class="navigation">
+            <span class="website-title">Nom du site</span>
+            <ul>
+                <li>
+                    <a href="{{ path('app_admin') }}">Accueil</a>
+                </li>
+                <li>
+                    <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_files') }}">Médias</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_pages') }}">Pages du site</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_posts') }}">Actualités</a>
+                </li>
+                <li>
+                    <a href="{{ path('add_admin_header') }}">En-tête du site</a>
+                </li>
+                <li>
+                    <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
+                </li>
+                <li>
+                    <a>Matomo</a>
+                </li>
+                <li>
+                    <a>Google Search Console</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </li>
+            </ul>
+        </nav>
+        
+        {% block body %}{% endblock %}
 
-            <footer>
-                <p>Conception et développement : Creative Eye Studio</p>
-            </footer>
-        </div>
+        <footer>
+            <p>Version 1.2<br />
+            Conception et développement : Creative Eye Studio</p>
+        </footer>
     </body>
 </html>

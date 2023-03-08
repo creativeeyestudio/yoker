@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
 h1{
-    font: 300 2.25em/1.2em "Roboto";
+    font: 300 2.25em/1.2em $font;
     margin: 0 0 3rem;
 }
 
 h2{
-    font: 300 1.75em/1.2em "Roboto";
+    font: 300 1.75em/1.2em $font;
     margin: 0 0 2rem;
+}
+
+p{
+    margin-top: 0;
 }

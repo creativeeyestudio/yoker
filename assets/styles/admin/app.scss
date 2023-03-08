@@ -8,6 +8,7 @@
 // LAYOUTS
 @import "./layouts/navigation";
 @import "./layouts/forms";
+@import "./layouts/footer";
 
 // COMPONENTS
 @import "./components/blocks";
@@ -17,3 +18,4 @@
 
 // PAGES
 @import "./pages/home";
+@import "./pages/login-page";

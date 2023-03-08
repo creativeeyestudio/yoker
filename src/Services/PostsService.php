@@ -72,13 +72,19 @@ class PostsService extends AbstractController{
 
             // Création du fichier TWIG
             if ($newPost) {
-                $file = fopen("../templates/webpages/posts/" . $slugName . '.html.twig', 'w');
+                $file = fopen("../templates/webpages/posts/fr/" . $slugName . '.html.twig', 'w');
+                $file_en = fopen("../templates/webpages/posts/en/" . $slugName . '.html.twig', 'w');
             } else {
-                unlink("../templates/webpages/posts/" . $postFileName);
-                $file = fopen("../templates/webpages/posts/" . $postFileName, 'w');
+                $postFileName = $post->getPostId() . '.html.twig';
+                unlink("../templates/webpages/posts/fr/" . $postFileName);
+                unlink("../templates/webpages/posts/en/" . $postFileName);
+                $file = fopen("../templates/webpages/posts/fr/" . $postFileName, 'w');
+                $file_en = fopen("../templates/webpages/posts/en/" . $postFileName, 'w');
             }
             fwrite($file, $form->get('post_content')->getData());
+            fwrite($file_en, $form->get('post_content_en')->getData());
             fclose($file);
+            fclose($file_en);
         }
 
         return $form;

@@ -20,7 +20,6 @@ class AdminPagesController extends AbstractController
         $pages = $pagesRepo->findAll();
 
         return $this->render('pages/index.html.twig', [
-            'controller_name' => 'AdminPagesController',
             "pages" => $pages
         ]);
     }
@@ -47,7 +46,8 @@ class AdminPagesController extends AbstractController
     public function modify_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request, String $page_id) {
 
         // Récupération du contenu de la page
-        $pageContent = file_get_contents("../templates/webpages/pages/" . $page_id . ".html.twig");
+        $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
+        $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
 
         $form = $pageService->PageManager($doctrine, $request, false, $page_id);
         
@@ -59,7 +59,8 @@ class AdminPagesController extends AbstractController
 
         return $this->render('pages/modify-page.html.twig', [
             'form' => $form->createView(),
-            'pageContent' => $pageContent,
+            'pageContentFr' => $pageContentFr,
+            'pageContentEn' => $pageContentEn,
         ]);
     }
 
@@ -80,7 +81,8 @@ class AdminPagesController extends AbstractController
         $entityManager->flush();
 
         // Suppression du fichier
-        unlink("../templates/webpages/pages/" . $page_id . ".html.twig");
+        unlink("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
+        unlink("../templates/webpages/pages/en/" . $page_id . ".html.twig");
 
         return $this->redirectToRoute('admin_pages');
     }

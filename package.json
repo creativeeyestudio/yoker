@@ -1,42 +1,29 @@
 {
-  "devDependencies": {
-    "@hotwired/stimulus": "^3.0.0",
-    "@symfony/stimulus-bridge": "^3.2.1",
-    "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
-    "@symfony/webpack-encore": "^3.0.0",
-    "core-js": "^3.24.1",
-    "regenerator-runtime": "^0.13.9",
-    "sass": "^1.54.4",
-    "sass-loader": "^13.0.2",
-    "ts-loader": "^9.0.0",
-    "typescript": "^4.9.4",
-    "vue": "^3.2.45",
-    "vue-loader": "^17.0.1",
-    "vue-template-compiler": "^2.7.14",
-    "webpack-notifier": "^1.15.0"
-  },
-  "license": "UNLICENSED",
-  "private": true,
-  "scripts": {
-    "dev-server": "encore dev-server",
-    "dev": "encore dev",
-    "watch": "encore dev --watch",
-    "build": "encore production --progress"
-  },
-  "dependencies": {
-    "dropzone": "^6.0.0-beta.2",
-    "loader-utils": "^3.2.1",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.3.3",
-    "tabs": "^0.2.0"
-  },
-  "name": "cms-project",
-  "version": "1.0.0",
-  "main": "webpack.config.js",
-  "directories": {
-    "test": "tests"
-  },
-  "keywords": [],
-  "author": "",
-  "description": ""
+    "devDependencies": {
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^3.2.1",
+        "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/assets",
+        "@symfony/webpack-encore": "^3.0.0",
+        "core-js": "^3.24.1",
+        "regenerator-runtime": "^0.13.9",
+        "sass": "^1.54.4",
+        "sass-loader": "^13.0.2",
+        "vue": "^3.2.45",
+        "vue-loader": "^17.0.1",
+        "vue-template-compiler": "^2.7.14",
+        "webpack-notifier": "^1.15.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "dropzone": "^6.0.0-beta.2",
+        "loader-utils": "^3.2.1",
+        "tabs": "^0.2.0"
+    }
 }

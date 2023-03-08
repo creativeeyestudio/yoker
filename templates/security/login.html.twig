@@ -14,10 +14,10 @@
         </div>
     {% endif %}
 
-    <label for="inputEmail">E-Mail</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <p><label for="inputEmail">E-Mail</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus></p>
+    <p><label for="inputPassword">Mot de passe</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required></p>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"

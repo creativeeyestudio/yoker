@@ -22,14 +22,20 @@ class PagesList
     #[ORM\Column(type: 'string', length: 255)]
     private $page_id;
 
+    #[ORM\Column]
+    private ?bool $blocked_page = null;
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $page_meta_title;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $page_meta_desc;
 
-    #[ORM\Column]
-    private ?bool $blocked_page = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $page_meta_title_en = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $page_meta_desc_en = null;
 
     public function getId(): ?int
     {
@@ -72,6 +78,18 @@ class PagesList
         return $this;
     }
 
+    public function isBlockedPage(): ?bool
+    {
+        return $this->blocked_page;
+    }
+
+    public function setBlockedPage(bool $blocked_page): self
+    {
+        $this->blocked_page = $blocked_page;
+
+        return $this;
+    }
+
     public function getPageMetaTitle(): ?string
     {
         return $this->page_meta_title;
@@ -96,14 +114,26 @@ class PagesList
         return $this;
     }
 
-    public function isBlockedPage(): ?bool
+    public function getPageMetaTitleEn(): ?string
     {
-        return $this->blocked_page;
+        return $this->page_meta_title_en;
     }
 
-    public function setBlockedPage(bool $blocked_page): self
+    public function setPageMetaTitleEn(?string $page_meta_title_en): self
     {
-        $this->blocked_page = $blocked_page;
+        $this->page_meta_title_en = $page_meta_title_en;
+
+        return $this;
+    }
+
+    public function getPageMetaDescEn(): ?string
+    {
+        return $this->page_meta_desc_en;
+    }
+
+    public function setPageMetaDescEn(?string $page_meta_desc_en): self
+    {
+        $this->page_meta_desc_en = $page_meta_desc_en;
 
         return $this;
     }
