@@ -15,7 +15,9 @@ import './bootstrap';
 
 // Initialisation de VueJS
 // -----------------------------------------------
-new Vue({
+const app = new Vue({
     el: '#website',
     delimiters: ['${', '}$']
 })
+
+console.log(app);

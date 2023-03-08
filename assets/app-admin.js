@@ -12,12 +12,6 @@ import './styles/admin/app.scss';
 import './bootstrap';
 
 
-
-/* VUEJS
---------------------------------------------*/
-
-
-
 /* TABS
 --------------------------------------------*/
 var tabs = require('tabs');
