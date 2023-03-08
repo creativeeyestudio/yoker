@@ -11,6 +11,13 @@ import './styles/admin/app.scss';
 // start the Stimulus application
 import './bootstrap';
 
+
+
+/* VUEJS
+--------------------------------------------*/
+    
+
+
 /* TABS
 --------------------------------------------*/
 var tabs = require('tabs');

@@ -56,13 +56,14 @@ Encore
         config.corejs = 3;
     })
 
-    .enableVueLoader()
+    // uncomment if you use VueJS
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
 
     // enables Sass/SCSS support
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+    .enableTypeScriptLoader()
 
     // uncomment if you use React
     //.enableReactPreset()
