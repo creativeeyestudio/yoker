@@ -6,5 +6,11 @@
 {% block desc %}{{ meta_desc }}{% endblock %}
 
 {% block body %}
-    {% include "webpages/pages/#{page_lang}/#{page_id}.html.twig" %}
+    <div id="website">
+        {% include "webpages/blocks/#{page_lang}/header.html.twig" %}
+        <main id="main">
+            {% include "webpages/pages/#{page_lang}/#{page_id}.html.twig" %}
+        </main>
+        {% include "webpages/blocks/#{page_lang}/footer.html.twig" %}
+    </div>
 {% endblock %}

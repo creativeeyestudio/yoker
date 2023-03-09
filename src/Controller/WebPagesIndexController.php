@@ -41,6 +41,7 @@ class WebPagesIndexController extends AbstractController
 
         return $this->render('web_pages_views/index.html.twig', [
             'page_id' => $index_page->getPageId(),
+            'page_slug' => $index_page->getPageUrl(),
             'page_lang' => $page_lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
@@ -70,14 +71,20 @@ class WebPagesIndexController extends AbstractController
     public function page_fr(ManagerRegistry $doctrine, string $page_slug): Response
     {
         $page = $this->showPage($doctrine, 0, $page_slug);
-        return $page;
+        if($page_slug == 'index')
+            return $this->redirectToRoute('web_index');
+        else
+            return $page;
     }
 
     #[Route('/en/{page_slug}', name: 'web_page_en')]
     public function page_en(ManagerRegistry $doctrine, string $page_slug): Response
     {
         $page = $this->showPage($doctrine, 1, $page_slug);
-        return $page;
+        if($page_slug == 'index')
+            return $this->redirectToRoute('web_index_en');
+        else
+            return $page;
     }
 
 
@@ -86,15 +93,5 @@ class WebPagesIndexController extends AbstractController
     #[Route('/', name: 'web_redirect')]
     public function redirectBase(){
         return $this->redirectToRoute('web_index');
-    }
-
-    #[Route('/fr/index', name: 'web_index_redirect_fr')]
-    public function redirectIndexFr(){
-        return $this->redirectToRoute('web_index');
-    }
-
-    #[Route('/en/index', name: 'web_index_redirect_en')]
-    public function redirectIndexEn(){
-        return $this->redirectToRoute('web_index_en');
     }
 }

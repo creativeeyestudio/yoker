@@ -1241,6 +1241,46 @@
   "resolved" "https://registry.npmjs.org/@swc/helpers/-/helpers-0.2.14.tgz"
   "version" "0.2.14"
 
+"@swup/debug-plugin@^1.0":
+  "integrity" "sha512-uSGrrI0Z4yLvUIYUNAzOGFgotJgjdXPGYCZ/WVGUdkBUWO8rWfSkDi+qCp2V8AdPGFc9TNq8bcR4zO0FPJ+C5g=="
+  "resolved" "https://registry.npmjs.org/@swup/debug-plugin/-/debug-plugin-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "@swup/plugin" "^1.0.0"
+
+"@swup/fade-theme@^1.0":
+  "integrity" "sha512-9PwC7UmW0RZ5eda+JtWz0z0H3kWWW4Ir3fnEnQOLwdS5p+nrvrLGQM3WjUR/kFIuAsU6K40Ty99gtoW6spWYSA=="
+  "resolved" "https://registry.npmjs.org/@swup/fade-theme/-/fade-theme-1.0.5.tgz"
+  "version" "1.0.5"
+  dependencies:
+    "@swup/theme" "^1.0.7"
+
+"@swup/forms-plugin@^1.0":
+  "integrity" "sha512-Ef+aBopJWvkUdWxiUVeXZyF7xxDXiiv7fgt1IvqU4o5BHXAg8eN51AtksxWMmHdINmK5zP59hsVquRTfS7mpHg=="
+  "resolved" "https://registry.npmjs.org/@swup/forms-plugin/-/forms-plugin-1.2.1.tgz"
+  "version" "1.2.1"
+  dependencies:
+    "@swup/plugin" "^1.0.0"
+    "delegate-it" "^3.0.1"
+    "swup" "^2.0.13"
+
+"@swup/plugin@^1.0.0":
+  "integrity" "sha512-QrTGn1DLx+50CNsk6oGzUFnyNyLkDK6iLb032qKImmAXS+0Dd1cwa8cSGvJ+I27J4qR8y6oJNurgHIEc6ZCTrg=="
+  "resolved" "https://registry.npmjs.org/@swup/plugin/-/plugin-1.0.1.tgz"
+  "version" "1.0.1"
+
+"@swup/slide-theme@^1.0":
+  "integrity" "sha512-0xxqtURSMDScjLMRdNjtxzo8NGCPcmp6VXrQcxIQzQDSAvwNnP8Zw871C+FSL1EMe8OhAzWAP3E3x9vzH+iLHg=="
+  "resolved" "https://registry.npmjs.org/@swup/slide-theme/-/slide-theme-1.0.5.tgz"
+  "version" "1.0.5"
+  dependencies:
+    "@swup/theme" "^1.0.6"
+
+"@swup/theme@^1.0.6", "@swup/theme@^1.0.7":
+  "integrity" "sha512-OINEaf34fYs90l7/YUUKfOf+paY7/FDhOBLwYxrD0w1OjBiItZpw3N+ATA/QklJwmoUu3KkDFOaQG0zT4KxmmA=="
+  "resolved" "https://registry.npmjs.org/@swup/theme/-/theme-1.0.7.tgz"
+  "version" "1.0.7"
+
 "@symfony/stimulus-bridge@^3.2.1":
   "integrity" "sha512-eawmVu+tLVkiTz7ewkcsxFvaSZKxFWXmdWxIsxr2jIfQ64PSJg7PIcd7GsPMDxX8sLwg3LGxXfJv5bASL1es+A=="
   "resolved" "https://registry.npmjs.org/@symfony/stimulus-bridge/-/stimulus-bridge-3.2.1.tgz"
@@ -1254,6 +1294,10 @@
 
 "@symfony/ux-dropzone@file:vendor/symfony/ux-dropzone/assets":
   "resolved" "file:vendor/symfony/ux-dropzone/assets"
+  "version" "1.1.0"
+
+"@symfony/ux-swup@file:vendor/symfony/ux-swup/assets":
+  "resolved" "file:vendor/symfony/ux-swup/assets"
   "version" "1.1.0"
 
 "@symfony/ux-vue@file:vendor/symfony/ux-vue/assets":
@@ -2711,6 +2755,13 @@
   "integrity" "sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ=="
   "resolved" "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz"
   "version" "1.0.0"
+
+"delegate-it@^3.0.1":
+  "integrity" "sha512-XU8H4pjDGBW74hFIbjdLPnvtU3HF3P9bbZvoFBSBLb5JgNaTkRb/2lvC1V+9kmZsxVR0kad4bU3rYhQ/4Ij+Gw=="
+  "resolved" "https://registry.npmjs.org/delegate-it/-/delegate-it-3.0.1.tgz"
+  "version" "3.0.1"
+  dependencies:
+    "typed-query-selector" "^2.6.1"
 
 "depd@~1.1.2":
   "integrity" "sha512-7emPTl6Dpo6JRXOXjLRxck+FlLRX5847cLKEn00PLAgc3g2hTZZgr+e4c2v6QpSmLeFP3n5yUo7ft6avBK/5jQ=="
@@ -4500,6 +4551,11 @@
     "is-docker" "^2.1.1"
     "is-wsl" "^2.2.0"
 
+"opencollective-postinstall@^2.0.2":
+  "integrity" "sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q=="
+  "resolved" "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz"
+  "version" "2.0.3"
+
 "optionator@^0.8.1":
   "integrity" "sha512-+IW9pACdk3XWmmTXG8m3upGUJst5XRGzxMRjXzAuJ1XnIFNvfhjjIuYkDvysnPQ7qzqVzLt78BCruntqRhWQbA=="
   "resolved" "https://registry.npmjs.org/optionator/-/optionator-0.8.3.tgz"
@@ -5612,6 +5668,14 @@
     "picocolors" "^1.0.0"
     "stable" "^0.1.8"
 
+"swup@^2.0", "swup@^2.0.13":
+  "integrity" "sha512-cyqcVG5ZlIwqRjvLhZvYFBoc8vDDZ5V0OMthTOa7OE/xowzqyhGRJ2hvFr6ecnJfpiTJGN5CIq+Ep2G7ty9gcw=="
+  "resolved" "https://registry.npmjs.org/swup/-/swup-2.0.19.tgz"
+  "version" "2.0.19"
+  dependencies:
+    "delegate-it" "^3.0.1"
+    "opencollective-postinstall" "^2.0.2"
+
 "symbol-tree@^3.2.4":
   "integrity" "sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw=="
   "resolved" "https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz"
@@ -5787,6 +5851,11 @@
     "media-typer" "0.3.0"
     "mime-types" "~2.1.24"
 
+"typed-query-selector@^2.6.1":
+  "integrity" "sha512-mOnelGQ0JBbYvboX6v/3vijUkIW9L557DHVRUFQTKG352EWvW/uDN6ORlPvTPRivefqb3QbbyZgLtPmxQaxmug=="
+  "resolved" "https://registry.npmjs.org/typed-query-selector/-/typed-query-selector-2.9.2.tgz"
+  "version" "2.9.2"
+
 "typedarray-to-buffer@^3.1.5":
   "integrity" "sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q=="
   "resolved" "https://registry.npmjs.org/typedarray-to-buffer/-/typedarray-to-buffer-3.1.5.tgz"
@@ -5906,7 +5975,7 @@
     "de-indent" "^1.0.2"
     "he" "^1.2.0"
 
-"vue@^3.0", "vue@^3.0.0-0", "vue@^3.2.45", "vue@3.2.45":
+"vue@^3.0", "vue@^3.0.0-0", "vue@^3.2.0", "vue@^3.2.45", "vue@3.2.45":
   "integrity" "sha512-9Nx/Mg2b2xWlXykmCwiTUCWHbWIj53bnkizBxKai1g61f2Xit700A1ljowpTIM11e3uipOeiPcSqnmBg6gyiaA=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.45.tgz"
   "version" "3.2.45"
@@ -5916,6 +5985,11 @@
     "@vue/runtime-dom" "3.2.45"
     "@vue/server-renderer" "3.2.45"
     "@vue/shared" "3.2.45"
+
+"vuetify@^3.1.8":
+  "integrity" "sha512-yODCnRxERSvcBwC6qPiySVhmZzNZ2Yme6b2lNLY1G8W/hbipAtbTCFVGB4ZY/qY7D7JNQBxzgVfZme7bDY9ZrQ=="
+  "resolved" "https://registry.npmjs.org/vuetify/-/vuetify-3.1.8.tgz"
+  "version" "3.1.8"
 
 "w3c-hr-time@^1.0.2":
   "integrity" "sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ=="
