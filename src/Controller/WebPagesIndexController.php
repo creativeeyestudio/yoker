@@ -87,7 +87,6 @@ class WebPagesIndexController extends AbstractController
             return $page;
     }
 
-
     // Redirections
     // -----------------------------------------------------------------------------------------------------------------
     #[Route('/', name: 'web_redirect')]

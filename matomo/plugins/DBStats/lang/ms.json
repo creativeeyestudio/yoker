@@ -1,9 +1,0 @@
-{
-    "DBStats": {
-        "MetricTables": "Jadual Metrik",
-        "OtherTables": "Jadual Lain",
-        "ReportTables": "Jadual Laporan",
-        "Table": "Jadual",
-        "TotalSize": "Jumlah saiz"
-    }
-}
