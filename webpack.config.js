@@ -57,7 +57,7 @@ Encore
     })
 
     // uncomment if you use VueJS
-    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    .enableVueLoader()
 
     // enables Sass/SCSS support
     .enableSassLoader()
