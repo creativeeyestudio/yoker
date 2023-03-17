@@ -1,5 +1,3 @@
-# DEPLOY FTP
-# ------------------------------------------------------------------------------
 name: Deploy on Prod
 
 on:
@@ -9,26 +7,28 @@ on:
 
 jobs:
   web-deploy:
-    name: Yarn
+    name: Web-Deploy
     runs-on: ubuntu-latest
     steps:
 
     # COMPOSER
     # --------------------------------------------------------------------------------------
-    - name: Composer Install
+    - name: Install Dependencies
       uses: php-actions/composer@v6
       with: 
         command: install
-    - name: Env Dump
+
+    - name: Composer Env Dump
       uses: php-actions/composer@v6
       with: 
         command: dump-env prod
 
     # YARN
     # --------------------------------------------------------------------------------------
-    - name: Checkout
+    - name: Yarn Checkout
       uses: actions/checkout@v2
-    - name: Cache node_modules
+
+    - name: Yarn Cache node_modules
       uses: actions/cache@v1
       id: yarn-cache-node-modules
       with:
@@ -36,18 +36,21 @@ jobs:
         key: ${{ runner.os }}-yarn-cache-node-modules-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-cache-node-modules-
+
     - name: Yarn install
       if: steps.yarn-cache-node-modules.outputs.cache-hit != 'true'
       run: yarn install
+
     - name: Yarn build
       run: yarn run encore prod
-    - name: Archive production artifacts
+      
+    - name: Yarn Archive production artifacts
       uses: actions/upload-artifact@v1
       with:
         name: build
         path: public/build
 
-    # DEPLOY ON FTP
+    # DEPLOY ON FTP 
     # --------------------------------------------------------------------------------------
     - name: 🚚 Get Latest Code
       uses: actions/checkout@v3
