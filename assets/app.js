@@ -14,6 +14,7 @@ import * as Vue from 'vue';
 import { Scrollbar } from 'smooth-scrollbar/scrollbar';
 import AOS from 'aos';
 
+
 // Initialisation de VueJS
 // -----------------------------------------------
 Vue.createApp({}).mount('#website');
