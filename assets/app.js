@@ -10,13 +10,23 @@ import './styles/web/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
-
-
+import * as Vue from 'vue';
+import { Scrollbar } from 'smooth-scrollbar/scrollbar';
+import AOS from 'aos';
 
 // Initialisation de VueJS
 // -----------------------------------------------
-import * as Vue from 'vue';
-
 Vue.createApp({}).mount('#website');
-
 // console.log(Vue);
+
+
+// Smooth Scrollbar
+// -----------------------------------------------
+Scrollbar.init(
+    document.querySelector('#website')
+)
+
+
+// AOS
+// -----------------------------------------------
+AOS.init();

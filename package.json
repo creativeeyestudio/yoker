@@ -31,8 +31,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "aos": "^2.3.4",
         "dropzone": "^6.0.0-beta.2",
         "loader-utils": "^3.2.1",
+        "smooth-scrollbar": "^8.8.1",
         "tabs": "^0.2.0",
         "vuetify": "^3.1.8"
     }
