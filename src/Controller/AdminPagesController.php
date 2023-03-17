@@ -47,7 +47,11 @@ class AdminPagesController extends AbstractController
 
         // Récupération du contenu de la page
         $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
+        if (!$pageContentFr)
+            $pageContentFr = fopen("../templates/webpages/pages/fr/" . $page_id . ".html.twig", 'w');
         $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
+        if(!$pageContentEn)
+            $pageContentEn = fopen("../templates/webpages/pages/en/" . $page_id . ".html.twig", 'w');
 
         $form = $pageService->PageManager($doctrine, $request, false, $page_id);
         

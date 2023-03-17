@@ -20,10 +20,6 @@ class PagesService extends AbstractController{
         } else {
             $entityManager = $doctrine->getManager();
             $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
-            if(!$page) {
-                $file = fopen("../templates/webpages/pages/fr/" . $page_id . '.html.twig', 'w');
-                $file_en = fopen("../templates/webpages/pages/en/" . $page_id . '.html.twig', 'w');
-            }
         }
 
 
