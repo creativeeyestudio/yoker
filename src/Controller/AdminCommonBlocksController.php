@@ -26,17 +26,29 @@ class AdminCommonBlocksController extends AbstractController
     }
 
     private function BlockManager(CommonBlocksService $block, Request $request, String $block_html, String $redirect_route){
+        // Path
+        $path = '../templates/webpages/blocks/';
+
         // Fichiers
-        $file = '../templates/webpages/blocks/fr/' . $block_html;
-        $file_en = '../templates/webpages/blocks/en/' . $block_html;
+        $file = $path . 'fr/' . $block_html;
+        $file_en = $path . 'en/' . $block_html;
+        if (!$file)
+            $file = fopen($path . 'fr/' . $block_html, 'w');
+            $file = $path . 'fr/' . $block_html;
+        if (!$file_en)
+            $file = fopen($path . 'en/' . $block_html, 'w');
+            $file_en = $path . 'en/' . $block_html;
+
         // Contenu
         $content = file_get_contents($file);
         $content_en = file_get_contents($file_en);
         $form = $block->BlockManager($request, $file, $file_en);
+
         // Submit du form
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute($redirect_route);
         }
+
         // Return
         return $this->render('common_blocks/' . $block_html, [
             'form' => $form->createView(),
