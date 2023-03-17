@@ -49,12 +49,15 @@ class AdminPagesController extends AbstractController
         $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
         if (!$pageContentFr)
             $pageContentFr = fopen("../templates/webpages/pages/fr/" . $page_id . ".html.twig", 'w');
+            $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
+
         $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
         if(!$pageContentEn)
             $pageContentEn = fopen("../templates/webpages/pages/en/" . $page_id . ".html.twig", 'w');
+            $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
 
-        $form = $pageService->PageManager($doctrine, $request, false, $page_id);
-        
+        // Mise à jour du contenu
+        $form = $pageService->PageManager($doctrine, $request, false, $page_id);        
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages_modify', [
                 'page_id' => $page_id

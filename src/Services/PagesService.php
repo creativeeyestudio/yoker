@@ -20,6 +20,11 @@ class PagesService extends AbstractController{
         } else {
             $entityManager = $doctrine->getManager();
             $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+            if(!$page) {
+                throw $this->createNotFoundException(
+                    "Aucune page n'a été trouvée"
+                );
+            }
         }
 
 
