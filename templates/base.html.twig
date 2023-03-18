@@ -11,7 +11,7 @@
         {% endblock %}
     </head>
     <body {{ stimulus_controller('symfony/ux-swup/swup', { 
-        containers: ['#website', '#nav'],
+        containers: ['#main', '#nav'],
         ignoreVisit: [('[data-no-swup]')] }) }}>
     
             {% block body %}{% endblock %}

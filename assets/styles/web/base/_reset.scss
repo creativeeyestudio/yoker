@@ -1,4 +1,12 @@
-#website{
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+.scroll-content{
     @media screen and (min-width: 1200px) {
         height: 100vh;
     }

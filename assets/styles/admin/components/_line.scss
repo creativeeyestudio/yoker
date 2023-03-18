@@ -2,10 +2,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    &:hover{
+        background-color: rgba($color: #000000, $alpha: .05);
+    }
+    p{
+        margin-bottom: 0;
+    }
     ul{
         list-style-type: none;
-        padding-left: 0;
-        margin: 0;
         display: flex;
     }
     li{

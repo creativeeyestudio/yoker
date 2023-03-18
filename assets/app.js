@@ -22,10 +22,26 @@ Vue.createApp({}).mount('#website');
 
 // Smooth Scrollbar
 // -----------------------------------------------
-Scrollbar.init(document.querySelector('#website'), {
-    damping: 0.05
+const scrollbar = Scrollbar.init(document.querySelector('#content'), {
+    damping: 0.05,
+    continuousScrolling: false,
+    alwaysShowTracks: true,
 });
 
+const links = document.querySelectorAll('a[href*=\\#]');
+links.forEach(link => {
+    link.setAttribute('data-no-swup', '');
+    link.addEventListener('click', function(){
+        const href = link.getAttribute('href');
+        const target = document.querySelector(href);
+        if (target) {
+            scrollbar.scrollIntoView(target, {
+                offsetTop: -scrollbar.containerEl.scrollTop,
+            });
+            return false;
+        }
+    });
+})
 
 // AOS
 // -----------------------------------------------
