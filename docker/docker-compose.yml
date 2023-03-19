@@ -1,0 +1,38 @@
+version: "3.4"
+name: cms-projects
+services:
+  app:
+    image: cms-project
+    ports:
+      - "8080:80"
+    environment:
+      - DATABASE_URL=mysql://root:docker@database:3306/cms-projects?serverVersion=5.7&charset=utf8mb4
+
+  database:
+    image: mysql
+    container_name: cmsdb
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+    ports:
+      - "6033:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    links:
+      - database
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=database
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=docker
+      - PMA_ARBITRARY=1
+
+volumes:
+  dbdata:
