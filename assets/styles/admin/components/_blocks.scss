@@ -1,11 +1,26 @@
 .row{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2rem 1.75rem;
+    display: grid;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    margin-bottom: 2rem;
+    &.col-2{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    &.col-3{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    &.col-4{
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .block{
     border: .0625rem solid black;
     padding: 1.75rem;
+    &.col-2{
+        width: 50%;
+    }
+    &.col-3{
+        width: 33.33%;
+    }
 }

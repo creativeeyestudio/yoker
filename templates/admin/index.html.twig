@@ -3,15 +3,49 @@
 {% block title %}Interface d'administration{% endblock %}
 
 {% block body %}
-<section class="row home-row">
-    <div class="col block">
+<!-- Col Contenu du CMS -->
+<section class="row col-3">
+    <div class="block">
         <h2>Dernières pages</h2>
+        <p>
+            <a class="btn-link">Voir toutes les pages</a>
+        </p>
     </div>
-    <div class="col block">
+    <div class="block">
         <h2>Derniers articles</h2>
+        <p>
+            <a class="btn-link">Voir tous les articles</a>
+        </p>
     </div>
-    <div class="col block">
+    <div class="block">
         <h2>Utilisateurs</h2>
+        <p>
+            <a class="btn-link">Gérer les utilisateurs</a>
+        </p>
+    </div>
+</section>
+
+<!-- Col Infos versions -->
+<section class="row col-2">
+    <div class="block">
+        <h2>Informations du CMS</h2>
+        <p>
+            Version du CMS : <br />
+            Dernière mise à jour : <br />
+            Symfony Ver <br />
+            Conception et développement :  Creative Eye Studio
+        </p>
+        <p>
+            <a class="btn-link">Mettre à jour le CMS</a>
+        </p>
+    </div>
+    <div class="block">
+        <h2>Informations de Symfony</h2>
+        <p>
+            Dernière version : <br />
+            Date de mise en service : <br />
+            Fin de service : <br />
+        </p>
     </div>
 </section>
 {% endblock %}
