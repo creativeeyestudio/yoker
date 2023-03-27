@@ -5,20 +5,20 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions pdo_pgsql pdo_mysql intl zip mysqli
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --disable_tls --install-dir=/usr/local/bin --filename=composer
 
-RUN apt update && apt install -yqq nodejs npm yarn -y
+RUN apt update && apt install -yqq nodejs npm
 
 COPY . /var/www/
 
-COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
+COPY ./.docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN cd /var/www && \
     composer install && \
-    npm install
-
+    npm install --force
+    
 WORKDIR /var/www/
 
-EXPOSE 80
+ENTRYPOINT ["bash", "./.docker/docker.sh"]
 
-ENTRYPOINT [ "docker/docker.sh" ]
+EXPOSE 80
