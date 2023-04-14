@@ -5,7 +5,5 @@ twig:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 
 fos_ck_editor:
-    configs:
-        main_config:
-            filebrowserBrowseRoute: elfinder
-            filebrowserBrowseRouteParameters: []
+    base_path: 'ckeditor'
+    js_path: 'ckeditor/ckeditor.js'
