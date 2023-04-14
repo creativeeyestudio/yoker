@@ -7,3 +7,7 @@ twig:
 fos_ck_editor:
     base_path: 'ckeditor'
     js_path: 'ckeditor/ckeditor.js'
+    configs:
+        main_config:
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []
