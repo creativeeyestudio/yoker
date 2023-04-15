@@ -10,12 +10,12 @@ xhr.send();
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	config.language = 'fr';
-	config.extraPlugins = 'codemirror,filebrowser';
+	config.extraPlugins = 'codemirror,templates';
 	config.allowedContent = true;
 	config.extraAllowedContent = 'i';
 	config.entities = false;
 	config.baseHref = '/';
 	config.contentsCss = '';
 	config.height = 300;
-	config.bodyClass = 'no-js header-second';
+	config.bodyClass = 'no-js';
 };
