@@ -47,7 +47,7 @@ class PagesAdminFormType extends AbstractType
                 'required' => false,
             ])
             ->add('page_submit', SubmitType::class, [
-                'label' => 'Envoyer'
+                'label' => 'Enregistrer'
             ])
         ;
     }

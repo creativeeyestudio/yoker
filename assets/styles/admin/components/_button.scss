@@ -1,15 +1,14 @@
+button{
+    @include btn-design(true);
+    height: 100%;
+}
+
 .btn-link{
-    color: white;
-    background-color: $p-color;
-    padding: 1rem 2rem;
-    display: inline-block;
+    @include btn-design(true);
     text-decoration: none;
 }
 
-button{
-    color: white;
-    background-color: $p-color;
-    padding: 1rem 2rem;
-    border: none;
-    font-size: 1em;
+.btn-link-2{
+    @include btn-design(false);
+    text-decoration: none;
 }

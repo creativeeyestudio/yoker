@@ -11,10 +11,12 @@
             <p>{{ form_label(form.page_url) }}<br />
             {{ form_widget(form.page_url) }}</p>
             <hr />
+            <!-- Boutons Tabs -->
             <ul class="tabs-btn tabs">
                 <li><a class="tab active">Français</a></li>
                 <li><a class="tab">English</a></li>
             </ul>
+            <!-- Tabs -->
             <div class="tab-panes">
                 <div class="tab-pane active">
                 <!-- Français -->
@@ -40,7 +42,10 @@
                 </div>
             </div>
             <!-- Submit -->
-            {{ form_row(form.page_submit) }}
+            <div class="btn-list">
+                {{ form_row(form.page_submit) }}
+                <a class="btn-link-2" href="{{ path('web_page', {page_slug: link}) }}" target="_blank" rel="noopener">Voir la page</a>
+            </div>
         {{ form_end(form) }}
     </section>
 {% endblock %}

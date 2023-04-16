@@ -16,6 +16,18 @@ hr{
     margin: 2rem 0;
 }
 
+.btn-list{
+    display: flex;
+    column-gap: 1rem;
+    a{
+        display: block;
+    }
+}
+
+.float-left{
+    float: left;
+}
+
 .float-right{
     float: right;
 }

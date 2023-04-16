@@ -45,6 +45,10 @@ class AdminPagesController extends AbstractController
     #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
     public function modify_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request, String $page_id) {
 
+        // Récupération du lien de la page
+        $entityManager = $doctrine->getManager();
+        $link = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id])->getPageUrl();
+
         // Récupération du contenu de la page
         $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
         if (!$pageContentFr)
@@ -66,6 +70,7 @@ class AdminPagesController extends AbstractController
 
         return $this->render('pages/modify-page.html.twig', [
             'form' => $form->createView(),
+            'link' => $link,
             'pageContentFr' => $pageContentFr,
             'pageContentEn' => $pageContentEn,
         ]);

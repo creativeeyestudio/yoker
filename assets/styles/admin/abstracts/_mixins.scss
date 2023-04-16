@@ -1,0 +1,13 @@
+@mixin btn-design($baseStyle){
+    padding: 1rem 2rem;
+    border: .0625rem solid $p-color;
+    font-size: 1em;
+    @if $baseStyle == true{
+        color: white;
+        background-color: $p-color;
+    }
+    @if $baseStyle == false{
+        color: $p-color;
+        background-color: white;
+    }
+}
