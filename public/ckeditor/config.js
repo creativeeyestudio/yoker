@@ -10,7 +10,7 @@ xhr.send();
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	config.language = 'fr';
-	config.extraPlugins = 'codemirror,templates';
+	config.extraPlugins = 'codemirror,templates,bgimage';
 	config.allowedContent = true;
 	config.extraAllowedContent = 'i';
 	config.entities = false;
