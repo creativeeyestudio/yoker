@@ -17,6 +17,13 @@
     }
     a{
         color: black;
+        @include ext-tab(black);
+        &[target='_blank']{
+            margin: 0 2rem 0 0rem;
+            &::after{
+                top: 0.4rem;
+            }
+        }
     }
     &:not(:last-child){
         border-bottom: .0625rem solid lightgray;

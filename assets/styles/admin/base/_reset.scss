@@ -16,7 +16,27 @@ hr{
     margin: 2rem 0;
 }
 
+a{
+    &[target='_blank']{
+        position: relative;
+        &::after{
+            content: "\1f855";
+            position: absolute;
+            top: 1.75rem;
+            width: 10px;
+            height: 10px;
+            margin-left: 1rem;
+            font-size: 1.2em;
+            line-height: 0;
+            color: white;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+        }
+    }
+}
+
 .btn-list{
+    margin-top: 1.75rem;
     display: flex;
     column-gap: 1rem;
     a{

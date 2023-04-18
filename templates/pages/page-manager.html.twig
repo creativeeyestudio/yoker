@@ -1,0 +1,44 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <section class="block tab-container">
+        <h2>{{ title }}</h2>
+        <p><em>* Champs obligatoires</em></p>
+        {{ form_start(form) }}
+            <p>{{ form_row(form.page_name) }}</p>
+            <p>{{ form_row(form.page_url) }}</p>
+            <hr />
+            <ul class="tabs-btn tabs">
+                <li><a class="tab active" tabindex='2'>Français</a></li>
+                <li><a class="tab" tabindex='2'>English</a></li>
+            </ul>
+            <div class="tab-panes">
+                <!-- Français -->
+                <fieldset class="tab-pane active">
+                    <legend>Contenu en français</legend>
+                    <p>{{ form_label(form.page_content) }}<br />
+                    {{ form_widget(form.page_content, { 'value': pageContentFr }) }}</p>
+                    <p>{{ form_row(form.page_meta_title) }}</p>
+                    <p>{{ form_row(form.page_meta_desc) }}</p>
+                </fieldset>
+                <!-- English -->
+                <fieldset class="tab-pane">
+                    <legend>English content</legend>
+                    <p>{{ form_label(form.page_content_en) }}<br />
+                    {{ form_widget(form.page_content_en, { 'value': pageContentEn }) }}</p>
+                    <p>{{ form_row(form.page_meta_title_en) }}</p>
+                    <p>{{ form_row(form.page_meta_desc_en) }}</p>
+                </fieldset>
+            </div>
+            <!-- Submit -->
+            <div class="btn-list">
+                {{ form_row(form.page_submit) }}
+                {% if link is defined %}
+                    <a class="btn-link-2" href="{{ path('web_page', {page_slug: link}) }}" target="_blank" rel="noopener">Voir la page</a>
+                {% endif %}
+            </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

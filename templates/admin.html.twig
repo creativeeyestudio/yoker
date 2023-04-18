@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='fr' dir="ltr">
     <head>
         <meta charset="UTF-8">
         <title>Nom du site - {% block title %}Welcome!{% endblock %}</title>
@@ -47,18 +47,20 @@
                     <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
                 </li>
                 <li>
-                    <a>Matomo</a>
+                    <a target='_blank' rel='noopener'>Matomo</a>
                 </li>
                 <li>
-                    <a>Google Search Console</a>
+                    <a target='_blank' rel='noopener'>Google Search Console</a>
                 </li>
                 <li>
                     <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
             </ul>
         </nav>
-        
-        {% block body %}{% endblock %}
+
+        <main>
+            {% block body %}{% endblock %}
+        </main>
 
         <footer>
             <p>Version 1.2<br />

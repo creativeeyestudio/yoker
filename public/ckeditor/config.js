@@ -9,13 +9,14 @@ xhr.send();
 
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
-	config.language = 'fr';
-	config.extraPlugins = 'bgimage,codemirror,templates';
 	config.allowedContent = true;
-	config.extraAllowedContent = 'i';
-	config.entities = false;
 	config.baseHref = '/';
-	config.contentsCss = '';
-	config.height = 300;
 	config.bodyClass = 'no-js';
+	config.contentsCss = '';
+	config.defaultLanguage = 'fr';
+	config.emailProtection = 'encode';
+	config.entities = false;
+	config.extraAllowedContent = 'i';
+	config.extraPlugins = 'bgimage,codemirror,templates';
+	config.height = 300;
 };

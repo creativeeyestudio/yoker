@@ -2,12 +2,36 @@
     padding: 1rem 2rem;
     border: .0625rem solid $p-color;
     font-size: 1em;
+    &[target='_blank']{
+        padding: 1rem 4rem 1rem 2rem;
+    }
     @if $baseStyle == true{
         color: white;
         background-color: $p-color;
+        @include ext-tab(white);
     }
     @if $baseStyle == false{
         color: $p-color;
         background-color: white;
+        @include ext-tab($p-color);
+    }
+}
+
+@mixin ext-tab($color){
+    &[target='_blank']{
+        position: relative;
+        &::after{
+            content: "\1f855";
+            position: absolute;
+            top: 1.7rem;
+            width: 8px;
+            height: 8px;
+            margin-left: 1rem;
+            font-size: 1em;
+            line-height: 0;
+            color: $color;
+            border-left: 2px solid $color;
+            border-bottom: 2px solid $color;
+        }
     }
 }

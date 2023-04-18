@@ -29,14 +29,17 @@ class AdminPagesController extends AbstractController
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
     public function add_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request) {
         
+        $title = "Ajouter une page";
         $form = $pageService->PageManager($doctrine, $request, true);
-
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages');
         }
 
-        return $this->render('pages/add-page.html.twig', [
-            'form' => $form->createView()
+        return $this->render('pages/page-manager.html.twig', [
+            'title' => $title,
+            'form' => $form->createView(),
+            'pageContentFr' => '',
+            'pageContentEn' => '',
         ]);
     }
 
@@ -61,6 +64,7 @@ class AdminPagesController extends AbstractController
             $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
 
         // Mise à jour du contenu
+        $title = "Modifier une page";
         $form = $pageService->PageManager($doctrine, $request, false, $page_id);        
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages_modify', [
@@ -68,11 +72,12 @@ class AdminPagesController extends AbstractController
             ]);
         }
 
-        return $this->render('pages/modify-page.html.twig', [
+        return $this->render('pages/page-manager.html.twig', [
+            'title' => $title,
             'form' => $form->createView(),
-            'link' => $link,
             'pageContentFr' => $pageContentFr,
             'pageContentEn' => $pageContentEn,
+            'link' => $link,
         ]);
     }
 
