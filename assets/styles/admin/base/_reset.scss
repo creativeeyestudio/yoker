@@ -5,7 +5,7 @@
 body{
     min-height: 100vh;
     position: relative;
-    padding: 3rem;
+    padding: 3rem 3rem 6rem;
     font: 400 1em/1.5em "Lato";
     &.admin-page{
         margin: 0 0 0 $nav-width;
@@ -14,6 +14,13 @@ body{
 
 hr{
     margin: 2rem 0;
+}
+
+p{
+    margin-top: 0;
+    &:last-child{
+        margin-bottom: 0;
+    }
 }
 
 a{
