@@ -17,6 +17,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.emailProtection = 'encode';
 	config.entities = false;
 	config.extraAllowedContent = 'i';
-	config.extraPlugins = 'bgimage,codemirror,templates';
+	config.extraPlugins = 'bgimage,codemirror,templates,video,widget';
 	config.height = 300;
 };
