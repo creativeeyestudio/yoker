@@ -19,15 +19,26 @@
                 <fieldset class="tab-pane active">
                     <legend>Contenu en français</legend>
                     <p>{{ form_label(form.page_content) }}<br />
-                    {{ form_widget(form.page_content, { 'value': pageContentFr }) }}</p>
+                    {% if pageContentFr is defined %}
+                    {{ form_widget(form.page_content, { 'value': pageContentFr }) }}
+                    {% else %}
+                    {{ form_widget(form.page_content) }}
+                    {% endif %}</p>
+
                     <p>{{ form_row(form.page_meta_title) }}</p>
                     <p>{{ form_row(form.page_meta_desc) }}</p>
                 </fieldset>
                 <!-- English -->
                 <fieldset class="tab-pane">
                     <legend>English content</legend>
+
                     <p>{{ form_label(form.page_content_en) }}<br />
+                    {% if pageContentEn is defined %}
                     {{ form_widget(form.page_content_en, { 'value': pageContentEn }) }}</p>
+                    {% else %}
+                    {{ form_widget(form.page_content_en) }}
+                    {% endif %}</p>
+
                     <p>{{ form_row(form.page_meta_title_en) }}</p>
                     <p>{{ form_row(form.page_meta_desc_en) }}</p>
                 </fieldset>

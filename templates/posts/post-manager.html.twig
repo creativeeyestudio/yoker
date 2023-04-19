@@ -1,0 +1,48 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Modifier un article{% endblock %}
+
+{% block body %}
+    <section class="block tab-container">
+        <h2>Modifier un article</h2>
+        <ul class="tabs tabs-btn">
+            <li><a class="tab active">Français</a></li>
+            <li><a class="tab">English</a></li>
+            <li><a class="tab">URL</a></li>
+        </ul>
+        {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
+            <div id="fr" class="tab-pane active">
+                <p>{{ form_row(form.post_name) }}</p>
+                
+                <p>{{ form_label(form.post_content) }}<br />
+                {% if content is defined %}
+                    {{ form_widget(form.post_content, { value: content } ) }}
+                {% else %}   
+                    {{ form_widget(form.post_content) }}
+                {% endif %}</p>
+
+                <p>{{ form_row(form.post_meta_title) }}</p>
+                <p>{{ form_row(form.post_meta_desc) }}</p>
+            </div>
+
+            <div id="english" class="tab-pane">
+                <p>{{ form_row(form.post_name_en) }}</p>
+                
+                <p>{{ form_label(form.post_content_en) }}<br />
+                {% if content_en is defined %}
+                    {{ form_widget(form.post_content_en, { value: content_en } ) }}
+                {% else %}
+                    {{ form_widget(form.post_content_en) }}
+                {% endif %}</p>
+                
+                <p>{{ form_row(form.post_meta_title_en) }}</p>
+                <p>{{ form_row(form.post_meta_desc_en) }}</p>
+            </div>
+
+            <div id="url" class="tab-pane">
+                <p>{{ form_row(form.post_url) }}</p>
+            </div>
+            {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

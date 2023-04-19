@@ -38,8 +38,6 @@ class AdminPagesController extends AbstractController
         return $this->render('pages/page-manager.html.twig', [
             'title' => $title,
             'form' => $form->createView(),
-            'pageContentFr' => '',
-            'pageContentEn' => '',
         ]);
     }
 
@@ -56,12 +54,12 @@ class AdminPagesController extends AbstractController
         $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
         if (!$pageContentFr)
             $pageContentFr = fopen("../templates/webpages/pages/fr/" . $page_id . ".html.twig", 'w');
-            $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
+            // $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
 
         $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
         if(!$pageContentEn)
             $pageContentEn = fopen("../templates/webpages/pages/en/" . $page_id . ".html.twig", 'w');
-            $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
+            // $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
 
         // Mise à jour du contenu
         $title = "Modifier une page";

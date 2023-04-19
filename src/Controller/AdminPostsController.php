@@ -39,7 +39,7 @@ class AdminPostsController extends AbstractController
             return $this->redirectToRoute('admin_posts');
         }
 
-        return $this->render('posts/add-post.html.twig', [
+        return $this->render('posts/post-manager.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -61,7 +61,7 @@ class AdminPostsController extends AbstractController
             ]);
         }
         
-        return $this->render('posts/modify-post.html.twig', [
+        return $this->render('posts/post-manager.html.twig', [
             'form' => $form->createView(),
             'content' => $postContent,
             'content_en' => $postContentEn,
