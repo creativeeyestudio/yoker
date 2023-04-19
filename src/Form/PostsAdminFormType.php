@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\PostsList;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +23,7 @@ class PostsAdminFormType extends AbstractType
             ->add('post_name_en', TextType::class, [
                 'label' => "Nom de l'article (EN)"
             ])
-            ->add('post_url', TextType::class, [
+            ->add('post_url', HiddenType::class, [
                 'label' => "URL de l'article (Optionnel)",
                 'required' => false
             ])

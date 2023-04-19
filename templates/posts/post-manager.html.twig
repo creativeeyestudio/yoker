@@ -8,10 +8,10 @@
         <ul class="tabs tabs-btn">
             <li><a class="tab active">Français</a></li>
             <li><a class="tab">English</a></li>
-            <li><a class="tab">URL</a></li>
         </ul>
         {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
-            <div id="fr" class="tab-pane active">
+            <fieldset id="fr" class="tab-pane active">
+                <legend>Post en français</legend>
                 <p>{{ form_row(form.post_name) }}</p>
                 
                 <p>{{ form_label(form.post_content) }}<br />
@@ -23,9 +23,10 @@
 
                 <p>{{ form_row(form.post_meta_title) }}</p>
                 <p>{{ form_row(form.post_meta_desc) }}</p>
-            </div>
+            </fieldset>
 
-            <div id="english" class="tab-pane">
+            <fieldset id="english" class="tab-pane">
+                <legend>Post in english</legend>
                 <p>{{ form_row(form.post_name_en) }}</p>
                 
                 <p>{{ form_label(form.post_content_en) }}<br />
@@ -37,12 +38,13 @@
                 
                 <p>{{ form_row(form.post_meta_title_en) }}</p>
                 <p>{{ form_row(form.post_meta_desc_en) }}</p>
+            </fieldset>
+            <div class="btn-list">
+                {{ form_row(form.submit) }}
+                {% if post_id is defined %}
+                    {# <a class="btn-link-2" href="{{ path('web_page', {post_url: post_id}) }}" target="_blank" rel="noopener">Voir la page</a> #}
+                {% endif %}
             </div>
-
-            <div id="url" class="tab-pane">
-                <p>{{ form_row(form.post_url) }}</p>
-            </div>
-            {{ form_row(form.submit) }}
         {{ form_end(form) }}
     </section>
 {% endblock %}
