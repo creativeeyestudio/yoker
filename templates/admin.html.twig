@@ -2,7 +2,7 @@
 <html lang='fr' dir="ltr">
     <head>
         <meta charset="UTF-8">
-        <title>Nom du site - {% block title %}Welcome!{% endblock %}</title>
+        <title>{{ site_name }} - {% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app-admin') }}
@@ -17,7 +17,7 @@
             <h1>Interface d'administration</h1>
         </header>
         <nav class="navigation">
-            <span class="website-title">Nom du site</span>
+            <span class="website-title">{{ site_name }}</span>
             <ul>
                 <li>
                     <a href="{{ path('app_admin') }}">Accueil</a>
