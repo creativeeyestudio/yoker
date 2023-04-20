@@ -27,5 +27,5 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###> symfony/webpages ###
-/templates/webpages/
+#/templates/webpages/
 ###< symfony/webpages ###
