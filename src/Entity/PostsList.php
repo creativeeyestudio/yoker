@@ -37,6 +37,9 @@ class PostsList
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $post_name_en = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $post_thumb = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +137,18 @@ class PostsList
     public function setPostNameEn(?string $post_name_en): self
     {
         $this->post_name_en = $post_name_en;
+
+        return $this;
+    }
+
+    public function getPostThumb(): ?string
+    {
+        return $this->post_thumb;
+    }
+
+    public function setPostThumb(?string $post_thumb): self
+    {
+        $this->post_thumb = $post_thumb;
 
         return $this;
     }

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class PostsAdminFormType extends AbstractType
 {
@@ -19,13 +20,6 @@ class PostsAdminFormType extends AbstractType
         $builder
             ->add('post_name', TextType::class, [
                 'label' => "Nom de l'article (FR)"
-            ])
-            ->add('post_name_en', TextType::class, [
-                'label' => "Nom de l'article (EN)"
-            ])
-            ->add('post_url', HiddenType::class, [
-                'label' => "URL de l'article (Optionnel)",
-                'required' => false
             ])
             ->add('post_content', CKEditorType::class, [
                 'label' => "Contenu de l'article (FR)",
@@ -39,6 +33,9 @@ class PostsAdminFormType extends AbstractType
                 'label' => "Meta Description de l'article (FR)",
                 'required' => false
             ])
+            ->add('post_name_en', TextType::class, [
+                'label' => "Nom de l'article (EN)"
+            ])
             ->add('post_content_en', CKEditorType::class, [
                 'label' => "Contenu de l'article (EN)",
                 'mapped' => false
@@ -49,6 +46,15 @@ class PostsAdminFormType extends AbstractType
             ])
             ->add('post_meta_desc_en', TextareaType::class, [
                 'label' => "Meta Description de l'article (EN)",
+                'required' => false
+            ])
+            ->add('post_thumb', DropzoneType::class, [
+                'label' => "Image de l'article",
+                'required' => false,
+                'mapped' => false
+            ])
+            ->add('post_url', HiddenType::class, [
+                'label' => "URL de l'article (Optionnel)",
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [

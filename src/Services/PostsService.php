@@ -65,6 +65,18 @@ class PostsService extends AbstractController{
                 $post->setPostMetaTitle($form->get('post_meta_title')->getData());
             }
 
+            // Création / Modification de l'image principale
+            if ($form->get('post_thumb')->getData() != null) {
+                $postImg = $form->get('post_thumb')->getData();
+                $imgFile = md5(uniqid()) . '.' . $postImg->guessExtension();
+                $postImg->move(
+                    $this->getParameter('posts_img_directory'),
+                    $imgFile
+                );
+                $post->setPostThumb($imgFile);
+            }
+            
+
             // Envoi des données vers la BDD
             $entityManager = $doctrine->getManager();
             $entityManager->persist($post);

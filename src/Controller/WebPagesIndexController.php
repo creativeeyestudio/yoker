@@ -75,14 +75,15 @@ class WebPagesIndexController extends AbstractController
     // Post Generator
     // -----------------------------------------------------------------------------------------------------------------
     public function showPost(ManagerRegistry $doctrine, Request $request, string $post_url){
-        $post = $doctrine->getRepository(PostsList::class)->findOneBy(["page_url" => $post_url]);
+        $post = $doctrine->getRepository(PostsList::class)->findOneBy(["post_url" => $post_url]);
         $post_lang = $request->getLocale();
         $meta_title = $post->getPostMetaTitle();
         $meta_desc = $post->getPostMetaDesc();
 
         return $this->render('web_pages_views/post.html.twig', [
-            'post_id' => $post->getPageId(),
-            'post_slug' => $post->getPageUrl(),
+            'post_id' => $post->getPostId(),
+            'post_slug' => $post->getPostUrl(),
+            'post_thumb' => $post->getPostThumb(),
             'post_lang' => $post_lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
@@ -91,7 +92,7 @@ class WebPagesIndexController extends AbstractController
 
     // Post Page
     // -----------------------------------------------------------------------------------------------------------------
-    #[Route('/{_locale}/blog/{post_slug}', name: 'web_post', requirements: ['_locale' => 'fr|en'])]
+    #[Route('/{_locale}/blog/{post_url}', name: 'web_post', requirements: ['_locale' => 'fr|en'])]
     public function post(ManagerRegistry $doctrine, Request $request, string $post_url): Response
     {
         $post = $this->showPost($doctrine, $request, $post_url);

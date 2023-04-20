@@ -13,7 +13,6 @@
             <fieldset id="fr" class="tab-pane active">
                 <legend>Post en français</legend>
                 <p>{{ form_row(form.post_name) }}</p>
-                
                 <p>{{ form_label(form.post_content) }}<br />
                 {% if content is defined %}
                     {{ form_widget(form.post_content, { value: content } ) }}
@@ -38,6 +37,11 @@
                 
                 <p>{{ form_row(form.post_meta_title_en) }}</p>
                 <p>{{ form_row(form.post_meta_desc_en) }}</p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Image principale de l'article</legend>
+                <p>{{ form_row(form.post_thumb) }}</p>
             </fieldset>
             <div class="btn-list">
                 {{ form_row(form.submit) }}
