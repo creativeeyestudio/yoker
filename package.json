@@ -36,6 +36,7 @@
         "loader-utils": "^3.2.1",
         "smooth-scrollbar": "^8.8.1",
         "tabs": "^0.2.0",
+        "tarteaucitronjs": "^1.11.0",
         "vuetify": "^3.1.8"
     }
 }

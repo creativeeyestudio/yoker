@@ -2,7 +2,9 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         site_name: "Nom du site"
-        ua_code: ''
+        fb_pixel: ""
+        google_maps: 'XXX'
+        gtm: 'XXX'
         recaptcha_public: ''
         recaptcha_private: ''
         mailjet_public: ''
