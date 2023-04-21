@@ -41,6 +41,7 @@ class AdminPostsController extends AbstractController
 
         return $this->render('posts/post-manager.html.twig', [
             'form' => $form->createView(),
+            'title' => "Ajouter un article",
         ]);
     }
 
@@ -65,6 +66,7 @@ class AdminPostsController extends AbstractController
             'form' => $form->createView(),
             'content' => $postContent,
             'content_en' => $postContentEn,
+            'title' => "Modifier un article",
         ]);
     }
 

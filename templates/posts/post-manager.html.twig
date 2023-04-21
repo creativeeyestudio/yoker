@@ -1,17 +1,17 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Modifier un article{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
     <section class="block tab-container">
-        <h2>Modifier un article</h2>
+        <h2>{{ title }}</h2>
         <ul class="tabs tabs-btn">
             <li><a class="tab active">Français</a></li>
             <li><a class="tab">English</a></li>
         </ul>
         {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
             <fieldset id="fr" class="tab-pane active">
-                <legend>Post en français</legend>
+                <legend>Article en français</legend>
                 <p>{{ form_row(form.post_name) }}</p>
                 <p>{{ form_label(form.post_content) }}<br />
                 {% if content is defined %}
