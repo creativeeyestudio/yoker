@@ -67,7 +67,7 @@ class PagesService extends AbstractController{
             }
 
             // Page bloquée
-            $page->setBlockedPage(0);
+            // $page->setBlockedPage(0);
 
             // Envoi des données vers la BDD
             $entityManager = $doctrine->getManager();

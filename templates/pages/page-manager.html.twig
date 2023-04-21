@@ -9,6 +9,9 @@
         {{ form_start(form) }}
             <p>{{ form_row(form.page_name) }}</p>
             <p>{{ form_row(form.page_url) }}</p>
+            <p {% if is_granted('ROLE_ADMIN') == false %} class="d-none" {% endif %} >
+                {{ form_widget(form.blocked_page) }} {{ form_label(form.blocked_page) }}
+            </p>
             <hr />
             <ul class="tabs-btn tabs">
                 <li><a class="tab active" tabindex='2'>Français</a></li>
