@@ -33,8 +33,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $activate_token = null;
+    #[ORM\Column]
+    private ?bool $is_verified = null;
 
     public function getId(): ?int
     {
@@ -130,14 +130,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getActivateToken(): ?string
+    public function getIsVerified(): ?bool
     {
-        return $this->activate_token;
+        return $this->is_verified;
     }
 
-    public function setActivateToken(?string $activate_token): self
+    public function setIsVerified(bool $is_verified): self
     {
-        $this->activate_token = $activate_token;
+        $this->is_verified = $is_verified;
 
         return $this;
     }
