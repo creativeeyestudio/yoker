@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Config\SymfonycastsVerifyEmailConfig;
 
 class AdminRegisterController extends AbstractController
 {
@@ -26,6 +27,7 @@ class AdminRegisterController extends AbstractController
             $password = $encoder->hashPassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setRoles(['ROLE_USER']);
+            $user->setActivateToken(md5(uniqid()));
 
             $doctrine = $doctrine->getManager();
             $doctrine->persist($user);

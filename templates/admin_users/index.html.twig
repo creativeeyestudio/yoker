@@ -11,7 +11,7 @@
             <p>{{ user.firstname }} {{ user.lastname }}</p>
             <ul>
                 {% if is_granted('ROLE_EDITOR') %}
-                    <li><a href="">Modifier</a></li>
+                    <li><a href="{{ path('admin_users_modify', { id: user.id }) }}">Modifier</a></li>
                     <li><a href="{{ path('admin_users_delete', { id: user.id }) }}">Supprimer</a></li>
                 {% endif %}
             </ul>

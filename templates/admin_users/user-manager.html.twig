@@ -1,0 +1,18 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Gestion de l'utilisateur{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <h2>Modifier l'utilisateur</h2>
+        {{ form_start(form) }}
+            <p>{{ form_row(form.email) }}</p>
+            <p>
+                {{ form_label(form.roles) }}<br />
+                {{ form_widget(form.roles, {value: userRole}) }}
+            </p>
+            <p>{{ form_row(form.remake_pass) }}</p>
+            <p>{{ form_row(form.submit) }}</p>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

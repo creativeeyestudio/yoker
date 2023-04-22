@@ -18,4 +18,5 @@ return [
     FM\ElfinderBundle\FMElfinderBundle::class => ['all' => true],
     Symfony\UX\Vue\VueBundle::class => ['all' => true],
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
+    SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
 ];
