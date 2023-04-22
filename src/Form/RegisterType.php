@@ -26,12 +26,12 @@ class RegisterType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => "E-Mail"
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Le mot de passe et la confirmation doivent être identiques',
-                'first_options' => ['label' => 'Votre mot de passe'],
-                'second_options' => ['label' => 'Confirmer le mot de passe']
-            ])
+            // ->add('password', RepeatedType::class, [
+            //     'type' => PasswordType::class,
+            //     'invalid_message' => 'Le mot de passe et la confirmation doivent être identiques',
+            //     'first_options' => ['label' => 'Votre mot de passe'],
+            //     'second_options' => ['label' => 'Confirmer le mot de passe']
+            // ])
             ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
             ])
