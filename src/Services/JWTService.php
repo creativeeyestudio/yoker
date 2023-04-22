@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Services;
+
+use DateTimeImmutable;
+
 class JWTService{
 
     // Génération du Token

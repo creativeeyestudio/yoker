@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 use App\Services\FormsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use JWTService;
+use App\Services\JWTService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +48,7 @@ class AdminRegisterController extends AbstractController
 
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            $formService->validateRegister($user['email'], 'user', 'token');
+            $formService->validateRegister($user->getEmail(), 'user', 'token');
 
             $notif = "Le compte a bien été crée";
         }
