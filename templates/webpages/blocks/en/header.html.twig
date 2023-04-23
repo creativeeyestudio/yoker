@@ -5,7 +5,6 @@
 <nav>
 <ul id="nav">
 	<li><a href="/en">Home</a></li>
-	<li><a href="/en/test">Test</a></li>
 	<li>{% if page_slug is defined %} <a data-no-swup="" href="/fr/{{ page_slug }}">FR</a> {% elseif post_slug is defined %} <a data-no-swup="" href="/fr/blog/{{ post_slug }}">FR</a> {% endif %}</li>
 </ul>
 </nav>
