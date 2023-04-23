@@ -41,17 +41,21 @@
                     <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
                 </li>
                 <li>
-                    <a href="{{ path('admin_users') }}">Utilisateurs</a>
-                </li>
-                <li>
                     <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
                 </li>
-                <li>
-                    <a target='_blank' rel='noopener'>Matomo</a>
-                </li>
-                <li>
-                    <a target='_blank' rel='noopener'>Google Search Console</a>
-                </li>
+                
+                {% if is_granted('ROLE_EDITOR') %}
+                    <li>
+                        <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                    </li>
+                    <li>
+                        <a target='_blank' rel='noopener'>Matomo</a>
+                    </li>
+                    <li>
+                        <a target='_blank' rel='noopener'>Google Search Console</a>
+                    </li>  
+                {% endif %}
+                
                 <li>
                     <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
