@@ -5,6 +5,7 @@ namespace App\Form;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,6 +23,13 @@ class PagesAdminFormType extends AbstractType
             ->add('page_url', TextType::class, [
                 'label' => 'URL de la page',
                 'required' => false,
+            ])
+            ->add('status', ChoiceType::class, [
+                'label' => "Visibilité de la page",
+                'choices' => [
+                    "En brouillon" => false,
+                    "Publié" => true
+                ]
             ])
             ->add('blocked_page', CheckboxType::class, [
                 'label' => 'Page fixe',

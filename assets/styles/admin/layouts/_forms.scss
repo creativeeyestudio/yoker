@@ -7,6 +7,11 @@ input{
     }
 }
 
+select{
+    margin-top: .25rem;
+    padding: .5rem;
+}
+
 fieldset{
     &:not(:last-child){
         margin-bottom: 1rem;

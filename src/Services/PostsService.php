@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entity\PostsList;
 use App\Form\PostsAdminFormType;
 use Cocur\Slugify\Slugify;
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,6 +47,15 @@ class PostsService extends AbstractController{
             if ($newPost) {
                 $post->setPostId($slugName);
             }
+
+            // Création des dates
+            if ($newPost) {
+                $post->setCreatedAt(new DateTimeImmutable());
+                $post->setUpdatedAt(new DateTimeImmutable());
+            } else {
+                $post->setUpdatedAt(new DateTimeImmutable());
+            }
+            
 
             // Création de l'URL
             if (!$form->get('post_url')->getData() && $newPost) {

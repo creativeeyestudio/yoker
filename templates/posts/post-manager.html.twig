@@ -10,6 +10,10 @@
             <li><a class="tab">English</a></li>
         </ul>
         {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
+            <p {% if is_granted('ROLE_EDITOR') == false %} class="d-none" {% endif %} >
+                {{ form_label(form.status) }}<br />
+                {{ form_widget(form.status) }}
+            </p>
             <fieldset id="fr" class="tab-pane active">
                 <legend>Article en français</legend>
                 <p>{{ form_row(form.post_name) }}</p>

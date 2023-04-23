@@ -20,6 +20,12 @@ class WebPagesIndexController extends AbstractController
     private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id){
         $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_id]);
         $posts = $doctrine->getRepository(PostsList::class)->findAll();
+
+        $statut = $page->isStatus();
+
+        if (!$statut) {
+            throw $this->createNotFoundException("Cette page n'est pas disponible");
+        }
         
         if ($page){
             $page_lang = $request->getLocale();
@@ -76,6 +82,11 @@ class WebPagesIndexController extends AbstractController
     // -----------------------------------------------------------------------------------------------------------------
     public function showPost(ManagerRegistry $doctrine, Request $request, string $post_url){
         $post = $doctrine->getRepository(PostsList::class)->findOneBy(["post_url" => $post_url]);
+        $statut = $post->isStatus();
+        if (!$statut) {
+            throw $this->createNotFoundException("Cet article n'est pas disponible");
+        }
+        
         $post_lang = $request->getLocale();
         $meta_title = $post->getPostMetaTitle();
         $meta_desc = $post->getPostMetaDesc();

@@ -37,6 +37,9 @@ class PagesList
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $page_meta_desc_en = null;
 
+    #[ORM\Column]
+    private ?bool $status = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +137,18 @@ class PagesList
     public function setPageMetaDescEn(?string $page_meta_desc_en): self
     {
         $this->page_meta_desc_en = $page_meta_desc_en;
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

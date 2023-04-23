@@ -9,6 +9,10 @@
         {{ form_start(form) }}
             <p>{{ form_row(form.page_name) }}</p>
             <p>{{ form_row(form.page_url) }}</p>
+            <p {% if is_granted('ROLE_EDITOR') == false %} class="d-none" {% endif %} >
+                {{ form_label(form.status) }}<br />
+                {{ form_widget(form.status) }}
+            </p>
             <p {% if is_granted('ROLE_ADMIN') == false %} class="d-none" {% endif %} >
                 {{ form_widget(form.blocked_page) }} {{ form_label(form.blocked_page) }}
             </p>
