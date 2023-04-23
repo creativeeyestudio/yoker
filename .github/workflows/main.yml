@@ -10,62 +10,47 @@ jobs:
     name: Web-Deploy
     runs-on: ubuntu-latest
     steps:
+    # PHP
+    # --------------------------------------------------------------------------------------
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        coverage: none
+        tools: composer:v2
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo
+      env:
+        update: true
+    - name: Check PHP Version
+      run: php -v
 
     # COMPOSER
     # --------------------------------------------------------------------------------------
-    - name: Install Dependencies
-      uses: php-actions/composer@v6
-      with: 
-        command: install
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - name: Cache composer dependencies
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+    - name: Install Composer dependencies
+      run: composer install
 
-    - name: Composer Env Dump
-      uses: php-actions/composer@v6
-      with: 
-        command: dump-env prod
+    # PREPARE PROD
+    # --------------------------------------------------------------------------------------
+    - name: Make production envfile
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_APP_ENV: prod
+        envkey_APP_DEBUG: false
+        file_name: .env
 
     # YARN
     # --------------------------------------------------------------------------------------
-    - name: Yarn Checkout
-      uses: actions/checkout@v3
-
-    - name: Yarn Cache node_modules
-      uses: actions/cache@v3
-      id: yarn-cache-node-modules
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-yarn-cache-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-cache-node-modules-
-
-    - name: Yarn install
-      if: steps.yarn-cache-node-modules.outputs.cache-hit != 'true'
-      run: yarn install
-
-    - name: Yarn build
-      run: yarn run encore prod
-      
-    - name: Yarn Archive production artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: public/build
 
     # DEPLOY ON SERVER 
-    # --------------------------------------------------------------------------------------      
-    - name: 🚚 Get Latest Code
-      uses: actions/checkout@v3
-    
-    - name: 📂 Sync Files
-      uses: SamKirkland/web-deploy@v1
-      with:
-        server: home633537587.1and1-data.host
-        username: u85588472
-        password: Cre@tive_Eye_2022
-        protocol: sftp
-        destination-path: ~/portfolio/projets/dreamsite
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/assets/**
-          **/node_modules/**
-          **/var/**
+    # --------------------------------------------------------------------------------------
