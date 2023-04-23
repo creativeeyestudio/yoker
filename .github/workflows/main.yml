@@ -3,7 +3,7 @@ name: Deploy on Prod
 on:
   push:
     branches: 
-      - 'prod'
+      - 'main'
 
 jobs:
   web-deploy:
@@ -50,7 +50,7 @@ jobs:
         name: build
         path: public/build
 
-    # DEPLOY ON FTP 
+    # DEPLOY ON SERVER 
     # --------------------------------------------------------------------------------------
     - name: 🚚 Get Latest Code
       uses: actions/checkout@v3
@@ -58,6 +58,13 @@ jobs:
     - name: 📂 Sync Files
       uses: SamKirkland/web-deploy@v1
       with:
-        target-server: example.com
-        remote-user: username
-        destination-path: ~/destinationFolder/
+        server: home633537587.1and1-data.host
+        username: u85588472
+        password: Cre@tive_Eye_2022
+        protocol: sftp
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/assets/**
+          **/node_modules/**
+          **/var/**
