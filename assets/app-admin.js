@@ -20,15 +20,3 @@ var container = document.querySelector('.tab-container');
 if (container != null) {
     tabs(container);
 }
-
-
-/* JSON
---------------------------------------------*/
-fetch('https://symfony.com/releases/6.2.json')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error(error);
-    });

@@ -10,39 +10,37 @@ import './styles/web/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+import { ScrollWeb } from './smoothScroll';
+import { Parallax } from './parallax';
 import * as Vue from 'vue';
-import Scrollbar from 'smooth-scrollbar';
 import AOS from 'aos';
 
-
-// Initialisation de VueJS
+// Variables
 // -----------------------------------------------
-Vue.createApp({}).mount('#website');
+var values = {
+    damping: 0.05
+}
 
+// Instantieur
+// -----------------------------------------------
+document.addEventListener('DOMContentLoaded', function(){
+    Vue.createApp({}).mount('#website');
+    AOS.init();
+    scrollWeb();
+    parallax();
+})
 
 // Smooth Scrollbar
 // -----------------------------------------------
-const scrollbar = Scrollbar.init(document.querySelector('#content'), {
-    damping: 0.05,
-    continuousScrolling: false,
-    alwaysShowTracks: true,
-});
+function scrollWeb() {
+    let scrollWeb = new ScrollWeb(values.damping, values.divScroller);
+    scrollWeb.init;
+    return scrollWeb;
+}
 
-const links = document.querySelectorAll('a[href*=\\#]');
-links.forEach(link => {
-    link.setAttribute('data-no-swup', '');
-    link.addEventListener('click', function(){
-        const href = link.getAttribute('href');
-        const target = document.querySelector(href);
-        if (target) {
-            scrollbar.scrollIntoView(target, {
-                offsetTop: -scrollbar.containerEl.scrollTop,
-            });
-            return false;
-        }
-    });
-})
-
-// AOS
-// -----------------------------------------------
-AOS.init();
+function parallax(){
+    let parallax = new Parallax(values.divScroller);
+    parallax.initParallax();
+    return parallax;
+}

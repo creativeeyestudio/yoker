@@ -5,7 +5,7 @@ CKEDITOR.dialog.add('bgImageDialog', function(editor) {
         minWidth: 500,
         minHeight: 200,
         onOk: function() {
-            contents = editor.document.getBody().getHtml();
+            contents = editor.document.getData();
             matches = contents.match(/<div style="(.*)">((.|\n)*?)<\/div>/)
             // styled div already exists
             if(matches){
@@ -158,27 +158,6 @@ CKEDITOR.dialog.add('bgImageDialog', function(editor) {
                                             ]
                                         }]
                                 }]
-                        }, {
-                            type: 'vbox',
-                            padding: 0,
-                            children: [{
-                                type: 'hbox',
-                                widths: ['150px', '150px'],
-                                align: 'right',
-                                children: [{
-                                    type: 'text',
-                                    id: 'width',
-                                    label: editor.lang.bgimage.bgWidth,
-                                    width:'50px',
-
-                                }, {
-                                    type: 'text',
-                                    label: editor.lang.bgimage.bgHeight,
-                                    id: 'height',
-                                    align: 'right',
-                                    width:'50px'
-                                }]
-                            }]
                         }]
         }],
     }
