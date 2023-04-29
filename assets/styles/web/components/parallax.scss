@@ -2,18 +2,21 @@
     position: relative;
     height: 75vh;
     overflow: hidden;
+	margin-bottom: 15vh;
 }
 
-.parallax-element {
+.parallax-element{
 	position: absolute;
+	width: 100%;
+	height: calc(100% * 1.2);
 	top: 0;
 	left: 0;
-	height: 100%;
-	width: 100%;
-	z-index: -1;
-	background-size: cover;
-	background-position: top;
-	background-attachment: fixed;
-	background-repeat: no-repeat;
-    background-image: url("../../../../public/uploads/images/pages/bg-parallax.jpg");
+	img{
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		width: 100%;
+		object-fit: cover;
+	}
 }

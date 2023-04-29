@@ -29,32 +29,12 @@ export class Parallax extends ScrollWeb {
         });
 
         gsap.utils.toArray('.parallax-section').forEach((section, i) => {
-            section.bg = section.querySelector(".parallax-element");
+            section.bg = section.querySelector(".parallax-element img");
             scrollWeb.init.addListener(({ offset }) => {  
-                section.bg.style.top = offset.y - section.bg.parentElement.offsetTop + 'px';
+                if (section.getBoundingClientRect().top < scrollWeb.init.containerEl.getBoundingClientRect().bottom) {
+                    section.bg.style.top = -(section.getBoundingClientRect().top * 0.5) + section.bg.parentElement.offsetTop + 'px';
+                }
             });
-            if(i) {
-                section.bg.style.backgroundPosition = `50% ${innerHeight / 2}px`;
-                gsap.to(section.bg, {
-                    backgroundPosition: `50% ${-innerHeight / 2}`,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: section,
-                        scrub: true
-                    }
-                });
-            } else {
-                section.bg.style.backgroundPosition = "50% 0px"; 
-                gsap.to(section.bg, {
-                    backgroundPosition: `50% ${-innerHeight / 2}px`,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top top",
-                        scrub: true
-                    }
-                });
-            }
         });
     }
 }
