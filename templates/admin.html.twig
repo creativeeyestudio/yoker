@@ -43,7 +43,7 @@
                 <li>
                     <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
                 </li>
-                
+
                 {% if is_granted('ROLE_EDITOR') %}
                     <li>
                         <a href="{{ path('admin_users') }}">Utilisateurs</a>
@@ -55,7 +55,13 @@
                         <a target='_blank' rel='noopener'>Google Search Console</a>
                     </li>  
                 {% endif %}
-                
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
+                    </li>
+                {% endif %}
+
                 <li>
                     <a href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
