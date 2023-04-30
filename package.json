@@ -35,6 +35,7 @@
         "dropzone": "^6.0.0-beta.2",
         "gsap": "^3.11.5",
         "loader-utils": "^3.2.1",
+        "rellax": "^1.12.1",
         "smooth-scrollbar": "^8.8.1",
         "tabs": "^0.2.0",
         "tarteaucitronjs": "^1.11.0",

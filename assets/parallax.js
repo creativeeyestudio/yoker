@@ -4,8 +4,9 @@ import { ScrollWeb } from './smoothScroll';
 
 export class Parallax extends ScrollWeb {
 
-    constructor(damping) {
-        super(damping)
+    constructor(damping, scrollImgSpeed) {
+        super(damping);
+        this.scrollImgSpeed = scrollImgSpeed;
     }
 
     initParallax(){
@@ -32,7 +33,7 @@ export class Parallax extends ScrollWeb {
             section.bg = section.querySelector(".parallax-element img");
             scrollWeb.init.addListener(({ offset }) => {  
                 if (section.getBoundingClientRect().top < scrollWeb.init.containerEl.getBoundingClientRect().bottom) {
-                    section.bg.style.top = -(section.getBoundingClientRect().top * 0.5) + section.bg.parentElement.offsetTop + 'px';
+                    section.bg.style.top = -(section.getBoundingClientRect().top * this.scrollImgSpeed) + section.bg.parentElement.offsetTop + 'px';
                 }
             });
         });

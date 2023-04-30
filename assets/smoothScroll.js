@@ -9,8 +9,9 @@ export class ScrollWeb {
     get init(){
         const scrollbar = Scrollbar.init(document.querySelector('#content'), {
             damping: this.damping,
-            continuousScrolling: false,
-            alwaysShowTracks: true,
+            renderByPixels: true,
+            continuousScrolling: true,
+            // alwaysShowTracks: true,
         });
         return scrollbar;
     }

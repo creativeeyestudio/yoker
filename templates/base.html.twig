@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="{% block lang %}{% endblock %}">
+<html 
+    dir="ltr" 
+    lang="{% block lang %}{% endblock %}" >
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -16,7 +18,9 @@
     </head>
     <body {{ stimulus_controller('symfony/ux-swup/swup', { 
         containers: ['#main', '#nav'],
-        ignoreVisit: [('[data-no-swup]')] }) }}>
+        ignoreVisit: [('[data-no-swup]')] }) }}
+        data-damping='{% block damping %}{% endblock %}'
+        data-scrollimg='{% block scrollimg %}{% endblock %}'>
     
         {% block body %}{% endblock %}
 

@@ -18,8 +18,10 @@ import AOS from 'aos';
 
 // Variables
 // -----------------------------------------------
+var pageDatas = document.querySelector('body')
 var values = {
-    damping: 0.05
+    damping: pageDatas.dataset.damping,
+    scrollImgSpeed: pageDatas.dataset.scrollimg
 }
 
 // Instantieur
@@ -34,13 +36,15 @@ document.addEventListener('DOMContentLoaded', function(){
 // Smooth Scrollbar
 // -----------------------------------------------
 function scrollWeb() {
-    let scrollWeb = new ScrollWeb(values.damping, values.divScroller);
+    let scrollWeb = new ScrollWeb(values.damping);
     scrollWeb.init;
     return scrollWeb;
 }
 
+// Parallax
+// -----------------------------------------------
 function parallax(){
-    let parallax = new Parallax(values.divScroller);
+    let parallax = new Parallax(values.damping, values.scrollImgSpeed);
     parallax.initParallax();
     return parallax;
 }

@@ -1,0 +1,20 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Configurations générales{% endblock %}
+
+{% block body %}
+<section class="block">
+    <h2>Configurations générales du site Internet</h2>
+    {{ form_start(form) }}
+        <fieldset>
+            <legend>Scroll de la page</legend>
+            {{ form_row(form.damping) }}
+        </fieldset>
+        <fieldset>
+            <legend>Parallax</legend>
+            {{ form_row(form.scrollimg) }}
+        </fieldset>
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+</section>
+{% endblock %}
