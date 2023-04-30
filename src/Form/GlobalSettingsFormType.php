@@ -15,10 +15,16 @@ class GlobalSettingsFormType extends AbstractType
         $builder
             ->add('damping', NumberType::class, [
                 'label' => 'Niveau de fludité',
+                'html5' => true,
+                'attr' => [
+                    'min' => 0,
+                    'max' => 1,
+                ],
                 'required' => false
             ])
             ->add('scrollimg', NumberType::class, [
                 'label' => 'Vitesse de défilement',
+                'html5' => true,
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [
