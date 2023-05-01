@@ -18,7 +18,7 @@ class GlobalSettingsFormType extends AbstractType
                 'html5' => true,
                 'attr' => [
                     'min' => 0,
-                    'max' => 1,
+                    'max' => 100,
                 ],
                 'required' => false
             ])

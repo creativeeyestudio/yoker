@@ -31,9 +31,12 @@ export class Parallax extends ScrollWeb {
 
         gsap.utils.toArray('.parallax-section').forEach((section, i) => {
             section.bg = section.querySelector(".parallax-element img");
-            scrollWeb.init.addListener(({ offset }) => {  
-                if (section.getBoundingClientRect().top < scrollWeb.init.containerEl.getBoundingClientRect().bottom) {
-                    section.bg.style.top = -(section.getBoundingClientRect().top * this.scrollImgSpeed) + section.bg.parentElement.offsetTop + 'px';
+            var pointSectionBg = section.bg.parentElement.offsetTop;
+            var pointScrollWeb = scrollWeb.init.containerEl.getBoundingClientRect().bottom;
+            
+            scrollWeb.init.addListener(() => {  
+                if (section.getBoundingClientRect().top < pointScrollWeb) {
+                    section.bg.style.top = -(section.getBoundingClientRect().top * (this.scrollImgSpeed / 10)) + pointSectionBg + 'px';
                 }
             });
         });
