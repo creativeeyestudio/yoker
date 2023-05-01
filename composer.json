@@ -1,4 +1,6 @@
 {
+    "name": "creative-eye/cms-project",
+    "description": "CMS propriétaire pour la réalisation de sites vitrines",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -7,7 +9,7 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "amphp/http-client": "4.4.0",
+        "amphp/http-client": "^4.6",
         "cocur/slugify": "^4.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.7",
@@ -51,7 +53,7 @@
         "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "6.2.*",
         "symfonycasts/reset-password-bundle": "^1.17",
-        "symfonycasts/verify-email-bundle": "1.11.0",
+        "symfonycasts/verify-email-bundle": "^1.13",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
