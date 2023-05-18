@@ -1,8 +1,11 @@
 // ABSTRACTS
 @import './abstracts/variables';
+@import './abstracts/mixins';
 
 // BASE
 @import './base/reset';
 
 // COMPONENTS
 @import './components/parallax';
+@import './components/grid';
+@import './components/utils';

@@ -1,0 +1,45 @@
+.container{
+    max-width: 1400px;
+    margin: auto;
+    padding: $padding-col;
+    &-fluid{
+        max-width: 100%;
+        padding: $padding-col;
+    }
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    .col{
+        // Grille de base
+        @include flexBlockInit();
+        // Grille de desktop
+        @media screen and (max-width: $lg) {
+            &-lg{
+                @include flexBlockInit();
+            }
+        }
+        // Grille de tablette paysage
+        @media screen and (max-width: $md) {
+            &-md{
+                @include flexBlockInit();
+            }
+        }
+        // Grille de tablette portrait
+        @media screen and (max-width: $sm) {
+            &-sm{
+                @include flexBlockInit();
+            }
+        }
+        // Grille de mobile portrait/paysage
+        @media screen and (max-width: $xs) {
+            &-xs{
+                @include flexBlockInit();
+            }
+        }
+    }
+}
+
+    
+    
