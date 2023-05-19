@@ -66,14 +66,6 @@ class PagesService extends AbstractController{
                 $page->setPageMetaTitle($form->get('page_meta_title')->getData());
             }
 
-            // Page bloquée
-            // $page->setBlockedPage(0);
-
-            // Envoi des données vers la BDD
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($page);
-            $entityManager->flush();
-
             // Création / Modification du fichier TWIG
             if ($newPage) {
                 $file = fopen("../templates/webpages/pages/fr/" . $slugName . '.html.twig', 'w');
@@ -89,6 +81,11 @@ class PagesService extends AbstractController{
             fclose($file);
             fwrite($file_en, $form->get('page_content_en')->getData());
             fclose($file_en);
+
+            // Envoi des données vers la BDD
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($page);
+            $entityManager->flush();
         }
 
         return $form;
