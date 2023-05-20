@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,12 +35,9 @@ class PagesAdminFormType extends AbstractType
                 'label' => 'Page fixe',
                 'required' => false, 
             ])
-            ->add('page_content', HiddenType::class, [
+            ->add('page_content', CKEditorType::class, [
                 'label' => 'Contenu de la page (FR)',
-                'mapped' => false,
-                'attr' => [
-                    'class' => 'editor'
-                ]
+                'mapped' => false
             ])
             ->add('page_meta_title', TextType::class, [
                 'label' => 'Balise Meta Title (FR)',
@@ -50,12 +47,9 @@ class PagesAdminFormType extends AbstractType
                 'label' => 'Balise Meta Description (FR)',
                 'required' => false,
             ])
-            ->add('page_content_en', HiddenType::class, [
+            ->add('page_content_en', CKEditorType::class, [
                 'label' => 'Contenu de la page (EN)',
-                'mapped' => false,
-                'attr' => [
-                    'class' => 'editor'
-                ]
+                'mapped' => false
             ])
             ->add('page_meta_title_en', TextType::class, [
                 'label' => 'Balise Meta Title (EN)',
@@ -75,9 +69,6 @@ class PagesAdminFormType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-            'attr' => [
-                'id' => "pages_admin_form"
-            ]
         ]);
     }
 }
