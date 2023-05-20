@@ -7,10 +7,6 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app-admin') }}
         {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app-admin') }}
-        {% endblock %}
     </head>
     <body class="admin-page">
         <header>
@@ -79,5 +75,12 @@
             <p>Dream Site - Version 1.1<br />
             Conception et développement : Creative Eye Studio</p>
         </footer>
+
+        {% block javascripts %}
+            <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+            {{ encore_entry_script_tags('app-admin') }}
+            {{ encore_entry_script_tags('ckeditor') }}
+        {% endblock %}
+
     </body>
 </html>

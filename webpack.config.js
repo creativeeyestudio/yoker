@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -22,6 +23,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('app-admin', './assets/app-admin.js')
+    .addEntry('ckeditor', './assets/ckeditor.js')
     .addEntry('modernizr', './assets/modernizr.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

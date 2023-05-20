@@ -31,9 +31,11 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^37.1.0",
         "@swup/matomo-plugin": "^2.0.0",
         "@swup/plugin": "^2.0.2",
         "aos": "^2.3.4",
+        "copy-webpack-plugin": "^11.0.0",
         "dropzone": "^6.0.0-beta.2",
         "gsap": "^3.11.5",
         "loader-utils": "^3.2.1",
