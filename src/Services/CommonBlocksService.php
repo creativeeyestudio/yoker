@@ -17,19 +17,14 @@ class CommonBlocksService extends AbstractController {
             $data = $form->getData();
 
             $filesystem = new Filesystem();
+
             // FR
-            $filesystem->remove([$filePath]);
-            $file = fopen($filePath, 'w');
-            fwrite($file, $data['common_block']);
+            $filesystem->dumpFile($filePath, $data['common_block']);
+
             // EN
-            $filesystem->remove([$filePathEn]);
-            $file = fopen($filePathEn, 'w');
-            fwrite($file, $data['common_block_en']);
+            $filesystem->dumpFile($filePathEn, $data['common_block_en']);
         }
 
         return $form;
     }
-
-    
-
 }

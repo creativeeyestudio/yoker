@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebPagesIndexController extends AbstractController
 {
     #region Page
-
     // Page Generator
     // -----------------------------------------------------------------------------------------------------------------
     private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id){
@@ -76,7 +75,6 @@ class WebPagesIndexController extends AbstractController
     public function redirectBase(){
         return $this->redirectToRoute('web_index');
     }
-
     #endregion
 
     #region Post

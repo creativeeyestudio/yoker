@@ -32,9 +32,7 @@ class PostsService extends AbstractController{
                 $postFileName = $postId . ".html.twig";
                 // Récupération du post souhaité
                 if(!$post) {
-                    throw $this->createNotFoundException(
-                        "Aucune page n'a été trouvée"
-                    );
+                    throw $this->createNotFoundException("Aucune page n'a été trouvée");
                 }
             }
 
@@ -55,7 +53,6 @@ class PostsService extends AbstractController{
             } else {
                 $post->setUpdatedAt(new DateTimeImmutable());
             }
-            
 
             // Création de l'URL
             if (!$form->get('post_url')->getData() && $newPost) {
@@ -67,12 +64,13 @@ class PostsService extends AbstractController{
             }
 
             // Création du Meta Title
-            if (!$form->get('post_meta_title')->getData() && $newPost) {
+            $postMetaTitle = $form->get('post_meta_title')->getData();
+            if (empty($postMetaTitle) && $newPost) {
                 $post->setPostMetaTitle($form->get('post_name')->getData());
-            } elseif (!$form->get('post_meta_title')->getData() && !$newPost) {
+            } elseif (empty($postMetaTitle) && !$newPost) {
                 $post->setPostMetaTitle($post->getPostMetaTitle());
             } else {
-                $post->setPostMetaTitle($form->get('post_meta_title')->getData());
+                $post->setPostMetaTitle($postMetaTitle);
             }
 
             // Création / Modification de l'image principale
@@ -85,7 +83,6 @@ class PostsService extends AbstractController{
                 );
                 $post->setPostThumb($imgFile);
             }
-            
 
             // Envoi des données vers la BDD
             $entityManager = $doctrine->getManager();
@@ -94,19 +91,17 @@ class PostsService extends AbstractController{
 
             // Création du fichier TWIG
             if ($newPost) {
-                $file = fopen("../templates/webpages/posts/fr/" . $slugName . '.html.twig', 'w');
-                $file_en = fopen("../templates/webpages/posts/en/" . $slugName . '.html.twig', 'w');
+                $file = "../templates/webpages/posts/fr/" . $slugName . '.html.twig';
+                $file_en = "../templates/webpages/posts/en/" . $slugName . '.html.twig';
             } else {
                 $postFileName = $post->getPostId() . '.html.twig';
                 unlink("../templates/webpages/posts/fr/" . $postFileName);
                 unlink("../templates/webpages/posts/en/" . $postFileName);
-                $file = fopen("../templates/webpages/posts/fr/" . $postFileName, 'w');
-                $file_en = fopen("../templates/webpages/posts/en/" . $postFileName, 'w');
+                $file = "../templates/webpages/posts/fr/" . $postFileName;
+                $file_en = "../templates/webpages/posts/en/" . $postFileName;
             }
-            fwrite($file, $form->get('post_content')->getData());
-            fwrite($file_en, $form->get('post_content_en')->getData());
-            fclose($file);
-            fclose($file_en);
+            file_put_contents($file, $form->get('post_content')->getData());
+            file_put_contents($file_en, $form->get('post_content_en')->getData());            
         }
 
         return $form;

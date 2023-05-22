@@ -78,18 +78,22 @@ class AdminPostsController extends AbstractController
         $entityManager = $doctrine->getManager();
         $post = $entityManager->getRepository(PostsList::class)->findOneBy(['post_id' => $post_id]);
 
-        if(!$post) {
-            throw $this->createNotFoundException(
-                "Aucune post n'a été trouvé"
-            );
+        if (!$post) {
+            throw $this->createNotFoundException("Aucun post n'a été trouvé");
         }
 
         $entityManager->remove($post);
         $entityManager->flush();
 
         // Suppression du fichier
-        unlink("../templates/webpages/posts/fr/" . $post_id . ".html.twig");
-        unlink("../templates/webpages/posts/en/" . $post_id . ".html.twig");
+        $fileFr = "../templates/webpages/posts/fr/" . $post_id . ".html.twig";
+        $fileEn = "../templates/webpages/posts/en/" . $post_id . ".html.twig";
+        if (file_exists($fileFr)) {
+            unlink($fileFr);
+        }
+        if (file_exists($fileEn)) {
+            unlink($fileEn);
+        }
 
         return $this->redirectToRoute('admin_posts');
     }
