@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ab9b3b0fa3e347decb4a6b737308293",
+    "content-hash": "20b3fcb5848146674dcbd77fd6272ed4",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2517,22 +2517,22 @@
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
-            "version": "v1.0.15",
+            "version": "v1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/proxy-manager-lts.git",
-                "reference": "3ca65b8edb8d96b46fedc9bb4911396516347129"
+                "reference": "ecadbdc9052e4ad08c60c8a02268712e50427f7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/3ca65b8edb8d96b46fedc9bb4911396516347129",
-                "reference": "3ca65b8edb8d96b46fedc9bb4911396516347129",
+                "url": "https://api.github.com/repos/FriendsOfPHP/proxy-manager-lts/zipball/ecadbdc9052e4ad08c60c8a02268712e50427f7c",
+                "reference": "ecadbdc9052e4ad08c60c8a02268712e50427f7c",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-code": "~3.4.1|^4.0",
                 "php": ">=7.1",
-                "symfony/filesystem": "^4.4.17|^5.0|^6.0"
+                "symfony/filesystem": "^4.4.17|^5.0|^6.0|^7.0"
             },
             "conflict": {
                 "laminas/laminas-stdlib": "<3.2.1",
@@ -2543,7 +2543,7 @@
             },
             "require-dev": {
                 "ext-phar": "*",
-                "symfony/phpunit-bridge": "^5.4|^6.0"
+                "symfony/phpunit-bridge": "^5.4|^6.0|^7.0"
             },
             "type": "library",
             "extra": {
@@ -2583,7 +2583,7 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/proxy-manager-lts/issues",
-                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.15"
+                "source": "https://github.com/FriendsOfPHP/proxy-manager-lts/tree/v1.0.16"
             },
             "funding": [
                 {
@@ -2595,7 +2595,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-16T13:18:04+00:00"
+            "time": "2023-05-24T07:17:17+00:00"
         },
         {
             "name": "friendsofsymfony/ckeditor-bundle",
@@ -5101,16 +5101,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v2.2.5",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "2ff8465e7172790a47ab3c129f2b514eb2d8a286"
+                "reference": "3c9c3424efdafe33e0e3cfb5e87e50b34711fedf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/2ff8465e7172790a47ab3c129f2b514eb2d8a286",
-                "reference": "2ff8465e7172790a47ab3c129f2b514eb2d8a286",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/3c9c3424efdafe33e0e3cfb5e87e50b34711fedf",
+                "reference": "3c9c3424efdafe33e0e3cfb5e87e50b34711fedf",
                 "shasum": ""
             },
             "require": {
@@ -5146,7 +5146,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v2.2.5"
+                "source": "https://github.com/symfony/flex/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -5162,7 +5162,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-18T08:03:15+00:00"
+            "time": "2023-05-27T07:38:25+00:00"
         },
         {
             "name": "symfony/form",
@@ -8442,30 +8442,30 @@
         },
         {
             "name": "symfony/ux-dropzone",
-            "version": "v2.8.1",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-dropzone.git",
-                "reference": "343c9cc858f575db25cce197998a2065d62e7865"
+                "reference": "b7a95daf3fb1e424b0bd13dee490e0f0a648c6a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-dropzone/zipball/343c9cc858f575db25cce197998a2065d62e7865",
-                "reference": "343c9cc858f575db25cce197998a2065d62e7865",
+                "url": "https://api.github.com/repos/symfony/ux-dropzone/zipball/b7a95daf3fb1e424b0bd13dee490e0f0a648c6a0",
+                "reference": "b7a95daf3fb1e424b0bd13dee490e0f0a648c6a0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
-                "symfony/config": "^4.4.17|^5.0|^6.0",
-                "symfony/dependency-injection": "^4.4.17|^5.0|^6.0",
-                "symfony/form": "^4.4.17|^5.0|^6.0",
-                "symfony/http-kernel": "^4.4.17|^5.0|^6.0"
+                "symfony/config": "^5.4|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/form": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0"
             },
             "require-dev": {
-                "symfony/framework-bundle": "^4.4.17|^5.0|^6.0",
-                "symfony/phpunit-bridge": "^5.2|^6.0",
-                "symfony/twig-bundle": "^4.4.17|^5.0|^6.0",
-                "symfony/var-dumper": "^4.4.17|^5.0|^6.0"
+                "symfony/framework-bundle": "^5.4|^6.0",
+                "symfony/phpunit-bridge": "^5.4|^6.0",
+                "symfony/twig-bundle": "^5.4|^6.0",
+                "symfony/var-dumper": "^5.4|^6.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -8499,7 +8499,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-dropzone/tree/v2.8.1"
+                "source": "https://github.com/symfony/ux-dropzone/tree/v2.9.0"
             },
             "funding": [
                 {
@@ -8515,20 +8515,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-11T13:01:48+00:00"
+            "time": "2023-05-26T10:08:52+00:00"
         },
         {
             "name": "symfony/ux-swup",
-            "version": "v2.8.1",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-swup.git",
-                "reference": "0c10a076c51690554cf8c917ed187f03b18f0df5"
+                "reference": "22dafa0c5bf27eba28f52692add7702aadc6ba8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-swup/zipball/0c10a076c51690554cf8c917ed187f03b18f0df5",
-                "reference": "0c10a076c51690554cf8c917ed187f03b18f0df5",
+                "url": "https://api.github.com/repos/symfony/ux-swup/zipball/22dafa0c5bf27eba28f52692add7702aadc6ba8e",
+                "reference": "22dafa0c5bf27eba28f52692add7702aadc6ba8e",
                 "shasum": ""
             },
             "conflict": {
@@ -8539,6 +8539,11 @@
                 "thanks": {
                     "name": "symfony/ux",
                     "url": "https://github.com/symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\Swup\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -8561,7 +8566,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-swup/tree/v2.8.1"
+                "source": "https://github.com/symfony/ux-swup/tree/v2.9.0"
             },
             "funding": [
                 {
@@ -8577,84 +8582,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-11T13:01:48+00:00"
-        },
-        {
-            "name": "symfony/ux-vue",
-            "version": "v2.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/ux-vue.git",
-                "reference": "b339cda2bda7d95060a770c841d505edd75c5a51"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-vue/zipball/b339cda2bda7d95060a770c841d505edd75c5a51",
-                "reference": "b339cda2bda7d95060a770c841d505edd75c5a51",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/webpack-encore-bundle": "^1.11"
-            },
-            "require-dev": {
-                "symfony/framework-bundle": "^4.4|^5.0|^6.0",
-                "symfony/phpunit-bridge": "^5.2|^6.0",
-                "symfony/twig-bundle": "^4.4|^5.0|^6.0",
-                "symfony/var-dumper": "^4.4|^5.0|^6.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "thanks": {
-                    "name": "symfony/ux",
-                    "url": "https://github.com/symfony/ux"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\UX\\Vue\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Titouan Galopin",
-                    "email": "galopintitouan@gmail.com"
-                },
-                {
-                    "name": "Thibault Richard",
-                    "email": "thibault.richard62@gmail.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Integration of Vue.js in Symfony",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "symfony-ux"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/ux-vue/tree/v2.8.1"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-04-11T18:25:45+00:00"
+            "time": "2023-05-26T14:30:18+00:00"
         },
         {
             "name": "symfony/validator",
@@ -9014,16 +8942,16 @@
         },
         {
             "name": "symfony/webpack-encore-bundle",
-            "version": "v1.16.1",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "1862d71e483769b40278548a30e756ce13ef9d4c"
+                "reference": "b8ff4a69eb4a85e7a068705bfdc27af61d4bac06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/1862d71e483769b40278548a30e756ce13ef9d4c",
-                "reference": "1862d71e483769b40278548a30e756ce13ef9d4c",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/b8ff4a69eb4a85e7a068705bfdc27af61d4bac06",
+                "reference": "b8ff4a69eb4a85e7a068705bfdc27af61d4bac06",
                 "shasum": ""
             },
             "require": {
@@ -9067,7 +8995,7 @@
             "description": "Integration with your Symfony app & Webpack Encore!",
             "support": {
                 "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
-                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.16.1"
+                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.17.0"
             },
             "funding": [
                 {
@@ -9083,7 +9011,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-18T19:37:55+00:00"
+            "time": "2023-05-26T00:15:03+00:00"
         },
         {
             "name": "symfony/yaml",

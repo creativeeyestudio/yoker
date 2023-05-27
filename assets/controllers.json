@@ -5,18 +5,12 @@
                 "enabled": true,
                 "fetch": "eager",
                 "autoimport": {
-                    "@symfony/ux-dropzone/src/style.css": true
+                    "@symfony/ux-dropzone/dist/style.min.css": true
                 }
             }
         },
         "@symfony/ux-swup": {
             "swup": {
-                "enabled": true,
-                "fetch": "eager"
-            }
-        },
-        "@symfony/ux-vue": {
-            "vue": {
                 "enabled": true,
                 "fetch": "eager"
             }
