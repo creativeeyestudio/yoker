@@ -17,7 +17,8 @@ class WebPagesIndexController extends AbstractController
     #region Page
     // Page Generator
     // -----------------------------------------------------------------------------------------------------------------
-    private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id){
+    private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id): Response
+    {
         $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_id]);
         $settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 0]);
         $posts = $doctrine->getRepository(PostsList::class)->findAll();
@@ -52,8 +53,7 @@ class WebPagesIndexController extends AbstractController
     #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => 'fr|en'])]
     public function index(ManagerRegistry $doctrine, Request $request): Response
     {
-        $page = $this->showPage($doctrine, $request, 'index');
-        return $page;
+        return $this->showPage($doctrine, $request, 'index');
     }
 
 
@@ -62,11 +62,10 @@ class WebPagesIndexController extends AbstractController
     #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => 'fr|en'])]
     public function page(ManagerRegistry $doctrine, Request $request, string $page_slug): Response
     {
-        $page = $this->showPage($doctrine, $request, $page_slug);
         if($page_slug == 'index')
             return $this->redirectBase();
         else
-            return $page;
+            return $this->showPage($doctrine, $request, $page_slug);
     }
 
     // Redirections
@@ -107,8 +106,7 @@ class WebPagesIndexController extends AbstractController
     #[Route('/{_locale}/blog/{post_url}', name: 'web_post', requirements: ['_locale' => 'fr|en'])]
     public function post(ManagerRegistry $doctrine, Request $request, string $post_url): Response
     {
-        $post = $this->showPost($doctrine, $request, $post_url);
-        return $post;
+        return $this->showPost($doctrine, $request, $post_url);
     }
 
     #endregion

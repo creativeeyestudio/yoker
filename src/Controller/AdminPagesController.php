@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PagesList;
 use App\Services\PagesService;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminPagesController extends AbstractController
 {
     #[Route('/admin/pages', name: 'admin_pages')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(EntityManagerInterface $em): Response
     {
-        $entityManager = $doctrine->getManager();
-        $pagesRepo = $entityManager->getRepository(PagesList::class);
+        $pagesRepo = $em->getRepository(PagesList::class);
         $pages = $pagesRepo->findAll();
 
         return $this->render('pages/index.html.twig', [
@@ -86,7 +86,7 @@ class AdminPagesController extends AbstractController
     /* SUPPRIMER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/supprimer/{page_id}', name: 'admin_pages_delete')]
-    public function delete_page(ManagerRegistry $doctrine, String $page_id) {
+    public function delete_page(ManagerRegistry $doctrine, string $page_id) {
         $entityManager = $doctrine->getManager();
         $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
 

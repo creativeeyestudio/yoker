@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserAdminFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminUsersController extends AbstractController
 {
     #[Route('/admin/users', name: 'admin_users')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(EntityManagerInterface $em): Response
     {
-        $entityManager = $doctrine->getManager();
-        $users = $entityManager->getRepository(User::class)->findAll();
+        $users = $em->getRepository(User::class)->findAll();
 
         return $this->render('admin_users/index.html.twig', [
             'users' => $users
@@ -25,7 +25,8 @@ class AdminUsersController extends AbstractController
     }
 
     #[Route('/admin/users/modify/{id}', name: 'admin_users_modify')]
-    public function modifyUser(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $encoder, String $id){
+    public function update(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $encoder, string $id): Response
+    {
         $entityManager = $doctrine->getManager();
         $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $id]);
         $userRole = $user->getRoles()[0];
@@ -36,11 +37,10 @@ class AdminUsersController extends AbstractController
             $newRole = explode(',', $form->get('roles')->getData());
             $user->setRoles($newRole);
             if ($form->get('remake_pass')->getData() != null) {
-                $new_pwd = 'changePassword!!!';
-                $password = $encoder->hashPassword($user, $new_pwd);
+                $newPwd = 'changePassword!!!';
+                $password = $encoder->hashPassword($user, $newPwd);
                 $user->setPassword($password);
             }
-            $entityManager = $doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -54,13 +54,16 @@ class AdminUsersController extends AbstractController
     }
 
     #[Route('/admin/users/delete/{id}', name: 'admin_users_delete')]
-    public function deleteUser(ManagerRegistry $doctrine, String $id){
+    public function delete(Request $request, ManagerRegistry $doctrine, String $id)
+    {
         $entityManager = $doctrine->getManager();
         $user = $entityManager->getRepository(User::class)->findOneBy([ 'id' => $id ]);
 
         $entityManager->remove($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_users');
+        // Retour à la liste
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 }

@@ -73,7 +73,7 @@ class AdminPostsController extends AbstractController
     /* SUPPRIMER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/post/supprimer/{post_id}', name: 'admin_posts_delete')]
-    public function delete_post(ManagerRegistry $doctrine, String $post_id)
+    public function delete_post(ManagerRegistry $doctrine, string $post_id)
     {
         $entityManager = $doctrine->getManager();
         $post = $entityManager->getRepository(PostsList::class)->findOneBy(['post_id' => $post_id]);

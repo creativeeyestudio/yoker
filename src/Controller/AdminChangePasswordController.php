@@ -20,16 +20,16 @@ class AdminChangePasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $old_pwd = $form->get('old_password')->getData();
-            if ($encoder->isPasswordValid($user, $old_pwd)) {
-                $new_pwd = $form->get('new_password')->getData();
-                $password = $encoder->hashPassword($user, $new_pwd);
+            $oldPassword = $form->get('old_password')->getData();
+            if ($encoder->isPasswordValid($user, $oldPassword)) {
+                $newPassword = $form->get('new_password')->getData();
+                $password = $encoder->hashPassword($user, $newPassword);
 
                 $user->setPassword($password);
 
-                $doctrine = $doctrine->getManager();
-                $doctrine->persist($user);
-                $doctrine->flush();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
             }
         }
 

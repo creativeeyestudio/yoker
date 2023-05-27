@@ -11,14 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PagesService extends AbstractController{
     
-    function PageManager(ManagerRegistry $doctrine, Request $request, bool $newPage, String $page_id = null){
+    function PageManager(ManagerRegistry $doctrine, Request $request, bool $newPage, String $page_id = null)
+    {
+        $entityManager = $doctrine->getManager();
 
         // CREATION / RECUPERATION D'UNE PAGE
         // --------------------------------------------------------
         if ($newPage) {
             $page = new PagesList();
         } else {
-            $entityManager = $doctrine->getManager();
             $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
             if(!$page) {
                 throw $this->createNotFoundException("Aucune page n'a été trouvée");
@@ -73,7 +74,6 @@ class PagesService extends AbstractController{
             fclose($file_en);
 
             // Envoi des données vers la BDD
-            $entityManager = $doctrine->getManager();
             $entityManager->persist($page);
             $entityManager->flush();
         }
