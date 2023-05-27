@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
@@ -21,6 +22,7 @@ class AdminController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'phpversion' => phpversion(),
+            'symfonyversion' => Kernel::VERSION,
             'pagesList' => $pagesList,
             'postsList' => $postsList,
             'usersList' => $usersList,
