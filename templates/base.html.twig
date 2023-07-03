@@ -16,18 +16,14 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.11.0/css/tarteaucitron.min.css" integrity="sha512-An5uG5l2933DG8oK8mICT7TycnhhY2Ti1xVSj2XW/scxb0jRvE1kLUh8ECth38zr+MlE4LH3l5xblJ+Ns0JINg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% endblock %}
     </head>
-    <body {{ stimulus_controller({
-             myswup: {},
-            'symfony/ux-swup/swup': {
-                containers: ['#main', '#nav'],
-                ignoreVisit: [('[data-no-swup]')] 
-            }
-        }) }}
+    <body  {{ stimulus_controller('symfony/ux-swup/swup') }}
         data-damping='{% block damping %}{% endblock %}'
         data-scrollimg='{% block scrollimg %}{% endblock %}'>
-    
-        {% block body %}{% endblock %}
 
+        <div id="website">
+            {% block body %}{% endblock %}
+        </div>
+        
         {% block javascripts %}
             {{ encore_entry_script_tags('modernizr') }}
             {{ encore_entry_script_tags('app') }}
