@@ -13,7 +13,7 @@ import './bootstrap';
 
 import { ScrollWeb } from './smoothScroll';
 import { Parallax } from './parallax';
-import Vue from 'vue';
+import { createApp } from 'vue';
 import AOS from 'aos';
 
 // Variables
@@ -27,10 +27,9 @@ var values = {
 // Instantieur
 // -----------------------------------------------
 document.addEventListener('DOMContentLoaded', function(){
-    new Vue({
-        el: '#website',
-        // ... configurez votre application Vue.js ici ...
-    });
+    // createApp({
+    //     Configuration de votre application Vue.js
+    // }).mount('#website');
     AOS.init();
     scrollWeb();
     parallax();

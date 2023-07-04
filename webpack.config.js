@@ -58,7 +58,9 @@ Encore
     })
 
     // uncomment if you use VueJS
-    .enableVueLoader()
+    .enableVueLoader(() => {}, {
+        useJsx: true
+    })
 
     // enables Sass/SCSS support
     .enableSassLoader()
