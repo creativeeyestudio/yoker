@@ -15,9 +15,8 @@
                 </ul>
             </div>
         {% endfor %}
-        
         <p>
-            <a class="btn-link mt">Voir toutes les pages</a>
+            <a class="btn-link mt" href="{{ path('admin_pages') }}">Voir toutes les pages</a>
         </p>
     </div>
     <div class="block">
@@ -31,7 +30,7 @@
             </div>
         {% endfor %}
         <p>
-            <a class="btn-link mt">Voir tous les articles</a>
+            <a class="btn-link mt" href="{{ path('admin_posts') }}">Voir tous les articles</a>
         </p>
     </div>
     <div class="block">
@@ -48,7 +47,7 @@
             </div>
         {% endfor %}
         <p>
-            <a class="btn-link mt">Gérer les utilisateurs</a>
+            <a class="btn-link mt" href="{{ path('admin_users') }}">Gérer les utilisateurs</a>
         </p>
     </div>
 </section>
@@ -58,15 +57,16 @@
     <div class="block">
         <h2>Informations du CMS</h2>
         <p>
-            Version du CMS : 1.2<br />
-            Dernière mise à jour : 05/05/2023<br />
-            Symfony Ver. : 6.2<br />
-            PHP Ver. : {{ phpversion }}<br />
+            CMS Ver. {{ version }}<br />
+            Dernière mise à jour : {{ date_update }}
+        </p>
+        <p>
+            Symfony Ver. {{ symfonyversion }}<br />
+            PHP Ver. {{ phpversion }}
+        </p>
+        <p>
             Conception et développement :  Creative Eye Studio
         </p>
-        {# <p>
-            <a class="btn-link">Mettre à jour le CMS</a>
-        </p> #}
     </div>
 </section>
 {% endblock %}

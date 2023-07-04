@@ -1,0 +1,20 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Gestion des E-Mails{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <a class="btn-link float-right" href="{{ path('app_admin_emails_create') }}">Créer un modèle</a>
+        <h2>Gestion des modèles d'E-mails</h2>
+        {% for email in emails %}
+        <div class="line">
+            <p>{{ email.emailname }}</p>
+            <ul>
+                <li><a href="{{ path('app_admin_emails_update', { emailId: email.emailid }) }}">Modifier</a></li>
+                <li><a href="{{ path('app_admin_emails_delete', { emailId: email.emailid }) }}">Supprimer</a></li>
+            </ul>
+        </div>   
+        {% endfor %}
+        
+    </section>
+{% endblock %}

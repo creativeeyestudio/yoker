@@ -14,30 +14,30 @@ class AdminCommonBlocksController extends AbstractController
     #[Route('/admin/header', name: 'add_admin_header')]
     public function header_manage(CommonBlocksService $block, Request $request): Response
     {
-        $block_manager = $this->BlockManager($block, $request, "header.html.twig", 'add_admin_header');
-        return $block_manager;
+        return $this->blockManager($block, $request, "header.html.twig", 'add_admin_header');
     }
 
     #[Route('/admin/footer', name: 'add_admin_footer')]
     public function footer_manage(CommonBlocksService $block, Request $request): Response
     {
-        $block_manager = $this->BlockManager($block, $request, "footer.html.twig", 'add_admin_footer');
-        return $block_manager;
+        return $this->blockManager($block, $request, "footer.html.twig", 'add_admin_footer');
     }
 
-    private function BlockManager(CommonBlocksService $block, Request $request, String $block_html, String $redirect_route){
+    private function blockManager(CommonBlocksService $block, Request $request, String $block_html, String $redirect_route){
         // Path
         $path = '../templates/webpages/blocks/';
 
         // Fichiers
         $file = $path . 'fr/' . $block_html;
         $file_en = $path . 'en/' . $block_html;
-        if (!$file)
-            $file = fopen($path . 'fr/' . $block_html, 'w');
-            $file = $path . 'fr/' . $block_html;
-        if (!$file_en)
-            $file = fopen($path . 'en/' . $block_html, 'w');
-            $file_en = $path . 'en/' . $block_html;
+
+        if (!file_exists($file)) {
+            file_put_contents($file, '');
+        }
+        
+        if (!file_exists($file_en)) {
+            file_put_contents($file_en, '');
+        }
 
         // Contenu
         $content = file_get_contents($file);

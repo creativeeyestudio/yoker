@@ -1,0 +1,18 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Créer / Modifier un E-Mail{% endblock %}
+
+{% block body %}
+    <section class="block">
+        <h2>Créer / Modifier un E-Mail</h2>
+        {{ form_start(form) }}
+            {{ form_row(form.email_name, {
+                value: name
+            }) }}
+            {{ form_row(form.email_content, {
+                value: content
+            }) }}
+            {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

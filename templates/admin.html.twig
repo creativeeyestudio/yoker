@@ -41,6 +41,9 @@
                     <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
                 </li>
                 <li>
+                    <a href="{{ path('app_admin_emails') }}">Modèles d'E-Mails</a>
+                </li>
+                <li>
                     <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
                 </li>
 
@@ -73,7 +76,7 @@
         </main>
 
         <footer>
-            <p>Dream Site - Version 1.2<br />
+            <p>Dream Site - Version {{ version }}<br />
             Conception et développement : Creative Eye Studio</p>
         </footer>
     </body>

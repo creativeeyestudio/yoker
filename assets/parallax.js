@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/all';
 import { ScrollWeb } from './smoothScroll';
 
 export class Parallax extends ScrollWeb {
-
     constructor(damping, scrollImgSpeed) {
         super(damping);
         this.scrollImgSpeed = scrollImgSpeed;
@@ -31,8 +30,8 @@ export class Parallax extends ScrollWeb {
 
         gsap.utils.toArray('.parallax-section').forEach((section, i) => {
             section.bg = section.querySelector(".parallax-element img");
-            var pointSectionBg = section.bg.parentElement.offsetTop;
-            var pointScrollWeb = scrollWeb.init.containerEl.getBoundingClientRect().bottom;
+            const pointSectionBg = section.bg.parentElement.offsetTop;
+            const pointScrollWeb = scrollWeb.init.containerEl.getBoundingClientRect().bottom;
             
             scrollWeb.init.addListener(() => {  
                 if (section.getBoundingClientRect().top < pointScrollWeb) {
