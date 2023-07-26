@@ -65,13 +65,10 @@ class PagesService extends AbstractController{
             $page->setPageMetaTitle($metaTitle ? $metaTitle : $form->get('page_name')->getData());
 
             // Création / Modification du fichier TWIG
-            $pageFileName = $page->getPageId() . '.html.twig';
-            $file = fopen("../templates/webpages/pages/fr/" . $pageFileName, 'w');
-            $file_en = fopen("../templates/webpages/pages/en/" . $pageFileName, 'w');
-            fwrite($file, $form->get('page_content')->getData());
-            fclose($file);
-            fwrite($file_en, $form->get('page_content_en')->getData());
-            fclose($file_en);
+            $pageContent = htmlspecialchars($form->get('page_content')->getData());
+            $pageContentEn = htmlspecialchars($form->get('page_content_en')->getData());
+            $page->setPageContent($pageContent ? $pageContent : "Contenu à ajouter");
+            $page->setPageContentEn($pageContentEn ? $pageContentEn : "Content to add");
 
             // Envoi des données vers la BDD
             $entityManager->persist($page);

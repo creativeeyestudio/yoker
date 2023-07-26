@@ -49,20 +49,12 @@ class AdminPagesController extends AbstractController
 
         // Récupération du lien de la page
         $entityManager = $doctrine->getManager();
-        $link = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id])->getPageUrl();
+        $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+        $link = $page->getPageUrl();
 
         // Récupération du contenu de la page
-        $pageContentFr = file_get_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig");
-        if (!$pageContentFr) {
-            $pageContentFr = '';
-            file_put_contents("../templates/webpages/pages/fr/" . $page_id . ".html.twig", $pageContentFr);
-        }
-
-        $pageContentEn = file_get_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig");
-        if (!$pageContentEn) {
-            $pageContentEn = '';
-            file_put_contents("../templates/webpages/pages/en/" . $page_id . ".html.twig", $pageContentEn);
-        }
+        $pageContentFr = htmlspecialchars_decode($page->getPageContent());
+        $pageContentEn = htmlspecialchars_decode($page->getPageContentEn());
 
         // Mise à jour du contenu
         $title = "Modifier une page";
@@ -96,16 +88,6 @@ class AdminPagesController extends AbstractController
 
         $entityManager->remove($page);
         $entityManager->flush();
-
-        // Suppression du fichier
-        $fileFr = "../templates/webpages/pages/fr/" . $page_id . ".html.twig";
-        $fileEn = "../templates/webpages/pages/en/" . $page_id . ".html.twig";
-        if (file_exists($fileFr)) {
-            unlink($fileFr);
-        }
-        if (file_exists($fileEn)) {
-            unlink($fileEn);
-        }
 
         return $this->redirectToRoute('admin_pages');
     }
