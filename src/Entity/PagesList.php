@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PagesListRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PagesListRepository::class)]
@@ -39,6 +40,12 @@ class PagesList
 
     #[ORM\Column]
     private ?bool $status = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $page_content = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $page_content_en = null;
 
     public function getId(): ?int
     {
@@ -149,6 +156,30 @@ class PagesList
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPageContent(): ?string
+    {
+        return $this->page_content;
+    }
+
+    public function setPageContent(string $page_content): static
+    {
+        $this->page_content = $page_content;
+
+        return $this;
+    }
+
+    public function getPageContentEn(): ?string
+    {
+        return $this->page_content_en;
+    }
+
+    public function setPageContentEn(?string $page_content_en): static
+    {
+        $this->page_content_en = $page_content_en;
 
         return $this;
     }
