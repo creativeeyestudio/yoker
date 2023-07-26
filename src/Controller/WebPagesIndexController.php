@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Intl\Locales;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -23,6 +24,11 @@ class WebPagesIndexController extends AbstractController
         $settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 0]);
         $posts = $doctrine->getRepository(PostsList::class)->findAll();
 
+        $locales = Locales::getLocales();
+        $localesSite[] = $locales[280]; // FR
+        $localesSite[] = $locales[96]; // EN
+        $page_lang = $request->getLocale();
+
         $statut = $page->isStatus();
 
         if (!$statut) {
@@ -30,20 +36,9 @@ class WebPagesIndexController extends AbstractController
         }
         
         if ($page){
-            $page_lang = $request->getLocale();
-            $meta_title = $page->getPageMetaTitle();
-            $meta_desc = $page->getPageMetaDesc();
-            switch ($page_lang) {
-                case 'fr':
-                    $page_content = $page->getPageContent();
-                    break;
-                case 'en':
-                    $page_content = $page->getPageContentEn();
-                    break;
-                default:
-                    # code...
-                    break;
-            }
+            $meta_title = $page->getPageMetaTitle()[array_search($page_lang, $localesSite)];
+            $meta_desc = $page->getPageMetaDesc()[array_search($page_lang, $localesSite)];
+            $page_content = $page->getPageContent()[array_search($page_lang, $localesSite)];
         } else {
             return $this->redirectToRoute('web_index');
         }

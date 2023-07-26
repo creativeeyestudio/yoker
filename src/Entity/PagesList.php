@@ -26,26 +26,17 @@ class PagesList
     #[ORM\Column]
     private ?bool $blocked_page = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $page_meta_title;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $page_meta_desc;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $page_meta_title_en = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $page_meta_desc_en = null;
-
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $page_content = null;
+    #[ORM\Column(nullable: true)]
+    private array $page_content = [];
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $page_content_en = null;
+    #[ORM\Column(nullable: true)]
+    private array $page_meta_title = [];
+
+    #[ORM\Column]
+    private array $page_meta_desc = [];
 
     public function getId(): ?int
     {
@@ -100,54 +91,6 @@ class PagesList
         return $this;
     }
 
-    public function getPageMetaTitle(): ?string
-    {
-        return $this->page_meta_title;
-    }
-
-    public function setPageMetaTitle(string $page_meta_title): self
-    {
-        $this->page_meta_title = $page_meta_title;
-
-        return $this;
-    }
-
-    public function getPageMetaDesc(): ?string
-    {
-        return $this->page_meta_desc;
-    }
-
-    public function setPageMetaDesc(string $page_meta_desc): self
-    {
-        $this->page_meta_desc = $page_meta_desc;
-
-        return $this;
-    }
-
-    public function getPageMetaTitleEn(): ?string
-    {
-        return $this->page_meta_title_en;
-    }
-
-    public function setPageMetaTitleEn(?string $page_meta_title_en): self
-    {
-        $this->page_meta_title_en = $page_meta_title_en;
-
-        return $this;
-    }
-
-    public function getPageMetaDescEn(): ?string
-    {
-        return $this->page_meta_desc_en;
-    }
-
-    public function setPageMetaDescEn(?string $page_meta_desc_en): self
-    {
-        $this->page_meta_desc_en = $page_meta_desc_en;
-
-        return $this;
-    }
-
     public function isStatus(): ?bool
     {
         return $this->status;
@@ -160,26 +103,38 @@ class PagesList
         return $this;
     }
 
-    public function getPageContent(): ?string
+    public function getPageContent(): array
     {
         return $this->page_content;
     }
 
-    public function setPageContent(string $page_content): static
+    public function setPageContent(?array $page_content): static
     {
         $this->page_content = $page_content;
 
         return $this;
     }
 
-    public function getPageContentEn(): ?string
+    public function getPageMetaTitle(): array
     {
-        return $this->page_content_en;
+        return $this->page_meta_title;
     }
 
-    public function setPageContentEn(?string $page_content_en): static
+    public function setPageMetaTitle(?array $page_meta_title): static
     {
-        $this->page_content_en = $page_content_en;
+        $this->page_meta_title = $page_meta_title;
+
+        return $this;
+    }
+
+    public function getPageMetaDesc(): array
+    {
+        return $this->page_meta_desc;
+    }
+
+    public function setPageMetaDesc(array $page_meta_desc): static
+    {
+        $this->page_meta_desc = $page_meta_desc;
 
         return $this;
     }

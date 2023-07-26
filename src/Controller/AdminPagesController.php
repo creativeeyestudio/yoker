@@ -53,8 +53,7 @@ class AdminPagesController extends AbstractController
         $link = $page->getPageUrl();
 
         // Récupération du contenu de la page
-        $pageContentFr = htmlspecialchars_decode($page->getPageContent());
-        $pageContentEn = htmlspecialchars_decode($page->getPageContentEn());
+        dump($page->getPageContent());
 
         // Mise à jour du contenu
         $title = "Modifier une page";
@@ -69,8 +68,12 @@ class AdminPagesController extends AbstractController
         return $this->render('pages/page-manager.html.twig', [
             'title' => $title,
             'form' => $form->createView(),
-            'pageContentFr' => $pageContentFr,
-            'pageContentEn' => $pageContentEn,
+            'metaTitleFr' => $page->getPageMetaTitle()[0],
+            'metaTitleEn' => $page->getPageMetaTitle()[1],
+            'metaDescFr' => $page->getPageMetaDesc()[0],
+            'metaDescEn' => $page->getPageMetaDesc()[1],
+            'pageContentFr' => htmlspecialchars_decode($page->getPageContent()[0]),
+            'pageContentEn' => htmlspecialchars_decode($page->getPageContent()[1]),
             'link' => $link,
         ]);
     }

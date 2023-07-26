@@ -22,34 +22,58 @@
                 <li><a class="tab" tabindex='2'>English</a></li>
             </ul>
             <div class="tab-panes">
+
                 <!-- Français -->
                 <fieldset class="tab-pane active">
                     <legend>Contenu en français</legend>
+
                     <p>{{ form_label(form.page_content) }}<br />
-                    {% if pageContentFr is defined %}
-                    {{ form_widget(form.page_content, { 'value': pageContentFr }) }}
-                    {% else %}
-                    {{ form_widget(form.page_content) }}
+                    {% if pageContentFr is defined %} 
+                        {{ form_widget(form.page_content, { 'value': pageContentFr }) }}
+                    {% else %} 
+                        {{ form_widget(form.page_content) }} 
                     {% endif %}</p>
 
-                    <p>{{ form_row(form.page_meta_title) }}</p>
-                    <p>{{ form_row(form.page_meta_desc) }}</p>
+                    {% if metaTitleFr is defined %}
+                        <p>{{ form_row(form.page_meta_title, { 'value': metaTitleFr }) }}</p>
+                    {% else %}
+                        <p>{{ form_row(form.page_meta_title) }}</p>
+                    {% endif %}
+
+                    {% if metaDescFr is defined %}
+                        <p>{{ form_row(form.page_meta_desc, { 'value': metaDescFr }) }}</p>
+                    {% else %}
+                        <p>{{ form_row(form.page_meta_desc) }}</p>
+                    {% endif %}
+                    
                 </fieldset>
+
                 <!-- English -->
                 <fieldset class="tab-pane">
                     <legend>English content</legend>
 
                     <p>{{ form_label(form.page_content_en) }}<br />
                     {% if pageContentEn is defined %}
-                    {{ form_widget(form.page_content_en, { 'value': pageContentEn }) }}</p>
+                        {{ form_widget(form.page_content_en, { 'value': pageContentEn }) }}
                     {% else %}
-                    {{ form_widget(form.page_content_en) }}
+                        {{ form_widget(form.page_content_en) }}
                     {% endif %}</p>
 
-                    <p>{{ form_row(form.page_meta_title_en) }}</p>
-                    <p>{{ form_row(form.page_meta_desc_en) }}</p>
+                    {% if metaTitleEn is defined %}
+                        <p>{{ form_row(form.page_meta_title_en, { 'value': metaTitleEn }) }}</p>
+                    {% else %}
+                        <p>{{ form_row(form.page_meta_title_en) }}</p>
+                    {% endif %}
+
+                    {% if metaDescEn is defined %}
+                        <p>{{ form_row(form.page_meta_desc_en, { 'value': metaDescEn }) }}</p>
+                    {% else %}
+                        <p>{{ form_row(form.page_meta_desc_en) }}</p>
+                    {% endif %}
                 </fieldset>
+
             </div>
+
             <!-- Submit -->
             <div class="btn-list">
                 {{ form_row(form.page_submit) }}
