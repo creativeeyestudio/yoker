@@ -33,6 +33,17 @@ class WebPagesIndexController extends AbstractController
             $page_lang = $request->getLocale();
             $meta_title = $page->getPageMetaTitle();
             $meta_desc = $page->getPageMetaDesc();
+            switch ($page_lang) {
+                case 'fr':
+                    $page_content = $page->getPageContent();
+                    break;
+                case 'en':
+                    $page_content = $page->getPageContentEn();
+                    break;
+                default:
+                    # code...
+                    break;
+            }
         } else {
             return $this->redirectToRoute('web_index');
         }
@@ -41,6 +52,7 @@ class WebPagesIndexController extends AbstractController
             'page_id' => $page->getPageId(),
             'page_slug' => $page->getPageUrl(),
             'page_lang' => $page_lang,
+            'page_content' => htmlspecialchars_decode($page_content),
             'posts' => $posts,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,

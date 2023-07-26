@@ -64,7 +64,7 @@ class PagesService extends AbstractController{
             $metaTitle = $form->get('page_meta_title')->getData();
             $page->setPageMetaTitle($metaTitle ? $metaTitle : $form->get('page_name')->getData());
 
-            // Création / Modification du fichier TWIG
+            // Création / Modification du contenu
             $pageContent = htmlspecialchars($form->get('page_content')->getData());
             $pageContentEn = htmlspecialchars($form->get('page_content_en')->getData());
             $page->setPageContent($pageContent ? $pageContent : "Contenu à ajouter");
