@@ -11,13 +11,13 @@ class GlobalSettings
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = 0;
 
     #[ORM\Column(nullable: true)]
-    private ?float $damping = null;
+    private ?float $damping = 0;
 
     #[ORM\Column(nullable: true)]
-    private ?float $scrollimg = null;
+    private ?float $scrollimg = 0;
 
     public function getId(): ?int
     {
