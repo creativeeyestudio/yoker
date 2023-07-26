@@ -35,16 +35,16 @@ class PagesAdminFormType extends AbstractType
                 'label' => 'Page fixe',
                 'required' => false, 
             ])
-            ->add('page_content', CKEditorType::class, [
+            ->add('page_content_fr', CKEditorType::class, [
                 'label' => 'Contenu de la page (FR)',
                 'mapped' => false
             ])
-            ->add('page_meta_title', TextType::class, [
+            ->add('page_meta_title_fr', TextType::class, [
                 'label' => 'Balise Meta Title (FR)',
                 'required' => false,
                 'mapped' => false
             ])
-            ->add('page_meta_desc', TextareaType::class, [
+            ->add('page_meta_desc_fr', TextareaType::class, [
                 'label' => 'Balise Meta Description (FR)',
                 'required' => false,
                 'mapped' => false

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PagesService extends AbstractController{
     
-    function PageManager(ManagerRegistry $doctrine, Request $request, bool $newPage, String $page_id = null)
+    function PageManager(ManagerRegistry $doctrine, Request $request, bool $newPage, string $page_id = null)
     {
         $entityManager = $doctrine->getManager();
 
@@ -21,17 +21,15 @@ class PagesService extends AbstractController{
             $page = new PagesList();
         } else {
             $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
-            if(!$page) {
+            if (!$page) {
                 throw $this->createNotFoundException("Aucune page n'a été trouvée");
             }
         }
-
 
         // INITIALISATION DU FORMULAIRE
         // --------------------------------------------------------
         $form = $this->createForm(PagesAdminFormType::class, $page);
         $form->handleRequest($request);
-
 
         // ENVOI DU FORMULAIRE
         // --------------------------------------------------------
@@ -50,35 +48,26 @@ class PagesService extends AbstractController{
             }
 
             // Création de l'URL
-            if ($form->get('page_url')->getData()) {
-                $page->setPageUrl($slugUrl);
+            if (!$form->get('page_url')->getData()) {
+                $page->setPageUrl($newPage ? $slugName : $page->getPageUrl());
             } else {
-                if ($newPage) {
-                    $page->setPageUrl($slugName);
-                } else {
-                    $page->setPageUrl($page->setPageUrl($page->getPageUrl()));
-                }
+                $page->setPageUrl($slugUrl);
             }
 
             // Création du Meta Title
-            $page->setPageMetaTitle([
-                $form->get('page_meta_title')->getData(),
-                $form->get('page_meta_title_en')->getData()
-            ]);
+            $metaTitle = $form->get('page_meta_title_fr')->getData() ?: '';
+            $metaTitleEn = $form->get('page_meta_title_en')->getData() ?: '';
+            $page->setPageMetaTitle([$metaTitle, $metaTitleEn]);
 
             // Création du Meta Desc
-            $page->setPageMetaDesc([
-                $form->get('page_meta_desc')->getData(),
-                $form->get('page_meta_desc_en')->getData()
-            ]);
+            $metaDesc = $form->get('page_meta_desc_fr')->getData() ?: '';
+            $metaDescEn = $form->get('page_meta_desc_en')->getData() ?: '';
+            $page->setPageMetaDesc([$metaDesc, $metaDescEn]);
 
             // Création / Modification du contenu
-            $pageContent = htmlspecialchars($form->get('page_content')->getData());
+            $pageContent = htmlspecialchars($form->get('page_content_fr')->getData());
             $pageContentEn = htmlspecialchars($form->get('page_content_en')->getData());
-            $page->setPageContent([
-                $pageContent ? $pageContent : "Contenu à ajouter",
-                $pageContentEn ? $pageContentEn : "Content to add"
-            ]);
+            $page->setPageContent([$pageContent ?: "Contenu à ajouter", $pageContentEn ?: "Content to add"]);
 
             // Envoi des données vers la BDD
             $entityManager->persist($page);

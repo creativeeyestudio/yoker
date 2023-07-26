@@ -68,12 +68,12 @@ class AdminPagesController extends AbstractController
         return $this->render('pages/page-manager.html.twig', [
             'title' => $title,
             'form' => $form->createView(),
-            'metaTitleFr' => $page->getPageMetaTitle()[0],
-            'metaTitleEn' => $page->getPageMetaTitle()[1],
-            'metaDescFr' => $page->getPageMetaDesc()[0],
-            'metaDescEn' => $page->getPageMetaDesc()[1],
-            'pageContentFr' => htmlspecialchars_decode($page->getPageContent()[0]),
-            'pageContentEn' => htmlspecialchars_decode($page->getPageContent()[1]),
+            'metaTitle_fr' => $page->getPageMetaTitle()[0],
+            'metaTitle_en' => $page->getPageMetaTitle()[1],
+            'metaDesc_fr' => $page->getPageMetaDesc()[0],
+            'metaDesc_en' => $page->getPageMetaDesc()[1],
+            'pageContent_fr' => htmlspecialchars_decode($page->getPageContent()[0]),
+            'pageContent_en' => htmlspecialchars_decode($page->getPageContent()[1]),
             'link' => $link,
         ]);
     }
