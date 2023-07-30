@@ -35,9 +35,15 @@ class PagesAdminFormType extends AbstractType
                 'label' => 'Page fixe',
                 'required' => false, 
             ])
+            
+            // Contenu en FR
             ->add('page_content_fr', CKEditorType::class, [
                 'label' => 'Contenu de la page (FR)',
-                'mapped' => false
+                'mapped' => false,
+                'attr' => [
+                    // Ajoutez une classe CSS pour identifier le champ de texte
+                    'class' => 'grapesjs-editor',
+                ],
             ])
             ->add('page_meta_title_fr', TextType::class, [
                 'label' => 'Balise Meta Title (FR)',
@@ -49,20 +55,7 @@ class PagesAdminFormType extends AbstractType
                 'required' => false,
                 'mapped' => false
             ])
-            ->add('page_content_en', CKEditorType::class, [
-                'label' => 'Contenu de la page (EN)',
-                'mapped' => false
-            ])
-            ->add('page_meta_title_en', TextType::class, [
-                'label' => 'Balise Meta Title (EN)',
-                'required' => false,
-                'mapped' => false
-            ])
-            ->add('page_meta_desc_en', TextareaType::class, [
-                'label' => 'Balise Meta Description (EN)',
-                'required' => false,
-                'mapped' => false
-            ])
+
             ->add('page_submit', SubmitType::class, [
                 'label' => 'Enregistrer'
             ])

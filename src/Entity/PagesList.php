@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PagesListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +39,14 @@ class PagesList
 
     #[ORM\Column]
     private array $page_meta_desc = [];
+
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: MenuLink::class)]
+    private Collection $menuLinks;
+
+    public function __construct()
+    {
+        $this->menuLinks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +145,36 @@ class PagesList
     public function setPageMetaDesc(array $page_meta_desc): static
     {
         $this->page_meta_desc = $page_meta_desc;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MenuLink>
+     */
+    public function getMenuLinks(): Collection
+    {
+        return $this->menuLinks;
+    }
+
+    public function addMenuLink(MenuLink $menuLink): static
+    {
+        if (!$this->menuLinks->contains($menuLink)) {
+            $this->menuLinks->add($menuLink);
+            $menuLink->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuLink(MenuLink $menuLink): static
+    {
+        if ($this->menuLinks->removeElement($menuLink)) {
+            // set the owning side to null (unless already changed)
+            if ($menuLink->getPage() === $this) {
+                $menuLink->setPage(null);
+            }
+        }
 
         return $this;
     }

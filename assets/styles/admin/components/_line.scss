@@ -5,6 +5,9 @@
     &:hover{
         background-color: rgba($color: #000000, $alpha: .05);
     }
+    &:not(:last-child){
+        border-bottom: .0625rem solid lightgray;
+    }
     p{
         margin-bottom: 0;
     }
@@ -25,7 +28,8 @@
             }
         }
     }
-    &:not(:last-child){
-        border-bottom: .0625rem solid lightgray;
+    .block_order_link{
+        display: flex;
+        align-items: center;
     }
 }

@@ -22,20 +22,22 @@
 
         <hr />
 
-        <ul class="tabs-btn tabs">
-            {% for language in ['Français', 'English'] %}
+        {# <ul class="tabs-btn tabs">
+            {% for language in ['Français'] %}
                 <li><a class="tab {% if loop.index == 1 %}active{% endif %}" tabindex='2'>{{ language }}</a></li>
             {% endfor %}
-        </ul>
+        </ul> #}
 
         <div class="tab-panes">
-            {% for language, prefix in {'Français': 'fr', 'English': 'en'} %}
+            {% for language, prefix in {'Français': 'fr'} %}
                 <fieldset class="tab-pane {% if loop.index == 1 %}active{% endif %}">
                     <legend>Contenu en {{ language }}</legend>
 
                     {% set contentField = attribute(form, 'page_content_' ~ prefix) %}
-                    <p>{{ form_label(contentField) }}<br />
-                    {{ form_widget(contentField, { 'value': attribute(_context, 'pageContent_' ~ prefix)|default }) }}</p>
+                    <p>
+                        {{ form_label(contentField) }}<br />
+                        {{ form_widget(contentField, { 'value': attribute(_context, 'pageContent_' ~ prefix)|default }) }}
+                    </p>
 
                     {% set metaTitleField = attribute(form, 'page_meta_title_' ~ prefix) %}
                     <p>{{ form_row(metaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}</p>
@@ -54,5 +56,6 @@
             {% endif %}
         </div>
     {{ form_end(form) }}
+
 </section>
 {% endblock %}

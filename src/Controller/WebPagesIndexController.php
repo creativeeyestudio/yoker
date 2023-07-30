@@ -15,33 +15,31 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WebPagesIndexController extends AbstractController
 {
+
     #region Page
     // Page Generator
     // -----------------------------------------------------------------------------------------------------------------
     private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id): Response
     {
         $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_id]);
+
+        $page_lang = $request->getLocale();
+        $locales = Locales::getLocales();
+        $localesSite = [
+            $locales[280], // FR
+            $locales[96] // EN
+        ];
+
+        $meta_title = $page->getPageMetaTitle()[array_search($page_lang, $localesSite)];
+        $meta_desc = $page->getPageMetaDesc()[array_search($page_lang, $localesSite)];
+        $page_content = $page->getPageContent()[array_search($page_lang, $localesSite)];
+
+        if (!$page || !$page->isStatus()) {
+            return (!$page) ? $this->redirectToRoute('web_index') : throw $this->createNotFoundException("Cette page n'est pas disponible");
+        }
+
         $settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 0]);
         $posts = $doctrine->getRepository(PostsList::class)->findAll();
-
-        $locales = Locales::getLocales();
-        $localesSite[] = $locales[280]; // FR
-        $localesSite[] = $locales[96]; // EN
-        $page_lang = $request->getLocale();
-
-        $statut = $page->isStatus();
-
-        if (!$statut) {
-            throw $this->createNotFoundException("Cette page n'est pas disponible");
-        }
-        
-        if ($page){
-            $meta_title = $page->getPageMetaTitle()[array_search($page_lang, $localesSite)];
-            $meta_desc = $page->getPageMetaDesc()[array_search($page_lang, $localesSite)];
-            $page_content = $page->getPageContent()[array_search($page_lang, $localesSite)];
-        } else {
-            return $this->redirectToRoute('web_index');
-        }
 
         return $this->render('web_pages_views/index.html.twig', [
             'page_id' => $page->getPageId(),
@@ -57,7 +55,7 @@ class WebPagesIndexController extends AbstractController
 
     // Index Page
     // -----------------------------------------------------------------------------------------------------------------
-    #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => 'fr|en'])]
+    #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => 'fr'])]
     public function index(ManagerRegistry $doctrine, Request $request): Response
     {
         return $this->showPage($doctrine, $request, 'index');
@@ -66,13 +64,10 @@ class WebPagesIndexController extends AbstractController
 
     // Other Page
     // -----------------------------------------------------------------------------------------------------------------
-    #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => 'fr|en'])]
+    #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => 'fr'])]
     public function page(ManagerRegistry $doctrine, Request $request, string $page_slug): Response
     {
-        if($page_slug == 'index')
-            return $this->redirectBase();
-        else
-            return $this->showPage($doctrine, $request, $page_slug);
+        return ($page_slug === 'index') ? $this->redirectBase() : $this->showPage($doctrine, $request, $page_slug);
     }
 
     // Redirections

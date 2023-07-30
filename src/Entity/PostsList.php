@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostsListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostsListRepository::class)]
@@ -48,6 +50,14 @@ class PostsList
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: MenuLink::class)]
+    private Collection $menuLinks;
+
+    public function __construct()
+    {
+        $this->menuLinks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -194,6 +204,36 @@ class PostsList
     public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MenuLink>
+     */
+    public function getMenuLinks(): Collection
+    {
+        return $this->menuLinks;
+    }
+
+    public function addMenuLink(MenuLink $menuLink): static
+    {
+        if (!$this->menuLinks->contains($menuLink)) {
+            $this->menuLinks->add($menuLink);
+            $menuLink->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuLink(MenuLink $menuLink): static
+    {
+        if ($this->menuLinks->removeElement($menuLink)) {
+            // set the owning side to null (unless already changed)
+            if ($menuLink->getPost() === $this) {
+                $menuLink->setPost(null);
+            }
+        }
 
         return $this;
     }

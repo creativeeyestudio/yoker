@@ -23,6 +23,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('app-admin', './assets/app-admin.js')
     .addEntry('modernizr', './assets/modernizr.js')
+    .addEntry('grapesjs', './node_modules/grapesjs/dist/grapes.min.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

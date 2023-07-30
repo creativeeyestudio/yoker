@@ -52,9 +52,6 @@ class AdminPagesController extends AbstractController
         $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
         $link = $page->getPageUrl();
 
-        // Récupération du contenu de la page
-        dump($page->getPageContent());
-
         // Mise à jour du contenu
         $title = "Modifier une page";
         $form = $pageService->PageManager($doctrine, $request, false, $page_id);   
@@ -68,13 +65,10 @@ class AdminPagesController extends AbstractController
         return $this->render('pages/page-manager.html.twig', [
             'title' => $title,
             'form' => $form->createView(),
-            'metaTitle_fr' => $page->getPageMetaTitle()[0],
-            'metaTitle_en' => $page->getPageMetaTitle()[1],
-            'metaDesc_fr' => $page->getPageMetaDesc()[0],
-            'metaDesc_en' => $page->getPageMetaDesc()[1],
-            'pageContent_fr' => htmlspecialchars_decode($page->getPageContent()[0]),
-            'pageContent_en' => htmlspecialchars_decode($page->getPageContent()[1]),
             'link' => $link,
+            'metaTitle_fr' => $page->getPageMetaTitle()[0],
+            'metaDesc_fr' => $page->getPageMetaDesc()[0],
+            'pageContent_fr' => htmlspecialchars_decode($page->getPageContent()[0]),
         ]);
     }
 

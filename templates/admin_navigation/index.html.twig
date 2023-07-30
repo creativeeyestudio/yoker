@@ -1,0 +1,91 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+    <section class="block">
+
+        {% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
+            <a class="btn-link float-right" href="{{ path('app_admin_nav_menu') }}">Créer un menu</a>
+        {% elseif route_name == 'app_admin_nav_menu' %}
+            <a class="btn-link float-right" href="{{ path('app_admin_nav') }}">Retour à la liste</a>
+        {% endif %}
+
+        <h2>{{ title }}</h2>
+
+        {% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
+            <div class="nav-blocks">
+                <div class="block links tab-container">
+                    <ul class="tabs tabs-btn">
+                        <li><a class="tab active">Pages</a></li>
+                        <li><a class="tab">Articles</a></li>
+                        <li><a class="tab">Lien</a></li>
+                    </ul>
+                    <div class="tab-panes">
+                        {{ form_start(nav_form) }}
+                        <div class="tab-pane active">
+                            {{ form_row(nav_form.pages) }}
+                        </div>
+                        <div class="tab-pane">
+                            {{ form_row(nav_form.posts) }}
+                        </div>
+                        <div class="tab-pane">
+                            <p>{{ form_row(nav_form.cus_name) }}</p>
+                            <p>{{ form_row(nav_form.cus_link) }}</p>
+                        </div>
+                        {{ form_row(nav_form.submit) }}
+                        {{ form_end(nav_form) }}
+                    </div>
+                </div>
+
+                <div class="block navsite">
+                    {{ form_start(menu_form) }}
+                        {{ form_widget(menu_form.nav_select, { 'value': id_menu }) }}
+                    {{ form_end(menu_form) }}
+
+                    <div 
+                        id="drag-drop-list" 
+                        data-url="{{ path('order_nav_link') }}" 
+                        data-urldel="{{ path('delete_nav_link') }}">
+                        {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
+                            <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
+                                {% if item.post is not null %}
+                                    <div class="block_order_link">
+                                        <span>Post (Article)</span>
+                                    </div>
+                                {% elseif item.page is not null %}
+                                    <div class="block_order_link">
+                                        <span>{{ item.page.pagename }}</span>
+                                    </div>
+                                    <ul>
+                                        <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
+                                        <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                    </ul>
+                                {% else %}
+                                    <div class="block_order_link">
+                                        <span>{{ item.cusname }} (Lien externe)</span>
+                                    </div>
+                                    <ul>
+                                        <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
+                                        <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% elseif route_name == 'app_admin_nav_menu' %}
+            {{ form_start(menu_create_form) }}
+            <p>{{ form_row(menu_create_form.name) }}</p>
+            <p>
+                {{ form_label(menu_create_form.pos) }}<br />
+                {{ form_widget(menu_create_form.pos) }}
+            </p>
+            <p>{{ form_row(menu_create_form.submit) }}</p>
+            {{ form_end(menu_create_form) }}
+        {% endif %}
+    </section>
+
+{% endblock %}

@@ -47,27 +47,24 @@ class PagesService extends AbstractController{
                 $page->setPageId($slugName);
             }
 
-            // Création de l'URL
+            // Création / Modification de l'URL
             if (!$form->get('page_url')->getData()) {
                 $page->setPageUrl($newPage ? $slugName : $page->getPageUrl());
             } else {
                 $page->setPageUrl($slugUrl);
             }
 
-            // Création du Meta Title
+            // Création / Modification du Meta Title
             $metaTitle = $form->get('page_meta_title_fr')->getData() ?: '';
-            $metaTitleEn = $form->get('page_meta_title_en')->getData() ?: '';
-            $page->setPageMetaTitle([$metaTitle, $metaTitleEn]);
+            $page->setPageMetaTitle([$metaTitle]);
 
-            // Création du Meta Desc
+            // Création / Modification du Meta Desc
             $metaDesc = $form->get('page_meta_desc_fr')->getData() ?: '';
-            $metaDescEn = $form->get('page_meta_desc_en')->getData() ?: '';
-            $page->setPageMetaDesc([$metaDesc, $metaDescEn]);
+            $page->setPageMetaDesc([$metaDesc]);
 
             // Création / Modification du contenu
             $pageContent = htmlspecialchars($form->get('page_content_fr')->getData());
-            $pageContentEn = htmlspecialchars($form->get('page_content_en')->getData());
-            $page->setPageContent([$pageContent ?: "Contenu à ajouter", $pageContentEn ?: "Content to add"]);
+            $page->setPageContent([$pageContent ?: "Contenu à ajouter"]);
 
             // Envoi des données vers la BDD
             $entityManager->persist($page);

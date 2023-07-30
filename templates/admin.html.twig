@@ -7,77 +7,87 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app-admin') }}
         {% endblock %}
+    </head>
+    <body class="admin-page">
+        <div id="app">
+            <!-- En-Tête -->
+            <header>
+                <h1>Interface d'administration</h1>
+            </header>
+            
+            <!-- Navigation -->
+            <nav class="navigation">
+                <span class="website-title">{{ site_name }}</span>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_admin') }}">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_admin_files') }}">Médias</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_admin_nav') }}">Navigation</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_pages') }}">Pages du site</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_posts') }}">Actualités</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('add_admin_header') }}">En-tête du site</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_admin_emails') }}">Modèles d'E-Mails</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
+                    </li>
 
+                    {% if is_granted('ROLE_EDITOR') %}
+                        <li>
+                            <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                        </li>
+                        <li>
+                            <a target='_blank' rel='noopener'>Matomo</a>
+                        </li>
+                        <li>
+                            <a target='_blank' rel='noopener'>Google Search Console</a>
+                        </li>  
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Contenu -->
+            <main>
+                {% block body %}{% endblock %}
+            </main>
+            
+            <!-- Pied de page -->
+            <footer>
+                <p>Dream Site - Version {{ version }}<br />
+                Conception et développement : Creative Eye Studio</p>
+            </footer>
+        </div>
+        
         {% block javascripts %}
             {{ encore_entry_script_tags('app-admin') }}
         {% endblock %}
-    </head>
-    <body class="admin-page">
-        <header>
-            <h1>Interface d'administration</h1>
-        </header>
-        <nav class="navigation">
-            <span class="website-title">{{ site_name }}</span>
-            <ul>
-                <li>
-                    <a href="{{ path('app_admin') }}">Accueil</a>
-                </li>
-                <li>
-                    <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
-                </li>
-                <li>
-                    <a href="{{ path('app_admin_files') }}">Médias</a>
-                </li>
-                <li>
-                    <a href="{{ path('admin_pages') }}">Pages du site</a>
-                </li>
-                <li>
-                    <a href="{{ path('admin_posts') }}">Actualités</a>
-                </li>
-                <li>
-                    <a href="{{ path('add_admin_header') }}">En-tête du site</a>
-                </li>
-                <li>
-                    <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
-                </li>
-                <li>
-                    <a href="{{ path('app_admin_emails') }}">Modèles d'E-Mails</a>
-                </li>
-                <li>
-                    <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
-                </li>
-
-                {% if is_granted('ROLE_EDITOR') %}
-                    <li>
-                        <a href="{{ path('admin_users') }}">Utilisateurs</a>
-                    </li>
-                    <li>
-                        <a target='_blank' rel='noopener'>Matomo</a>
-                    </li>
-                    <li>
-                        <a target='_blank' rel='noopener'>Google Search Console</a>
-                    </li>  
-                {% endif %}
-
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li>
-                        <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
-                    </li>
-                {% endif %}
-
-                <li>
-                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
-            </ul>
-        </nav>
-
-        <main>
-            {% block body %}{% endblock %}
-        </main>
-
-        <footer>
-            <p>Dream Site - Version {{ version }}<br />
-            Conception et développement : Creative Eye Studio</p>
-        </footer>
     </body>
 </html>
