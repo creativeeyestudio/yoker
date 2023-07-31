@@ -1,7 +1,20 @@
 <footer>
-<ul>
-	<li><a href="/fr">Accueil</a></li>
-	<li><span onclick="tarteaucitron.userInterface.openPanel();">Cookies</span></li>
-	<li>{% if page_slug is defined %} <a data-no-swup="" href="/en/{{ page_slug }}">EN</a> {% elseif post_slug is defined %} <a data-no-swup="" href="/en/blog/{{ post_slug }}">EN</a> {% endif %}</li>
-</ul>
+	<ul id="nav">
+		{% for item in menus.findOneBy({'pos': 1}).menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
+			{% if item.page is not null %}
+				<li>
+					<a href="{{ path('web_page', {page_slug: item.page.pageurl}) }}">{{ item.page.pagename }}</a>
+				</li>
+			{% elseif item.post is not null %}
+				<li>
+					<a href="{{ path('web_post', {post_url: item.post.posturl}) }}">{{ item.page.postname }}</a>
+				</li>
+			{% else %}
+				<li>
+					<a href="{{ item.cuslink }}" target="_blank" rel="noopener">{{ item.cusname }}</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+		<li><span onclick="tarteaucitron.userInterface.openPanel();">Cookies</span></li>
+	</ul>
 </footer>

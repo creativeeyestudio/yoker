@@ -25,8 +25,7 @@ class NavCreateFormType extends AbstractType
                     "Menu Pied de page" => 2,
                 ],
                 'label' => "Position du menu",
-                'expanded' => true,
-                'multiple' => true
+                'expanded' => true
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"

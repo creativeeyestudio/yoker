@@ -25,72 +25,102 @@ if (container != null) {
 
 /* SORTABLE JS
 --------------------------------------------*/
-var dragDropList = document.querySelector('#drag-drop-list');
+const dragDropList = document.querySelector('#drag-drop-list');
 if (dragDropList) {
-    document.addEventListener('DOMContentLoaded', function() {
-        var sortable = new Sortable(dragDropList, {
+    document.addEventListener('DOMContentLoaded', () => {
+        const sortable = new Sortable(dragDropList, {
             animation: 150,
-            onEnd: function (event) {
+            onEnd: (event) => {
                 // Mettre à jour l'ordre des éléments après le glisser-déposer
                 const lines = dragDropList.querySelectorAll('.line');
-                lines.forEach(function (line, index) {
+                lines.forEach((line, index) => {
                     line.dataset.order = index + 1;
                 });
                 changeOrderLinks();
             },
-        })    
-    })
+        });
+    });
 }
 
-function changeOrderLinks(){
+function changeOrderLinks() {
     const url = dragDropList.dataset.url;
     const lines = dragDropList.querySelectorAll('.line');
-    const orderData = [];
+    const orderData = Array.from(lines).map((line) => ({
+        id: line.dataset.id,
+        order: line.dataset.order,
+    }));
 
-    lines.forEach(function (line) {
-        const orderId = line.dataset.id;
-        const orderValue = line.dataset.order;
-        orderData.push({ id: orderId, order: orderValue });
-    });
-
-    // Envoyer les données d'ordre via une requête AJAX au contrôleur
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
     })
-    .then(function (response) {
-        // Gérer la réponse du contrôleur (facultatif)
+    .then((response) => {
         console.log('Enregistrement de l\'ordre terminé : ', response);
     })
-    .catch(function (error) {
+    .catch((error) => {
         console.error('Erreur lors de l\'enregistrement de l\'ordre :', error);
     });
 }
 
-
 /* SECTION - NAVIGATION
 --------------------------------------------*/
-var navLinksRemove = document.querySelectorAll('.nav-remove');
-if (navLinksRemove) {
+
+// Sélecteur de menu
+const navSelect = document.querySelector('.nav-select');
+if (navSelect) {
+    navSelect.addEventListener('change', function() {
+        const navSelected = navSelect.value; 
+        window.location.href = '/admin/navigation/' + navSelected;
+    })
+}
+
+// Menus
+const menuRemove = document.querySelectorAll('.menu-remove');
+if (menuRemove.length > 0) {
+    menuRemove.forEach((menu) => {
+        menu.addEventListener('click', () => {
+            const menuId = menu.dataset.id;
+            const urlDel = menu.dataset.removeurl;
+            fetch(urlDel, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(menuId),
+            })
+            .then((response) => {
+                const navLinkRemoved = document.querySelector(`.menu-${menuId}`);
+                navLinkRemoved.style.display = 'none';
+                navLinkRemoved.style.visibility = 'hidden';
+                console.log('Suppression effectuée : ', response);
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la suppression :', error);
+            });
+        });
+    });
+}
+
+// Liens
+const navLinksRemove = document.querySelectorAll('.nav-remove');
+if (navLinksRemove.length > 0 && dragDropList) {
     const urlDel = dragDropList.dataset.urldel;
-    navLinksRemove.forEach(link => {
-        link.addEventListener('click', function() {
-            const linkId = link.dataset.id
+    navLinksRemove.forEach((link) => {
+        link.addEventListener('click', () => {
+            const linkId = link.dataset.id;
             fetch(urlDel, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(linkId),
             })
-            .then(function (response) {
-                // Gérer la réponse du contrôleur (facultatif)
-                var navLinkRemoved = document.querySelector('.nav-link-' + linkId);
+            .then((response) => {
+                const navLinkRemoved = document.querySelector(`.nav-link-${linkId}`);
                 navLinkRemoved.style.display = 'none';
+                navLinkRemoved.style.visibility = 'hidden';
                 console.log('Suppression effectuée : ', response);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.error('Erreur lors de la suppression :', error);
             });
-        })
-    })
+        });
+    });
 }

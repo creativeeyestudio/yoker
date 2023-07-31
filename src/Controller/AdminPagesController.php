@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\MenuLink;
 use App\Entity\PagesList;
 use App\Services\PagesService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,15 +77,20 @@ class AdminPagesController extends AbstractController
     ------------------------------------------------------- */
     #[Route('/admin/pages/supprimer/{page_id}', name: 'admin_pages_delete')]
     public function delete_page(ManagerRegistry $doctrine, string $page_id) {
-        $entityManager = $doctrine->getManager();
-        $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+        $em = $doctrine->getManager();
+        $page = $em->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+        $menuLink = $em->getRepository(MenuLink::class)->findOneBy(['page' => $page]);
+        
+        if ($menuLink) {
+            $em->remove($menuLink);
+        }
 
         if(!$page) {
             throw $this->createNotFoundException("Aucune page n'a été trouvée");
         }
 
-        $entityManager->remove($page);
-        $entityManager->flush();
+        $em->remove($page);
+        $em->flush();
 
         return $this->redirectToRoute('admin_pages');
     }

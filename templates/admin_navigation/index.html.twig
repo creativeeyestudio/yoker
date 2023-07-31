@@ -48,31 +48,34 @@
                         id="drag-drop-list" 
                         data-url="{{ path('order_nav_link') }}" 
                         data-urldel="{{ path('delete_nav_link') }}">
-                        {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
-                            <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
-                                {% if item.post is not null %}
-                                    <div class="block_order_link">
-                                        <span>Post (Article)</span>
-                                    </div>
-                                {% elseif item.page is not null %}
-                                    <div class="block_order_link">
-                                        <span>{{ item.page.pagename }}</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
-                                        <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                    </ul>
-                                {% else %}
-                                    <div class="block_order_link">
-                                        <span>{{ item.cusname }} (Lien externe)</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
-                                        <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                    </ul>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
+                        {% if menu is not null %}
+                            {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
+                                <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
+                                    {% if item.post is not null %}
+                                        <div class="block_order_link">
+                                            <span>Post (Article)</span>
+                                        </div>
+                                    {% elseif item.page is not null %}
+                                        <div class="block_order_link">
+                                            <span>{{ item.page.pagename }}</span>
+                                        </div>
+                                        <ul>
+                                            <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
+                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                        </ul>
+                                    {% else %}
+                                        <div class="block_order_link">
+                                            <span>{{ item.cusname }} (Lien externe)</span>
+                                        </div>
+                                        <ul>
+                                            <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
+                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}    
+                        {% endif %}
+                        
                     </div>
                 </div>
             </div>
@@ -85,6 +88,18 @@
             </p>
             <p>{{ form_row(menu_create_form.submit) }}</p>
             {{ form_end(menu_create_form) }}
+            <hr />
+            {% for menu in menus %}
+                <div class="line menu-{{ menu.id }}">
+                    <p>{{ menu.name }}</p>
+                    <ul>
+                        <li><span 
+                            class="menu-remove" 
+                            data-id="{{ menu.id }}"
+                            data-removeurl="{{ path('delete_link') }}">Supprimer</span></li>
+                    </ul>
+                </div>
+            {% endfor %}
         {% endif %}
     </section>
 

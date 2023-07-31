@@ -16,7 +16,11 @@ class NavSelectFormType extends AbstractType
             ->add('nav_select', EntityType::class, [
                 'class' => Menu::class,
                 'choice_label' => 'name',
+                'choice_value' => 'pos',
                 'label' => false,
+                'attr' => [
+                    'class' => 'nav-select'
+                ]
             ])
         ;
     }

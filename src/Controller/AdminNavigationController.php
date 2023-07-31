@@ -22,7 +22,7 @@ class AdminNavigationController extends AbstractController
 
         if ($nav_links_form->isSubmitted() && $nav_links_form->isValid()) {
             $em = $doctrine->getManager();
-            $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $id_menu]);
+            $menu = $em->getRepository(Menu::class)->findOneBy(['pos' => $id_menu]);
 
             $pagesToInsert = [];
             $postsToInsert = [];
@@ -127,7 +127,9 @@ class AdminNavigationController extends AbstractController
         // $nav_update_form = $this->navUpdateForm($doctrine, $request);
 
         $em = $doctrine->getManager();
-        $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $id_menu]);
+        $menusBase = $em->getRepository(Menu::class);
+        $menus = $menusBase->findAll();
+        $menu = $menusBase->findOneBy(['pos' => $id_menu]);
         
         $route_name = $request->attributes->get('_route');
 
@@ -135,11 +137,11 @@ class AdminNavigationController extends AbstractController
             'nav_form' => $nav_links_form->createView(),
             'menu_form' => $nav_select_form->createView(),
             'menu_create_form' => $nav_create_form->createView(),
-            // 'nav_update_form' => $nav_update_form->createView(),
             'route_name' => $route_name,
             'title' => $title,
             'id_menu' => $id_menu,
-            'menu' => $menu
+            'menu' => $menu,
+            'menus' => $menus
         ]);
     }
 
@@ -164,6 +166,23 @@ class AdminNavigationController extends AbstractController
         return $render;
     }
 
+    #[Route(path: '/delete-nav', name: 'delete_link', methods: ['POST'])]
+    public function deleteNav(ManagerRegistry $doctrine, Request $request){ 
+        $em = $doctrine->getManager();
+        $data = json_decode($request->getContent(), true);
+        $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $data]);
+        $menuItems = $em->getRepository(MenuLink::class)->findBy(['menu' => $menu->getId()]);
+
+        foreach ($menuItems as $item) {
+            if ($item) {
+                $em->remove($item);
+            }
+        }
+
+        $em->remove($menu);
+        $em->flush();
+    }
+
     #[Route(path: '/order-nav-link', name: 'order_nav_link', methods: ['POST'])]
     public function orderNavLink(ManagerRegistry $doctrine, Request $request){
         $em = $doctrine->getManager();
@@ -176,9 +195,8 @@ class AdminNavigationController extends AbstractController
                 $em->persist($link);
             }
         }
-
+        
         $em->flush();
-
         return new JsonResponse(['message' => 'Ordre des liens enregistré avec succès.']);
     }
 

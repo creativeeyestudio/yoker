@@ -19,7 +19,7 @@ class Menu
     private ?string $name = null;
 
     #[ORM\Column]
-    private array $pos = [];
+    private ?int $pos = null;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuLink::class)]
     private Collection $menuLinks;
@@ -46,12 +46,12 @@ class Menu
         return $this;
     }
 
-    public function getPos(): array
+    public function getPos(): ?int
     {
         return $this->pos;
     }
 
-    public function setPos(array $pos): static
+    public function setPos(int $pos): static
     {
         $this->pos = $pos;
 

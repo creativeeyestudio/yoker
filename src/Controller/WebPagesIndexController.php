@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GlobalSettings;
+use App\Entity\Menu;
 use App\Entity\PagesList;
 use App\Entity\PostsList;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,6 +23,8 @@ class WebPagesIndexController extends AbstractController
     private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id): Response
     {
         $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_id]);
+        $menus = $doctrine->getRepository(Menu::class);
+        $main_menu = $menus->findOneBy(['pos' => 0])->getMenuLinks();
 
         $page_lang = $request->getLocale();
         $locales = Locales::getLocales();
@@ -47,6 +50,7 @@ class WebPagesIndexController extends AbstractController
             'page_lang' => $page_lang,
             'page_content' => htmlspecialchars_decode($page_content),
             'posts' => $posts,
+            'menus' => $menus,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
             'settings' => $settings,
