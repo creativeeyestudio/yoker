@@ -57,10 +57,10 @@
                                 <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
                                     {% if item.post is not null %}
                                     <div class="block_order_link">
-                                        <span>Post (Article) {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>
+                                        <span>{{ item.post.postname[0] }} (Article) {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>
                                     </div>
                                     <ul>
-                                        <li><a href="{{ path('web_post', { post_url: item.post.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
+                                        <li><a href="{{ path('web_post', { post_url: item.post.posturl }) }}" rel='noopener' target='_blank'>Voir</a></li>
                                     {% elseif item.page is not null %}
                                     <div class="block_order_link">
                                         <span>{{ item.page.pagename }} {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>

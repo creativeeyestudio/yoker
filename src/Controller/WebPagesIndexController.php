@@ -31,6 +31,7 @@ class WebPagesIndexController extends AbstractController
             $locales[96] // EN
         ];
 
+        $post_title = array_search($page_lang, $localesSite);
         $meta_title = $page->getPageMetaTitle()[array_search($page_lang, $localesSite)];
         $meta_desc = $page->getPageMetaDesc()[array_search($page_lang, $localesSite)];
         $page_content = $page->getPageContent()[array_search($page_lang, $localesSite)];
@@ -45,10 +46,11 @@ class WebPagesIndexController extends AbstractController
         return $this->render('web_pages_views/index.html.twig', [
             'page_id' => $page->getPageId(),
             'page_slug' => $page->getPageUrl(),
-            'page_lang' => $page_lang,
+            'lang' => $page_lang,
             'page_content' => htmlspecialchars_decode($page_content),
             'posts' => $posts,
             'menus' => $menus,
+            'post_title' => $post_title,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
             'settings' => $settings,
@@ -99,6 +101,8 @@ class WebPagesIndexController extends AbstractController
             $locales[96] // EN
         ];
         
+        $post_title = array_search($post_lang, $localesSite);
+        dump($post_title);
         $meta_title = $post->getPostMetaTitle()[array_search($post_lang, $localesSite)];
         $meta_desc = $post->getPostMetaDesc()[array_search($post_lang, $localesSite)];
         $post_content = $post->getPostContent()[array_search($post_lang, $localesSite)];
@@ -108,7 +112,8 @@ class WebPagesIndexController extends AbstractController
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
             'post_content' => htmlspecialchars_decode($post_content),
-            'post_lang' => $post_lang,
+            'post_title' => $post_title,
+            'lang' => $post_lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
         ]);

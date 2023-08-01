@@ -9,7 +9,6 @@ use App\Form\NavLinksFormType;
 use App\Form\NavSelectFormType;
 use App\Form\NavUpdateLinkFormType;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,7 +102,6 @@ class AdminNavigationController extends AbstractController
 
         if ($nav_select_form->isSubmitted() && $nav_select_form->isValid()) { 
             $id_menu = $nav_select_form->get('nav_select')->getData()->getId();
-            dump($id_menu);
         }
 
         return $nav_select_form;
@@ -126,7 +124,6 @@ class AdminNavigationController extends AbstractController
         $nav_links_form = $this->navLinksForm($doctrine, $request, $id_menu);
         $nav_select_form = $this->navSelectForm($request);
         $nav_create_form = $this->navCreateForm($doctrine, $request);
-        // $nav_update_form = $this->navUpdateForm($doctrine, $request);
 
         $em = $doctrine->getManager();
         $menusBase = $em->getRepository(Menu::class);
@@ -139,11 +136,11 @@ class AdminNavigationController extends AbstractController
             'nav_form' => $nav_links_form->createView(),
             'menu_form' => $nav_select_form->createView(),
             'menu_create_form' => $nav_create_form->createView(),
-            'route_name' => $route_name,
             'title' => $title,
             'id_menu' => $id_menu,
+            'menus' => $menus,
             'menu' => $menu,
-            'menus' => $menus
+            'route_name' => $route_name
         ]);
     }
 

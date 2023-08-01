@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {# Metas #}
-{% block lang %}{{ post_lang }}{% endblock %}
+{% block lang %}{{ lang }}{% endblock %}
 {% block title %}{{ meta_title }}{% endblock %}
 {% block desc %}{{ meta_desc }}{% endblock %}
 
 {% block body %}
     <div id="content">
         <div id="website">
-            {% include "webpages/blocks/#{post_lang}/header.html.twig" %}
+            {% include "webpages/blocks/#{lang}/header.html.twig" %}
             <main id="main">
                 {% if post_thumb %}
                     <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
                 {% endif %}
                 {{ post_content | raw }}
             </main>
-            {% include "webpages/blocks/#{post_lang}/footer.html.twig" %}
+            {% include "webpages/blocks/#{lang}/footer.html.twig" %}
         </div>
     </div>
 {% endblock %}

@@ -16,7 +16,7 @@
         {% elseif item.post %}
             <li>
                 <a href="{{ path('web_post', {post_url: item.post.posturl}) }}" {{ targetAttr }}>
-                    {{ item.cusname ?? item.post.postname }}
+                    {{ item.cusname ?? item.post.postname[post_title] }}
                 </a>
             </li>
         {% else %}

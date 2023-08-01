@@ -25,7 +25,7 @@ class NavLinksFormType extends AbstractType
             ])
             ->add('posts', EntityType::class, [
                 'class' => PostsList::class,
-                'choice_label' => 'post_name',
+                'choice_label' => 'post_name[0]',
                 'label' => false,
                 'multiple' => true,
                 'expanded' => true
