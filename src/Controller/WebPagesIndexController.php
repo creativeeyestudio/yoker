@@ -85,19 +85,29 @@ class WebPagesIndexController extends AbstractController
     // -----------------------------------------------------------------------------------------------------------------
     public function showPost(ManagerRegistry $doctrine, Request $request, string $post_url){
         $post = $doctrine->getRepository(PostsList::class)->findOneBy(["post_url" => $post_url]);
-        $statut = $post->isStatus();
+        $menus = $doctrine->getRepository(Menu::class);
+        $statut = $post->isOnline();
+
         if (!$statut) {
             throw $this->createNotFoundException("Cet article n'est pas disponible");
         }
-        
+
         $post_lang = $request->getLocale();
-        $meta_title = $post->getPostMetaTitle();
-        $meta_desc = $post->getPostMetaDesc();
+        $locales = Locales::getLocales();
+        $localesSite = [
+            $locales[280], // FR
+            $locales[96] // EN
+        ];
+        
+        $meta_title = $post->getPostMetaTitle()[array_search($post_lang, $localesSite)];
+        $meta_desc = $post->getPostMetaDesc()[array_search($post_lang, $localesSite)];
+        $post_content = $post->getPostContent()[array_search($post_lang, $localesSite)];
 
         return $this->render('web_pages_views/post.html.twig', [
-            'post_id' => $post->getPostId(),
+            'menus' => $menus,
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
+            'post_content' => htmlspecialchars_decode($post_content),
             'post_lang' => $post_lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,

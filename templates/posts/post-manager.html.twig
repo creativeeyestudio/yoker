@@ -5,54 +5,29 @@
 {% block body %}
     <section class="block tab-container">
         <h2>{{ title }}</h2>
-        <ul class="tabs tabs-btn">
-            <li><a class="tab active">Français</a></li>
-            <li><a class="tab">English</a></li>
-        </ul>
+
+        {# <ul class="tabs tabs-btn">
+        {% for language in ['Français'] %}
+            <li><a class="tab {% if loop.index == 1 %}active{% endif %}" tabindex='2'>{{ language }}</a></li>
+        {% endfor %}
+        </ul> #}
+
         {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
-            <p {% if is_granted('ROLE_EDITOR') == false %} class="d-none" {% endif %} >
-                {{ form_label(form.status) }}<br />
-                {{ form_widget(form.status) }}
-            </p>
-            <fieldset id="fr" class="tab-pane active">
-                <legend>Article en français</legend>
-                <p>{{ form_row(form.post_name) }}</p>
-                <p>{{ form_label(form.post_content) }}<br />
-                {% if content is defined %}
-                    {{ form_widget(form.post_content, { value: content } ) }}
-                {% else %}   
-                    {{ form_widget(form.post_content) }}
-                {% endif %}</p>
-
-                <p>{{ form_row(form.post_meta_title) }}</p>
-                <p>{{ form_row(form.post_meta_desc) }}</p>
+            <fieldset class="tab-pane active">
+                {# <legend>Contenu en {{ language }}</legend> #}
+                {{ form_row(form.post_name_fr) }}
+                {{ form_row(form.post_content_fr) }}
+                {{ form_row(form.post_meta_title_fr) }}
+                {{ form_row(form.post_meta_desc_fr) }}
             </fieldset>
-
-            <fieldset id="english" class="tab-pane">
-                <legend>Post in english</legend>
-                <p>{{ form_row(form.post_name_en) }}</p>
-                
-                <p>{{ form_label(form.post_content_en) }}<br />
-                {% if content_en is defined %}
-                    {{ form_widget(form.post_content_en, { value: content_en } ) }}
-                {% else %}
-                    {{ form_widget(form.post_content_en) }}
-                {% endif %}</p>
-                
-                <p>{{ form_row(form.post_meta_title_en) }}</p>
-                <p>{{ form_row(form.post_meta_desc_en) }}</p>
-            </fieldset>
-
+            <hr />
             <fieldset>
-                <legend>Image principale de l'article</legend>
-                <p>{{ form_row(form.post_thumb) }}</p>
+                <legend>Autres informations</legend>
+                {{ form_row(form.online) }}
+                {{ form_row(form.post_thumb) }}
+                {{ form_row(form.post_url) }}
             </fieldset>
-            <div class="btn-list">
-                {{ form_row(form.submit) }}
-                {% if post_id is defined %}
-                    {# <a class="btn-link-2" href="{{ path('web_page', {post_url: post_id}) }}" target="_blank" rel="noopener">Voir la page</a> #}
-                {% endif %}
-            </div>
+            {{ form_row(form.submit) }}
         {{ form_end(form) }}
     </section>
 {% endblock %}

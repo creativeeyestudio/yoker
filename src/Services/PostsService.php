@@ -7,95 +7,102 @@ use App\Form\PostsAdminFormType;
 use Cocur\Slugify\Slugify;
 use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 class PostsService extends AbstractController{
 
-    function PostManager(ManagerRegistry $doctrine, Request $request, bool $newPost, string $postId = null)
-{
-    $entityManager = $doctrine->getManager();
-
-    // Initialisation du formulaire
-    if ($newPost) {
-        $post = new PostsList();
-    } else {
-        $post = $entityManager->getRepository(PostsList::class)->findOneBy(['post_id' => $postId]);
-    }
-
-    $form = $this->createForm(PostsAdminFormType::class, $post);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Récupération des données du formulaire
-        $post = $form->getData();
-
-        if (!$newPost) {
-            if (!$post) {
-                throw $this->createNotFoundException("Aucune page n'a été trouvée");
-            }
-            $postId = $post->getPostId();
-            $postFileName = $postId . ".html.twig";
-            unlink("../templates/webpages/posts/fr/" . $postFileName);
-            unlink("../templates/webpages/posts/en/" . $postFileName);
-        }
-
-        // Création du slug
+    function PostManager(ManagerRegistry $doctrine, Request $request, Security $security, bool $newPost, string $postId = null)
+    {
+        $em = $doctrine->getManager();
+        $postRepo = $em->getRepository(PostsList::class);
         $slugify = new Slugify();
-        $slugName = $slugify->slugify($form->get('post_name')->getData());
-        $slugUrl = $slugify->slugify($form->get('post_url')->getData());
 
-        // Création de l'ID Post
+        // CREATION / RECUPERATION D'UN POST
+        // --------------------------------------------------------
         if ($newPost) {
-            $post->setPostId($slugName);
-        }
-
-        // Création des dates
-        if ($newPost) {
-            $post->setCreatedAt(new DateTimeImmutable());
-        }
-        $post->setUpdatedAt(new DateTimeImmutable());
-
-        // Création de l'URL
-        if (!$form->get('post_url')->getData() && $newPost) {
-            $post->setPostUrl($slugName);
-        } elseif (!$form->get('post_url')->getData() && !$newPost) {
-            $post->setPostUrl($post->getPostUrl());
+            $post = new PostsList();
         } else {
-            $post->setPostUrl($slugUrl);
+            $post = $postRepo->find($postId);
+            if (!$post) {
+                throw $this->createNotFoundException("Aucune post n'a été trouvé");
+            }
         }
 
-        // Création du Meta Title
-        $postMetaTitle = $form->get('post_meta_title')->getData();
-        if (empty($postMetaTitle)) {
-            $postMetaTitle = $newPost ? $form->get('post_name')->getData() : $post->getPostMetaTitle();
+        // INITIALISATION DU FORMULAIRE
+        // --------------------------------------------------------
+        $form = $this->createForm(PostsAdminFormType::class, $post);
+        $form->handleRequest($request);
+
+        // ENVOI DU FORMULAIRE
+        // --------------------------------------------------------
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération des données du formulaire
+            $post = $form->getData();
+
+            // Création / Modification du nom
+            $nameFr = $form->get('post_name_fr')->getData();
+            $post->setPostName([$nameFr]);
+
+            // Création / Modification du contenu
+            $contentFr = htmlspecialchars($form->get('post_content_fr')->getData());
+            $post->setPostContent([$contentFr]);
+
+            // Création / Modification du Meta Title
+            $metaTitleFr = $form->get('post_meta_title_fr')->getData();
+            $post->setPostMetaTitle([
+                !($metaTitleFr) ? $nameFr : $metaTitleFr
+            ]);
+
+            // Création / Modification du Meta Desc
+            $metaDescFr = $form->get('post_meta_desc_fr')->getData();
+            $post->setPostMetaDesc([$metaDescFr]);
+
+            // Création de l'URL
+            if ($newPost) {
+                $slugName = $slugify->slugify($nameFr);
+                if ($slugName) {
+                    $post->setPostUrl($slugName);
+                }
+            }
+
+            // Gestion des dates
+            $dateFormat = 'd-m-Y H:m:s';
+            $currentDate = new DateTimeImmutable();
+            $post->setUpdatedAt($currentDate);
+            if ($newPost) {
+                $post->setCreatedAt($currentDate);
+            }
+
+            // Création de l'auteur
+            if ($newPost) {
+                $author = $security->getUser();
+                $post->setAuthor($author);
+            }
+
+            // Création de l'image
+            $imageFile = $form->get('post_thumb')->getData();
+            if ($imageFile) {
+                $imageName = $slugify->slugify($imageFile->getClientOriginalName());
+                $ext = $imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('posts_img_directory'),
+                        $imageName
+                    );
+                    $post->setPostThumb($imageName);
+                } catch (\Throwable $th) {
+                    throw $th;
+                }
+            }
+            
+            // Envoi des données vers la BDD
+            $em->persist($post);
+            $em->flush();
         }
-        $post->setPostMetaTitle($postMetaTitle);
 
-        // Création / Modification de l'image principale
-        if ($form->get('post_thumb')->getData() !== null) {
-            $postImg = $form->get('post_thumb')->getData();
-            $imgFile = md5(uniqid()) . '.' . $postImg->guessExtension();
-            $postImg->move(
-                $this->getParameter('posts_img_directory'),
-                $imgFile
-            );
-            $post->setPostThumb($imgFile);
-        }
-
-        // Envoi des données vers la BDD
-        $entityManager->persist($post);
-        $entityManager->flush();
-
-        // Création du fichier TWIG
-        $file = "../templates/webpages/posts/fr/" . $post->getPostId() . '.html.twig';
-        $file_en = "../templates/webpages/posts/en/" . $post->getPostId() . '.html.twig';
-        file_put_contents($file, $form->get('post_content')->getData());
-        file_put_contents($file_en, $form->get('post_content_en')->getData());
+        return $form;
     }
-
-    return $form;
-}
-
-
 }

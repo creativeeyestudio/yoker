@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +37,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $is_verified = null;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: PostsList::class)]
+    private Collection $postsLists;
+
+    public function __construct()
+    {
+        $this->postsLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +148,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $is_verified): self
     {
         $this->is_verified = $is_verified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostsList>
+     */
+    public function getPostsLists(): Collection
+    {
+        return $this->postsLists;
+    }
+
+    public function addPostsList(PostsList $postsList): static
+    {
+        if (!$this->postsLists->contains($postsList)) {
+            $this->postsLists->add($postsList);
+            $postsList->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostsList(PostsList $postsList): static
+    {
+        if ($this->postsLists->removeElement($postsList)) {
+            // set the owning side to null (unless already changed)
+            if ($postsList->getAuthor() === $this) {
+                $postsList->setAuthor(null);
+            }
+        }
 
         return $this;
     }

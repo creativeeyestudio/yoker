@@ -10,10 +10,10 @@
         <div id="website">
             {% include "webpages/blocks/#{post_lang}/header.html.twig" %}
             <main id="main">
-                {% if post_thumb != '' %}
+                {% if post_thumb %}
                     <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
                 {% endif %}
-                {% include "webpages/posts/#{post_lang}/#{post_id}.html.twig" %}
+                {{ post_content | raw }}
             </main>
             {% include "webpages/blocks/#{post_lang}/footer.html.twig" %}
         </div>
