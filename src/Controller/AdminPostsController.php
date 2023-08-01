@@ -67,9 +67,10 @@ class AdminPostsController extends AbstractController
         return $this->render('posts/post-manager.html.twig', [
             'form' => $form->createView(),
             'title' => "Modifier un article",
+            'postName_fr' => $post->getPostName()[0],
             'metaTitle_fr' => $post->getPostMetaTitle()[0],
             'metaDesc_fr' => $post->getPostMetaDesc()[0],
-            'pageContent_fr' => htmlspecialchars_decode($post->getPostContent()[0]),
+            'postContent_fr' => htmlspecialchars_decode($post->getPostContent()[0]),
         ]);
     }
 
