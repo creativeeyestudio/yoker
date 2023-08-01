@@ -79,18 +79,19 @@ class AdminPagesController extends AbstractController
     public function delete_page(ManagerRegistry $doctrine, string $page_id) {
         $em = $doctrine->getManager();
         $page = $em->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
-        $menuLink = $em->getRepository(MenuLink::class)->findOneBy(['page' => $page]);
-        
-        if ($menuLink) {
-            $em->remove($menuLink);
-        }
+        $menuLink = $em->getRepository(MenuLink::class)->findBy(['page' => $page]);
 
-        if(!$page) {
+        if($page) {
+            if ($menuLink) {
+                foreach($menuLink as $link){
+                    $em->remove($link);
+                }
+            }
+            $em->remove($page);
+            $em->flush();
+        } else {
             throw $this->createNotFoundException("Aucune page n'a été trouvée");
         }
-
-        $em->remove($page);
-        $em->flush();
 
         return $this->redirectToRoute('admin_pages');
     }

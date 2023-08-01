@@ -56,37 +56,30 @@
                             {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
                                 <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
                                     {% if item.post is not null %}
-                                        <div class="block_order_link">
-                                            <span>Post (Article)</span>
-                                        <ul>
-                                            <li><a href="{{ path('web_post', { post_url: item.post.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
-                                            <li><span class="nav-update" data-link="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
-                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                        </ul>
-                                        </div>
+                                    <div class="block_order_link">
+                                        <span>Post (Article) {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>
+                                    </div>
+                                    <ul>
+                                        <li><a href="{{ path('web_post', { post_url: item.post.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
                                     {% elseif item.page is not null %}
-                                        <div class="block_order_link">
-                                            <span>{{ item.page.pagename }}</span>
-                                        </div>
-                                        <ul>
-                                            <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
-                                            <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
-                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                        </ul>
+                                    <div class="block_order_link">
+                                        <span>{{ item.page.pagename }} {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>
+                                    </div>
+                                    <ul>
+                                        <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
                                     {% else %}
-                                        <div class="block_order_link">
-                                            <span>{{ item.cusname }} (Lien externe)</span>
-                                        </div>
-                                        <ul>
-                                            <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
-                                            <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
-                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                        </ul>
+                                    <div class="block_order_link">
+                                        <span>{{ item.cusname }} {% if item.cusname %}<em>- {{ item.cusname }}</em>{% endif %}</span>
+                                    </div>
+                                    <ul>
+                                        <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
                                     {% endif %}
+                                        <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
+                                        <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                    </ul>
                                 </div>
-                            {% endfor %}    
+                            {% endfor %} 
                         {% endif %}
-                        
                     </div>
                 </div>
             </div>

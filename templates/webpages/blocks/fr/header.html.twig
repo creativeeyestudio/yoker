@@ -22,7 +22,7 @@
         {% else %}
             <li>
                 <a href="{{ item.cuslink }}" {{ targetAttr }}>
-                    {{ item.cusname }}
+                    {{ item.cusname ?? item.cuslink }}
                 </a>
             </li>
         {% endif %}
