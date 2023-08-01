@@ -21,39 +21,40 @@ class WebPagesIndexController extends AbstractController
     // -----------------------------------------------------------------------------------------------------------------
     private function showPage(ManagerRegistry $doctrine, Request $request, string $page_id): Response
     {
-        $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_id]);
+        $page_base = $doctrine->getRepository(PagesList::class);
+        $page = $page_base->findOneBy(['page_url' => $page_id]);
+        $post_base = $doctrine->getRepository(PostsList::class);
+        $posts = $post_base->findAll();
+        $post = $post_base->find($page_id);
         $menus = $doctrine->getRepository(Menu::class);
 
-        $page_lang = $request->getLocale();
+        $lang = $request->getLocale();
         $locales = Locales::getLocales();
         $localesSite = [
             $locales[280], // FR
             $locales[96] // EN
         ];
 
-        $post_title = array_search($page_lang, $localesSite);
-        $meta_title = $page->getPageMetaTitle()[array_search($page_lang, $localesSite)];
-        $meta_desc = $page->getPageMetaDesc()[array_search($page_lang, $localesSite)];
-        $page_content = $page->getPageContent()[array_search($page_lang, $localesSite)];
+        $post_title = array_search($lang, $localesSite);
+        $meta_title = $page->getPageMetaTitle()[array_search($lang, $localesSite)];
+        $meta_desc = $page->getPageMetaDesc()[array_search($lang, $localesSite)];
+        $page_content = $page->getPageContent()[array_search($lang, $localesSite)];
 
         if (!$page || !$page->isStatus()) {
             return (!$page) ? $this->redirectToRoute('web_index') : throw $this->createNotFoundException("Cette page n'est pas disponible");
         }
 
         $settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 0]);
-        $posts = $doctrine->getRepository(PostsList::class)->findAll();
 
         return $this->render('web_pages_views/index.html.twig', [
-            'page_id' => $page->getPageId(),
-            'page_slug' => $page->getPageUrl(),
-            'lang' => $page_lang,
             'page_content' => htmlspecialchars_decode($page_content),
             'posts' => $posts,
-            'menus' => $menus,
             'post_title' => $post_title,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
             'settings' => $settings,
+            'lang' => $lang,
+            'menus' => $menus,
         ]);
     }
 
