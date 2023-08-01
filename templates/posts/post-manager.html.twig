@@ -17,26 +17,26 @@
             <fieldset class="tab-pane {% if loop.index == 1 %}active{% endif %}">
                 <legend>Contenu en {{ language }}</legend>
                 {% set postNameField = attribute(form, 'post_name_' ~ prefix) %}
-                {{ form_row(postNameField, { 'value': attribute(_context, 'postName_' ~ prefix)|default }) }}
+                <p>{{ form_row(postNameField, { 'value': attribute(_context, 'postName_' ~ prefix)|default }) }}</p>
 
                 {% set postContentField = attribute(form, 'post_content_' ~ prefix) %}
-                {{ form_row(postContentField, { 'value': attribute(_context, 'postContent_' ~ prefix)|default }) }}
+                <p>{{ form_row(postContentField, { 'value': attribute(_context, 'postContent_' ~ prefix)|default }) }}</p>
                 
                 {% set postMetaTitleField = attribute(form, 'post_meta_title_' ~ prefix) %}
-                {{ form_row(postMetaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}
+                <p>{{ form_row(postMetaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}</p>
 
                 {% set postMetaDescField = attribute(form, 'post_meta_desc_' ~ prefix) %}
-                {{ form_row(postMetaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}
+                <p>{{ form_row(postMetaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}</p>
             </fieldset>
             {% endfor %}
             <hr />
             <fieldset>
                 <legend>Autres informations</legend>
-                {{ form_row(form.online) }}
-                {{ form_row(form.post_thumb) }}
-                {{ form_row(form.post_url) }}
+                <p>{{ form_row(form.online) }}</p>
+                <p>{{ form_row(form.post_thumb) }}</p>
+                <p>{{ form_row(form.post_url) }}</p>
             </fieldset>
-            {{ form_row(form.submit) }}
+            <p>{{ form_row(form.submit) }}</p>
         {{ form_end(form) }}
     </section>
 {% endblock %}
