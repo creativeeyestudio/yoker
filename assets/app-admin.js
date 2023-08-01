@@ -29,6 +29,7 @@ const dragDropList = document.querySelector('#drag-drop-list');
 if (dragDropList) {
     document.addEventListener('DOMContentLoaded', () => {
         const sortable = new Sortable(dragDropList, {
+            group: 'nested',
             animation: 150,
             onEnd: (event) => {
                 // Mettre à jour l'ordre des éléments après le glisser-déposer
@@ -75,7 +76,7 @@ if (navSelect) {
     })
 }
 
-// Menus
+// Suppression de menu
 const menuRemove = document.querySelectorAll('.menu-remove');
 if (menuRemove.length > 0) {
     menuRemove.forEach((menu) => {
@@ -100,7 +101,29 @@ if (menuRemove.length > 0) {
     });
 }
 
-// Liens
+// Modification du lien
+const navLinksUpdate = document.querySelectorAll('.nav-update');
+const popupContainer = document.querySelector('#popup-container');
+if (navLinksUpdate) {
+    const popup = document.querySelector('#popup');
+    navLinksUpdate.forEach((link) => {
+        link.addEventListener('click', function() {
+            const url = link.dataset.url;
+            popupContainer.style.display = 'flex';
+            popup.src = url;
+            console.log(url);
+        })
+        
+    })
+}
+
+if (popupContainer) {
+    popupContainer.addEventListener('click', function () {
+        popupContainer.style.display = 'none';
+    })
+}
+
+// Drag and drop / Suppression du lien
 const navLinksRemove = document.querySelectorAll('.nav-remove');
 if (navLinksRemove.length > 0 && dragDropList) {
     const urlDel = dragDropList.dataset.urldel;

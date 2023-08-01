@@ -15,6 +15,10 @@
         <h2>{{ title }}</h2>
 
         {% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
+            <div id="popup-container">
+                <iframe src="" frameborder="0" id="popup"></iframe>
+            </div>
+            
             <div class="nav-blocks">
                 <div class="block links tab-container">
                     <ul class="tabs tabs-btn">
@@ -54,6 +58,11 @@
                                     {% if item.post is not null %}
                                         <div class="block_order_link">
                                             <span>Post (Article)</span>
+                                        <ul>
+                                            <li><a href="{{ path('web_post', { post_url: item.post.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
+                                            <li><span class="nav-update" data-link="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
+                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                        </ul>
                                         </div>
                                     {% elseif item.page is not null %}
                                         <div class="block_order_link">
@@ -61,6 +70,7 @@
                                         </div>
                                         <ul>
                                             <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
+                                            <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
                                             <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
                                         </ul>
                                     {% else %}
@@ -69,6 +79,7 @@
                                         </div>
                                         <ul>
                                             <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
+                                            <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
                                             <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
                                         </ul>
                                     {% endif %}

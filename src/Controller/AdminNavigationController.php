@@ -7,7 +7,9 @@ use App\Entity\MenuLink;
 use App\Form\NavCreateFormType;
 use App\Form\NavLinksFormType;
 use App\Form\NavSelectFormType;
+use App\Form\NavUpdateLinkFormType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +37,7 @@ class AdminNavigationController extends AbstractController
 
             foreach ($pages as $link) {
                 $oldLink = $em->getRepository(MenuLink::class)->findOneBy([
-                    'menu' => $id_menu,
+                    'menu' => $menu->getId(),
                     'page' => $link
                 ]);
 
@@ -164,6 +166,24 @@ class AdminNavigationController extends AbstractController
     {
         $render = $this->initPage($doctrine, $request, "Navigation du site", $id_menu);
         return $render;
+    }
+
+    #[Route('/admin/navigation/manage-link/{id_link}', name: 'app_admin_nav_manage_link')]
+    public function manageLink(ManagerRegistry $doctrine, Request $request, int $id_link){
+        $em = $doctrine->getManager();
+        $menuLink = $em->getRepository(MenuLink::class)->findOneBy(['id' => $id_link]);
+        $form = $this->createForm(NavUpdateLinkFormType::class, $menuLink);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $em = $doctrine->getManager();
+            $em->persist($menuLink);
+            $em->flush();
+        }
+        
+        return $this->render('admin_navigation/popup.html.twig', [
+            'form' => $form
+        ]);
     }
 
     #[Route(path: '/delete-nav', name: 'delete_link', methods: ['POST'])]

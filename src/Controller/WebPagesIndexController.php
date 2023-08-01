@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WebPagesIndexController extends AbstractController
 {
-
     #region Page
     // Page Generator
     // -----------------------------------------------------------------------------------------------------------------
@@ -24,7 +23,6 @@ class WebPagesIndexController extends AbstractController
     {
         $page = $doctrine->getRepository(PagesList::class)->findOneBy(["page_url" => $page_id]);
         $menus = $doctrine->getRepository(Menu::class);
-        $main_menu = $menus->findOneBy(['pos' => 0])->getMenuLinks();
 
         $page_lang = $request->getLocale();
         $locales = Locales::getLocales();
@@ -83,7 +81,6 @@ class WebPagesIndexController extends AbstractController
     #endregion
 
     #region Post
-
     // Post Generator
     // -----------------------------------------------------------------------------------------------------------------
     public function showPost(ManagerRegistry $doctrine, Request $request, string $post_url){

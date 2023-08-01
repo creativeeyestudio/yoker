@@ -31,6 +31,9 @@ class MenuLink
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cus_link = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $blank = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class MenuLink
     public function setCusLink(?string $cus_link): static
     {
         $this->cus_link = $cus_link;
+
+        return $this;
+    }
+
+    public function isBlank(): ?bool
+    {
+        return $this->blank;
+    }
+
+    public function setBlank(?bool $blank): static
+    {
+        $this->blank = $blank;
 
         return $this;
     }
