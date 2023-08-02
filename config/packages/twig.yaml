@@ -3,7 +3,7 @@ twig:
     globals:
         site_name: "Nom du site"
         version: "2.0"
-        date_update: "31/07/2023"
+        date_update: "02/08/2023"
         google_maps: ""
         recaptcha_public: ''
         recaptcha_private: ''

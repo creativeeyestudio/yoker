@@ -25,7 +25,6 @@ class WebPagesIndexController extends AbstractController
         $page = $page_base->findOneBy(['page_url' => $page_id]);
         $post_base = $doctrine->getRepository(PostsList::class);
         $posts = $post_base->findAll();
-        $post = $post_base->find($page_id);
         $menus = $doctrine->getRepository(Menu::class);
 
         $lang = $request->getLocale();
@@ -107,10 +106,10 @@ class WebPagesIndexController extends AbstractController
         $post_content = $post->getPostContent()[array_search($lang, $localesSite)];
 
         return $this->render('web_pages_views/post.html.twig', [
-            'menus' => $menus,
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
             'post_content' => htmlspecialchars_decode($post_content),
+            'menus' => $menus,
             'lang' => $lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,

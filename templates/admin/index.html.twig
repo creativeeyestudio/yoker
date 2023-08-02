@@ -9,7 +9,7 @@
         <h2>Dernières pages</h2>
         {% for page in pagesList %}
             <div class="line">
-                <p>{{ page.pagename }}</p>
+                <p>{{ page.pagename[0] }}</p>
                 <ul>
                     <li><a href="{{ path('web_page', {page_slug: page.pageurl}) }}" target="_blank" rel="noopener">Voir</a></li>
                 </ul>
@@ -23,7 +23,7 @@
         <h2>Derniers articles</h2>
         {% for post in postsList %}
             <div class="line">
-                <p>{{ post.postname }}</p>
+                <p>{{ post.postname[0] }}</p>
                 <ul>
                     <li><a href="{{ path('web_post', {post_url: post.posturl}) }}" target="_blank" rel="noopener">Voir</a></li>
                 </ul>
