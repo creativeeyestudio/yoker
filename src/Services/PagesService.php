@@ -38,12 +38,12 @@ class PagesService extends AbstractController{
             $page = $form->getData();
 
             // Création du nom
-            $nameFr = $form->get('page_name_fr')->getData();
-            $page->setPageName([$nameFr]);
+            $name = [$form->get('page_name_fr')->getData()];
+            $page->setPageName($name);
 
             // Création du slug
             $slugify = new Slugify();
-            $slugName = $slugify->slugify($nameFr);
+            $slugName = $slugify->slugify($name[0]);
             $slugUrl = $slugify->slugify($form->get('page_url')->getData());
 
             // Création de l'ID Page
@@ -52,23 +52,19 @@ class PagesService extends AbstractController{
             }
 
             // Création / Modification de l'URL
-            if (!$form->get('page_url')->getData()) {
-                $page->setPageUrl($newPage ? $slugName : $page->getPageUrl());
-            } else {
-                $page->setPageUrl($slugUrl);
-            }
+            $page->setPageUrl(empty($form->get('page_url')->getData()) ? ($newPage ? $slugName : $page->getPageUrl()) : $slugUrl);
 
             // Création / Modification du Meta Title
-            $metaTitle = $form->get('page_meta_title_fr')->getData() ?: '';
+            $metaTitle = [$form->get('page_meta_title_fr')->getData() ?: $name[0]];
             $page->setPageMetaTitle([$metaTitle]);
 
             // Création / Modification du Meta Desc
-            $metaDesc = $form->get('page_meta_desc_fr')->getData() ?: '';
-            $page->setPageMetaDesc([$metaDesc]);
+            $metaDesc = [$form->get('page_meta_desc_fr')->getData() ?: ''];
+            $page->setPageMetaDesc($metaDesc);
 
             // Création / Modification du contenu
-            $pageContent = htmlspecialchars($form->get('page_content_fr')->getData());
-            $page->setPageContent([$pageContent ?: "Contenu à ajouter"]);
+            $pageContent = [htmlspecialchars($form->get('page_content_fr')->getData()) ?: "Contenu à ajouter"];
+            $page->setPageContent($pageContent);
 
             // Envoi des données vers la BDD
             $entityManager->persist($page);

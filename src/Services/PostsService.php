@@ -43,17 +43,17 @@ class PostsService extends AbstractController{
             $post = $form->getData();
 
             // Création / Modification du nom
-            $nameFr = $form->get('post_name_fr')->getData();
-            $post->setPostName([$nameFr]);
+            $name = [$form->get('post_name_fr')->getData()];
+            $post->setPostName($name);
 
             // Création / Modification du contenu
-            $contentFr = htmlspecialchars($form->get('post_content_fr')->getData());
-            $post->setPostContent([$contentFr]);
+            $content = [htmlspecialchars($form->get('post_content_fr')->getData())];
+            $post->setPostContent($content);
 
             // Création / Modification du Meta Title
             $metaTitleFr = $form->get('post_meta_title_fr')->getData();
             $post->setPostMetaTitle([
-                !($metaTitleFr) ? $nameFr : $metaTitleFr
+                !($metaTitleFr) ? $name[0] : $metaTitleFr
             ]);
 
             // Création / Modification du Meta Desc
@@ -62,14 +62,13 @@ class PostsService extends AbstractController{
 
             // Création de l'URL
             if ($newPost) {
-                $slugName = $slugify->slugify($nameFr);
+                $slugName = $slugify->slugify($name[0]);
                 if ($slugName) {
                     $post->setPostUrl($slugName);
                 }
             }
 
             // Gestion des dates
-            $dateFormat = 'd-m-Y H:m:s';
             $currentDate = new DateTimeImmutable();
             $post->setUpdatedAt($currentDate);
             if ($newPost) {
