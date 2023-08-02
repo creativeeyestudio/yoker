@@ -1,31 +1,33 @@
 <header id="header">
-<h1>En-tête du site</h1>
+    <h1>En-tête du site</h1>
 </header>
 
 <nav>
-	<ul id="nav">
-    {% for item in menus.findOneBy({'pos': 0}).menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
-        {% set targetAttr = item.blank ? 'target="_blank" rel="noopener" data-no-swup="1"' : '' %}
+	<ul>
+		{% set menuData = menus.findOneBy({'pos': 0}) %}
+		{% set sortedMenuLinks = menuData.menulinks|sort((a, b) => a.orderlink <=> b.orderlink) %}
+		{% for item in sortedMenuLinks  %}
+			{% set targetAttr = item.blank ? 'target="_blank" rel="noopener" data-no-swup="1"' : '' %}
+			{% set cusname = item.cusname[lang] ?? null %}
+			{% set pageSlug = item.page.pageurl ?? null %}
+			{% set postUrl = item.post.posturl ?? null %}
+			{% set cuslink = item.cuslink ?? null %}
 
-        {% if item.page %}
-            <li>
-                <a href="{{ path('web_page', {page_slug: item.page.pageurl}) }}" {{ targetAttr }}>
-                    {{ item.cusname[lang] ?? item.page.pagename[lang] }}
-                </a>
-            </li>
-        {% elseif item.post %}
-            <li>
-                <a href="{{ path('web_post', {post_url: item.post.posturl}) }}" {{ targetAttr }}>
-                    {{ item.cusname[lang] ?? item.post.postname[lang] }}
-                </a>
-            </li>
-        {% else %}
-            <li>
-                <a href="{{ item.cuslink }}" {{ targetAttr }}>
-                    {{ item.cusname[lang] ?? item.cuslink }}
-                </a>
-            </li>
-        {% endif %}
-    {% endfor %}
-</ul>
+			<li>
+				{% if item.page %}
+					<a href="{{ path('web_page', {page_slug: pageSlug}) }}" {{ targetAttr }}>
+						{{ cusname ?? item.page.pagename[lang] }}
+					</a>
+				{% elseif item.post %}
+					<a href="{{ path('web_post', {post_url: postUrl}) }}" {{ targetAttr }}>
+						{{ cusname ?? item.post.postname[lang] }}
+					</a>
+				{% else %}
+					<a href="{{ cuslink }}" {{ targetAttr }}>
+						{{ cusname ?? cuslink }}
+					</a>
+				{% endif %}
+			</li>
+		{% endfor %}
+    </ul>
 </nav>

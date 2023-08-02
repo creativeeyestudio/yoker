@@ -62,6 +62,7 @@ class AdminNavigationController extends AbstractController
             foreach ($pagesToInsert as $link) {
                 $menuLink = new MenuLink();
                 $menuLink->setMenu($menu);
+                $menuLink->setCusName($link->getPageName());
                 $menuLink->setPage($link);
                 $menuLink->setOrderLink(0);
                 $menuLinksToInsert[] = $menuLink;
@@ -70,6 +71,7 @@ class AdminNavigationController extends AbstractController
             foreach ($postsToInsert as $link) {
                 $menuLink = new MenuLink();
                 $menuLink->setMenu($menu);
+                $menuLink->setCusName($link->getPostName());
                 $menuLink->setPost($link);
                 $menuLink->setOrderLink(0);
                 $menuLinksToInsert[] = $menuLink;
@@ -80,7 +82,7 @@ class AdminNavigationController extends AbstractController
                 $menuLink = new MenuLink();
                 $menuLink->setOrderLink(0);
                 $menuLink->setMenu($menu);
-                $menuLink->setCusName($cusName);
+                $menuLink->setCusName([$cusName]);
                 $menuLink->setCusLink($cusLink);
                 $menuLinksToInsert[] = $menuLink;
             }

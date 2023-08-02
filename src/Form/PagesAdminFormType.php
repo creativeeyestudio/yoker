@@ -17,26 +17,12 @@ class PagesAdminFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('page_name', TextType::class, [
-                'label' => 'Nom de la page'
-            ])
-            ->add('page_url', TextType::class, [
-                'label' => 'URL de la page',
-                'required' => false,
-            ])
-            ->add('status', ChoiceType::class, [
-                'label' => "Visibilité de la page",
-                'choices' => [
-                    "En brouillon" => false,
-                    "Publié" => true
-                ]
-            ])
-            ->add('blocked_page', CheckboxType::class, [
-                'label' => 'Page fixe',
-                'required' => false, 
-            ])
             
             // Contenu en FR
+            ->add('page_name_fr', TextType::class, [
+                'label' => 'Nom de la page',
+                'mapped' => false,
+            ])
             ->add('page_content_fr', CKEditorType::class, [
                 'label' => 'Contenu de la page (FR)',
                 'mapped' => false,
@@ -54,6 +40,23 @@ class PagesAdminFormType extends AbstractType
                 'label' => 'Balise Meta Description (FR)',
                 'required' => false,
                 'mapped' => false
+            ])
+
+            // Global
+            ->add('page_url', TextType::class, [
+                'label' => 'URL de la page',
+                'required' => false,
+            ])
+            ->add('status', ChoiceType::class, [
+                'label' => "Visibilité de la page",
+                'choices' => [
+                    "En brouillon" => false,
+                    "Publié" => true
+                ]
+            ])
+            ->add('blocked_page', CheckboxType::class, [
+                'label' => 'Page fixe',
+                'required' => false, 
             ])
 
             ->add('page_submit', SubmitType::class, [

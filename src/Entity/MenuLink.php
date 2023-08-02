@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MenuLinkRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MenuLinkRepository::class)]
@@ -33,6 +35,24 @@ class MenuLink
 
     #[ORM\Column(nullable: true)]
     private ?bool $blank = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'menuLinks')]
+    private ?self $parent = null;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private Collection $menuLinks;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'sous_menus')]
+    private ?self $menuLink = null;
+
+    #[ORM\OneToMany(mappedBy: 'menuLink', targetEntity: self::class)]
+    private Collection $sous_menus;
+
+    public function __construct()
+    {
+        $this->menuLinks = new ArrayCollection();
+        $this->sous_menus = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +139,90 @@ class MenuLink
     public function setBlank(?bool $blank): static
     {
         $this->blank = $blank;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): static
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getMenuLinks(): Collection
+    {
+        return $this->menuLinks;
+    }
+
+    public function addMenuLink(self $menuLink): static
+    {
+        if (!$this->menuLinks->contains($menuLink)) {
+            $this->menuLinks->add($menuLink);
+            $menuLink->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuLink(self $menuLink): static
+    {
+        if ($this->menuLinks->removeElement($menuLink)) {
+            // set the owning side to null (unless already changed)
+            if ($menuLink->getParent() === $this) {
+                $menuLink->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMenuLink(): ?self
+    {
+        return $this->menuLink;
+    }
+
+    public function setMenuLink(?self $menuLink): static
+    {
+        $this->menuLink = $menuLink;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSousMenus(): Collection
+    {
+        return $this->sous_menus;
+    }
+
+    public function addSousMenu(self $sousMenu): static
+    {
+        if (!$this->sous_menus->contains($sousMenu)) {
+            $this->sous_menus->add($sousMenu);
+            $sousMenu->setMenuLink($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSousMenu(self $sousMenu): static
+    {
+        if ($this->sous_menus->removeElement($sousMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($sousMenu->getMenuLink() === $this) {
+                $sousMenu->setMenuLink(null);
+            }
+        }
 
         return $this;
     }

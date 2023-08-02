@@ -37,9 +37,13 @@ class PagesService extends AbstractController{
             // Récupération des données du formulaire
             $page = $form->getData();
 
+            // Création du nom
+            $nameFr = $form->get('page_name_fr')->getData();
+            $page->setPageName([$nameFr]);
+
             // Création du slug
             $slugify = new Slugify();
-            $slugName = $slugify->slugify($form->get('page_name')->getData());
+            $slugName = $slugify->slugify($nameFr);
             $slugUrl = $slugify->slugify($form->get('page_url')->getData());
 
             // Création de l'ID Page

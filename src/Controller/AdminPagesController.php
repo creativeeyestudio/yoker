@@ -67,6 +67,7 @@ class AdminPagesController extends AbstractController
             'title' => $title,
             'form' => $form->createView(),
             'link' => $link,
+            'name_fr' => $page->getPageName()[0],
             'metaTitle_fr' => $page->getPageMetaTitle()[0],
             'metaDesc_fr' => $page->getPageMetaDesc()[0],
             'pageContent_fr' => htmlspecialchars_decode($page->getPageContent()[0]),

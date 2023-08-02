@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\MenuLink;
 use App\Entity\PostsList;
 use App\Services\PostsService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -81,8 +82,14 @@ class AdminPostsController extends AbstractController
     {
         $em = $doctrine->getManager();
         $post = $em->getRepository(PostsList::class)->find($post_id);
+        $menuLink = $em->getRepository(MenuLink::class)->findBy(['post' => $post]);
 
         if ($post) {
+            if ($menuLink) {
+                foreach($menuLink as $link){
+                    $em->remove($link);
+                }
+            }
             $em->remove($post);
             $em->flush();
         } else {
