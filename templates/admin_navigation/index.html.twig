@@ -57,19 +57,19 @@
                                 <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
                                     {% if item.post is not null %}
                                     <div class="block_order_link">
-                                        <span>{{ item.post.postname[0] }} (Article) {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>
+                                        <span>[Post] {{ item.post.postname[0] }} {% if item.cusname[0] %}- <em>{{ item.cusname[0] }}</em>{% endif %}</span>
                                     </div>
                                     <ul>
                                         <li><a href="{{ path('web_post', { post_url: item.post.posturl }) }}" rel='noopener' target='_blank'>Voir</a></li>
                                     {% elseif item.page is not null %}
                                     <div class="block_order_link">
-                                        <span>{{ item.page.pagename }} {% if item.cusname %}- <em>{{ item.cusname }}</em>{% endif %}</span>
+                                        <span>[Page] {{ item.page.pagename[0] }} {% if item.cusname[0] %}- <em>{{ item.cusname[0] }}</em>{% endif %}</span>
                                     </div>
                                     <ul>
                                         <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
                                     {% else %}
                                     <div class="block_order_link">
-                                        <span>{{ item.cusname }} {% if item.cusname %}<em>- {{ item.cusname }}</em>{% endif %}</span>
+                                        <span>[Lien] {{ item.cusname[0] }} {% if item.cusname[0] %}<em>- {{ item.cusname[0] }}</em>{% endif %}</span>
                                     </div>
                                     <ul>
                                         <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>

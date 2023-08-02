@@ -25,8 +25,8 @@ class MenuLink
     #[ORM\ManyToOne(inversedBy: 'menuLinks')]
     private ?PostsList $post = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cus_name = null;
+    #[ORM\Column(nullable: true)]
+    private ?array $cus_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cus_link = null;
@@ -87,12 +87,12 @@ class MenuLink
         return $this;
     }
 
-    public function getCusName(): ?string
+    public function getCusName(): ?array
     {
         return $this->cus_name;
     }
 
-    public function setCusName(?string $cus_name): static
+    public function setCusName(?array $cus_name): static
     {
         $this->cus_name = $cus_name;
 

@@ -18,7 +18,7 @@ class NavLinksFormType extends AbstractType
         $builder
             ->add('pages', EntityType::class, [
                 'class' => PagesList::class,
-                'choice_label' => 'page_name',
+                'choice_label' => 'page_name[0]',
                 'label' => false,
                 'multiple' => true,
                 'expanded' => true

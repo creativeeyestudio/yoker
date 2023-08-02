@@ -168,7 +168,7 @@ class AdminNavigationController extends AbstractController
     #[Route('/admin/navigation/manage-link/{id_link}', name: 'app_admin_nav_manage_link')]
     public function manageLink(ManagerRegistry $doctrine, Request $request, int $id_link){
         $em = $doctrine->getManager();
-        $menuLink = $em->getRepository(MenuLink::class)->findOneBy(['id' => $id_link]);
+        $menuLink = $em->getRepository(MenuLink::class)->find($id_link);
         $form = $this->createForm(NavUpdateLinkFormType::class, $menuLink);
         $form->handleRequest($request);
         
@@ -179,7 +179,8 @@ class AdminNavigationController extends AbstractController
         }
         
         return $this->render('admin_navigation/popup.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'nameFr' => $menuLink->getCusName()[0]
         ]);
     }
 

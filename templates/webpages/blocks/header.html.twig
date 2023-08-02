@@ -10,19 +10,19 @@
         {% if item.page %}
             <li>
                 <a href="{{ path('web_page', {page_slug: item.page.pageurl}) }}" {{ targetAttr }}>
-                    {{ item.cusname ?? item.page.pagename }}
+                    {{ item.cusname[lang] ?? item.page.pagename[lang] }}
                 </a>
             </li>
         {% elseif item.post %}
             <li>
                 <a href="{{ path('web_post', {post_url: item.post.posturl}) }}" {{ targetAttr }}>
-                    {{ item.cusname ?? item.post.postname[post_title] }}
+                    {{ item.cusname[lang] ?? item.post.postname[lang] }}
                 </a>
             </li>
         {% else %}
             <li>
                 <a href="{{ item.cuslink }}" {{ targetAttr }}>
-                    {{ item.cusname ?? item.cuslink }}
+                    {{ item.cusname[lang] ?? item.cuslink }}
                 </a>
             </li>
         {% endif %}

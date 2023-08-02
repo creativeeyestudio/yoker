@@ -3,6 +3,11 @@
 {% block body %}
     <section>
         <h1>Modifier le lien de navigation</h1>
-        {{ form(form) }}
+        {{ form_start(form) }}
+            <p>{{ form_row(form.cus_name, { value: nameFr }) }}</p>
+            <p>{{ form_row(form.cus_link) }}</p>
+            <p>{{ form_widget(form.blank) }} {{ form_label(form.blank) }} </p>
+            <p>{{ form_row(form.submit) }}</p>
+        {{ form_end(form) }}
     </section>
 {% endblock %}

@@ -35,10 +35,10 @@ class WebPagesIndexController extends AbstractController
             $locales[96] // EN
         ];
 
-        $post_title = array_search($lang, $localesSite);
-        $meta_title = $page->getPageMetaTitle()[array_search($lang, $localesSite)];
-        $meta_desc = $page->getPageMetaDesc()[array_search($lang, $localesSite)];
-        $page_content = $page->getPageContent()[array_search($lang, $localesSite)];
+        $lang = array_search($lang, $localesSite);
+        $meta_title = $page->getPageMetaTitle()[$lang];
+        $meta_desc = $page->getPageMetaDesc()[$lang];
+        $page_content = $page->getPageContent()[$lang];
 
         if (!$page || !$page->isStatus()) {
             return (!$page) ? $this->redirectToRoute('web_index') : throw $this->createNotFoundException("Cette page n'est pas disponible");
@@ -49,11 +49,10 @@ class WebPagesIndexController extends AbstractController
         return $this->render('web_pages_views/index.html.twig', [
             'page_content' => htmlspecialchars_decode($page_content),
             'posts' => $posts,
-            'post_title' => $post_title,
+            'lang' => $lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
             'settings' => $settings,
-            'lang' => $lang,
             'menus' => $menus,
         ]);
     }
@@ -95,26 +94,24 @@ class WebPagesIndexController extends AbstractController
             throw $this->createNotFoundException("Cet article n'est pas disponible");
         }
 
-        $post_lang = $request->getLocale();
+        $lang = $request->getLocale();
         $locales = Locales::getLocales();
         $localesSite = [
             $locales[280], // FR
             $locales[96] // EN
         ];
         
-        $post_title = array_search($post_lang, $localesSite);
-        dump($post_title);
-        $meta_title = $post->getPostMetaTitle()[array_search($post_lang, $localesSite)];
-        $meta_desc = $post->getPostMetaDesc()[array_search($post_lang, $localesSite)];
-        $post_content = $post->getPostContent()[array_search($post_lang, $localesSite)];
+        $lang = array_search($lang, $localesSite);
+        $meta_title = $post->getPostMetaTitle()[array_search($lang, $localesSite)];
+        $meta_desc = $post->getPostMetaDesc()[array_search($lang, $localesSite)];
+        $post_content = $post->getPostContent()[array_search($lang, $localesSite)];
 
         return $this->render('web_pages_views/post.html.twig', [
             'menus' => $menus,
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
             'post_content' => htmlspecialchars_decode($post_content),
-            'post_title' => $post_title,
-            'lang' => $post_lang,
+            'lang' => $lang,
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
         ]);

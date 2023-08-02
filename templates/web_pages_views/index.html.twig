@@ -10,11 +10,11 @@
 {% block body %}
     <div id="content">
         <div id="website">
-            {% include "webpages/blocks/#{lang}/header.html.twig" %}
+            {% include "webpages/blocks/header.html.twig" %}
             <main id="main">
                 {{ page_content | raw }}
             </main>
-            {% include "webpages/blocks/#{lang}/footer.html.twig" %}
+            {% include "webpages/blocks/footer.html.twig" %}
         </div>
     </div>
 {% endblock %}

@@ -16,8 +16,8 @@ class PagesList
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $page_name;
+    #[ORM\Column]
+    private array $page_name = [];
 
     #[ORM\Column(type: 'string', length: 255)]
     private $page_url;
@@ -53,12 +53,12 @@ class PagesList
         return $this->id;
     }
 
-    public function getPageName(): ?string
+    public function getPageName(): ?array
     {
         return $this->page_name;
     }
 
-    public function setPageName(string $page_name): self
+    public function setPageName(?array $page_name): self
     {
         $this->page_name = $page_name;
 

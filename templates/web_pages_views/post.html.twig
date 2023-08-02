@@ -8,14 +8,14 @@
 {% block body %}
     <div id="content">
         <div id="website">
-            {% include "webpages/blocks/#{lang}/header.html.twig" %}
+            {% include "webpages/blocks/header.html.twig" %}
             <main id="main">
                 {% if post_thumb %}
                     <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
                 {% endif %}
                 {{ post_content | raw }}
             </main>
-            {% include "webpages/blocks/#{lang}/footer.html.twig" %}
+            {% include "webpages/blocks/footer.html.twig" %}
         </div>
     </div>
 {% endblock %}
