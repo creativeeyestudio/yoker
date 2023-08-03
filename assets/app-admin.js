@@ -33,7 +33,7 @@ if (dragDropList) {
             animation: 150,
             onEnd: (event) => {
                 // Mettre à jour l'ordre des éléments après le glisser-déposer
-                const lines = dragDropList.querySelectorAll('.line');
+                const lines = dragDropList.querySelectorAll('.nav-item');
                 lines.forEach((line, index) => {
                     line.dataset.order = index + 1;
                 });
@@ -45,7 +45,7 @@ if (dragDropList) {
 
 function changeOrderLinks() {
     const url = dragDropList.dataset.url;
-    const lines = dragDropList.querySelectorAll('.line');
+    const lines = dragDropList.querySelectorAll('.nav-item');
     const orderData = Array.from(lines).map((line) => ({
         id: line.dataset.id,
         order: line.dataset.order,

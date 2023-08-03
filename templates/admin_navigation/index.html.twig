@@ -64,30 +64,18 @@
                         data-urldel="{{ path('delete_nav_link') }}">
                         {% if menu is not null %}
                             {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
-                                {% if item.parent == null %}
-                                    <div class="line nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
-                                        {% if item.post is not null %}
-                                        <div class="block_order_link">
-                                            <span>[Post] {{ item.post.postname[0] }} {% if item.cusname[0] %}- <em>{{ item.cusname[0] }}</em>{% endif %}</span>
+                                {% if item.parent is null %}
+                                    <div class="nav-item nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
+                                        <div class="line">
+                                            {% set postType = item.post is not null ? 'Post' %}
+                                            {% set itemType = item.page is not null ? 'Page' : 'Lien' %}
+                                            {% set cusname = item.cusname[0] ?: '' %}
+                                            <span>[{{ itemType }}] {{ cusname }} {% if cusname %}<em>- {{ cusname }}</em>{% endif %}</span>
+                                            <ul>
+                                                <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
+                                                <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+                                            </ul>
                                         </div>
-                                        <ul>
-                                            <li><a href="{{ path('web_post', { post_url: item.post.posturl }) }}" rel='noopener' target='_blank'>Voir</a></li>
-                                        {% elseif item.page is not null %}
-                                        <div class="block_order_link">
-                                            <span>[Page] {{ item.page.pagename[0] }} {% if item.cusname[0] %}- <em>{{ item.cusname[0] }}</em>{% endif %}</span>
-                                        </div>
-                                        <ul>
-                                            <li><a href="{{ path('web_page', { page_slug: item.page.pageurl }) }}" rel='noopener' target='_blank'>Voir</a></li>
-                                        {% else %}
-                                        <div class="block_order_link">
-                                            <span>[Lien] {{ item.cusname[0] }} {% if item.cusname[0] %}<em>- {{ item.cusname[0] }}</em>{% endif %}</span>
-                                        </div>
-                                        <ul>
-                                            <li><a href="{{ item.cuslink }}" rel='noopener' target='_blank'>Voir</a></li>
-                                        {% endif %}
-                                            <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
-                                            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                        </ul>
                                     </div>
                                 {% endif %}
                             {% endfor %} 
