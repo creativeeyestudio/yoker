@@ -49,6 +49,7 @@ class WebPagesIndexController extends AbstractController
             'page_content' => htmlspecialchars_decode($page_content),
             'posts' => $posts,
             'lang' => $lang,
+            'lang_page' => $localesSite[$lang],
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
             'settings' => $settings,
@@ -111,6 +112,7 @@ class WebPagesIndexController extends AbstractController
             'post_content' => htmlspecialchars_decode($post_content),
             'menus' => $menus,
             'lang' => $lang,
+            'lang_page' => $localesSite[$lang],
             'meta_title' => $meta_title,
             'meta_desc' => $meta_desc,
         ]);

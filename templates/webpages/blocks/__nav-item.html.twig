@@ -1,0 +1,28 @@
+{% set targetAttr = item.blank ? 'target="_blank" rel="noopener" data-no-swup="1"' : '' %}
+{% set cusname = item.cusname[lang] ?? null %}
+{% set pageSlug = item.page.pageurl ?? null %}
+{% set postUrl = item.post.posturl ?? null %}
+{% set cuslink = item.cuslink ?? null %}
+<li>
+    {% if item.page %}
+        <a href="{{ path('web_page', {page_slug: pageSlug}) }}" {{ targetAttr }}>
+            {{ cusname ?? item.page.pagename[lang] }}
+        </a>
+    {% elseif item.post %}
+        <a href="{{ path('web_post', {post_url: postUrl}) }}" {{ targetAttr }}>
+            {{ cusname ?? item.post.postname[lang] }}
+        </a>
+    {% else %}
+        <a href="{{ cuslink }}" {{ targetAttr }}>
+            {{ cusname ?? cuslink }}
+        </a>
+    {% endif %}
+    {% if item.menulinks %}
+        <ul>
+            {% for subitem in item.menulinks %}
+                {{ include('webpages/blocks/__nav-item.html.twig', { "pos": pos, "item": subitem }) }}
+            {% endfor %}
+        </ul>    
+    {% endif %}
+    
+</li>

@@ -1,29 +1,8 @@
-{% macro renderNav(pos, lang) %}
-    {% set menuData = menus.findOneBy({'pos': pos}) %}
-    {% set sortedMenuLinks = menuData.menulinks|sort((a, b) => a.orderlink <=> b.orderlink) %}
-    {{ dump("Inclued") }}
-    {% for item in sortedMenuLinks  %}
-        {% set targetAttr = item.blank ? 'target="_blank" rel="noopener" data-no-swup="1"' : '' %}
-        {% set cusname = item.cusname[lang] ?? null %}
-        {% set pageSlug = item.page.pageurl ?? null %}
-        {% set postUrl = item.post.posturl ?? null %}
-        {% set cuslink = item.cuslink ?? null %}
-
-        <li>
-            {% if item.page %}
-                <a href="{{ path('web_page', {page_slug: pageSlug}) }}" {{ targetAttr }}>
-                    {{ cusname ?? item.page.pagename[lang] }}
-                </a>
-            {% elseif item.post %}
-                <a href="{{ path('web_post', {post_url: postUrl}) }}" {{ targetAttr }}>
-                    {{ cusname ?? item.post.postname[lang] }}
-                </a>
-            {% else %}
-                <a href="{{ cuslink }}" {{ targetAttr }}>
-                    {{ cusname ?? cuslink }}
-                </a>
-            {% endif %}
-        </li>
-    {% endfor %}
-{% endmacro %}
+{% set menuData = menus.findOneBy({'pos': pos}) %}
+{% set sortedMenuLinks = menuData.menulinks|sort((a, b) => a.orderlink <=> b.orderlink) %}
+{% for item in sortedMenuLinks  %}
+    {% if item.parent is null %} 
+        {{ include('webpages/blocks/__nav-item.html.twig', { "pos": pos, "item": item }) }}
+    {% endif %}
+{% endfor %}
     

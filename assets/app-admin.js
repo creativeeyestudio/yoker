@@ -37,7 +37,7 @@ if (dragDropList) {
             animation: 150,
             onEnd: (event) => {
                 // Mettre à jour l'ordre des éléments après le glisser-déposer
-                const lines = navItems;
+                const lines = dragDropList.querySelectorAll('.nav-item');
                 lines.forEach((line, index) => {
                     line.dataset.order = index + 1;
                 });
@@ -52,11 +52,6 @@ if (dragDropList) {
                 group: 'nested',
                 animation: 150,
                 onEnd: (event) => {
-                    // Mettre à jour l'ordre des éléments après le glisser-déposer
-                    const lines = navItems;
-                    lines.forEach((line, index) => {
-                        line.dataset.order = index + 1;
-                    });
                     changeOrderLinks();
                 },
             })
