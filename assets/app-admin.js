@@ -26,20 +26,41 @@ if (container != null) {
 /* SORTABLE JS
 --------------------------------------------*/
 const dragDropList = document.querySelector('#drag-drop-list');
+let subItems = dragDropList.querySelectorAll('.subitems');
+let navItems = dragDropList.querySelectorAll('.nav-item');
+
 if (dragDropList) {
     document.addEventListener('DOMContentLoaded', () => {
+        // Items racines
         const sortable = new Sortable(dragDropList, {
             group: 'nested',
             animation: 150,
             onEnd: (event) => {
                 // Mettre à jour l'ordre des éléments après le glisser-déposer
-                const lines = dragDropList.querySelectorAll('.nav-item');
+                const lines = navItems;
                 lines.forEach((line, index) => {
                     line.dataset.order = index + 1;
                 });
                 changeOrderLinks();
             },
         });
+
+        // Sous-items
+        for (let i = 0; i < subItems.length; i++) {
+            const elem = subItems[i];
+            const subsortable = new Sortable(elem, {
+                group: 'nested',
+                animation: 150,
+                onEnd: (event) => {
+                    // Mettre à jour l'ordre des éléments après le glisser-déposer
+                    const lines = navItems;
+                    lines.forEach((line, index) => {
+                        line.dataset.order = index + 1;
+                    });
+                    changeOrderLinks();
+                },
+            })
+        }
     });
 }
 
@@ -49,7 +70,9 @@ function changeOrderLinks() {
     const orderData = Array.from(lines).map((line) => ({
         id: line.dataset.id,
         order: line.dataset.order,
+        sublist: line.parentElement.getAttribute('data-sublist')
     }));
+    console.log(orderData);
 
     fetch(url, {
         method: 'POST',

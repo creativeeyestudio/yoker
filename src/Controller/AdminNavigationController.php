@@ -212,6 +212,10 @@ class AdminNavigationController extends AbstractController
             $link = $em->getRepository(MenuLink::class)->findOneBy(['id' => $item['id']]);
             if ($link) {
                 $link->setOrderLink($item['order']);
+                if ($item['sublist']) {
+                    $sublist = $em->getRepository(MenuLink::class)->findOneBy(['id' => $item['sublist']]);
+                    $link->setParent($sublist);
+                }
                 $em->persist($link);
             }
         }

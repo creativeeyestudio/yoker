@@ -1,0 +1,17 @@
+<div class="nav-item nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
+    <div class="line">
+        {% set postType = item.post is not null ? 'Post' %}
+        {% set itemType = item.page is not null ? 'Page' : 'Lien' %}
+        {% set cusname = item.cusname[0] ?: '' %}
+        <span>[{{ itemType ? itemType : postType }}] - {{ cusname }}</span>
+        <ul>
+            <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
+            <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
+        </ul>
+    </div>
+    <div class="subitems" data-sublist="{{ item.id }}">
+        {% for subitem in item.menulinks %}
+            {{ include('admin_navigation/_nav-list.html.twig', { "item": subitem }) }}
+        {% endfor %}
+    </div>
+</div>

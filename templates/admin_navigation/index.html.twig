@@ -58,52 +58,19 @@
                         {{ form_widget(menu_form.nav_select, { 'value': id_menu }) }}
                     {{ form_end(menu_form) }}
 
-                    <div 
-                        id="drag-drop-list" 
-                        data-url="{{ path('order_nav_link') }}" 
-                        data-urldel="{{ path('delete_nav_link') }}">
+                    <div id="drag-drop-list" data-sublist="null" data-url="{{ path('order_nav_link') }}" data-urldel="{{ path('delete_nav_link') }}">
                         {% if menu is not null %}
                             {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
-                                {% if item.parent is null %}
-                                    <div class="nav-item nav-link-{{ item.id }}" data-order="{{ item.orderlink }}" data-id="{{ item.id }}">
-                                        <div class="line">
-                                            {% set postType = item.post is not null ? 'Post' %}
-                                            {% set itemType = item.page is not null ? 'Page' : 'Lien' %}
-                                            {% set cusname = item.cusname[0] ?: '' %}
-                                            <span>[{{ itemType }}] {{ cusname }} {% if cusname %}<em>- {{ cusname }}</em>{% endif %}</span>
-                                            <ul>
-                                                <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
-                                                <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                {% if item.parent is null %} 
+                                    {{ include('admin_navigation/_nav-list.html.twig', { "item": item }) }}
                                 {% endif %}
-                            {% endfor %} 
+                            {% endfor %}
                         {% endif %}
                     </div>
                 </div>
             </div>
         {% elseif route_name == 'app_admin_nav_menu' %}
-            {{ form_start(menu_create_form) }}
-            <p>{{ form_row(menu_create_form.name) }}</p>
-            <p>
-                {{ form_label(menu_create_form.pos) }}<br />
-                {{ form_widget(menu_create_form.pos) }}
-            </p>
-            <p>{{ form_row(menu_create_form.submit) }}</p>
-            {{ form_end(menu_create_form) }}
-            <hr />
-            {% for menu in menus %}
-                <div class="line menu-{{ menu.id }}">
-                    <p>{{ menu.name }}</p>
-                    <ul>
-                        <li><span 
-                            class="menu-remove" 
-                            data-id="{{ menu.id }}"
-                            data-removeurl="{{ path('delete_link') }}">Supprimer</span></li>
-                    </ul>
-                </div>
-            {% endfor %}
+            {{ include('admin_navigation/_create-menu-form.html.twig') }}
         {% endif %}
     </section>
 
