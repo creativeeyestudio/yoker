@@ -175,7 +175,12 @@ class AdminNavigationController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) { 
+            $name = [
+                $form->get('cus_name')->getData()
+            ];
+            dump($name);
             $em = $doctrine->getManager();
+            $menuLink->setCusName($name);
             $em->persist($menuLink);
             $em->flush();
         }

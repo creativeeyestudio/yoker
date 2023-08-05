@@ -16,19 +16,25 @@ class NavUpdateLinkFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('order_link', HiddenType::class)
+            // FR
             ->add('cus_name', TextType::class, [
                 'label' => 'Nom personnalisé',
-                'required' => false
+                'required' => false,
+                'data_class' => null,
+                'mapped' => false
             ])
             ->add('cus_link', TextType::class, [
                 'label' => 'URL (Si champ personnalisé)',
                 'required' => false
             ])
+
+
             ->add('blank', CheckboxType::class, [
                 'label' => 'Lien externe',
                 'required' => false
             ])
+            
+            ->add('order_link', HiddenType::class)
             ->add('menu', HiddenType::class, [
                 'mapped' => false
             ])

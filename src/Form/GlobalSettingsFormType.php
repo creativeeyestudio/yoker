@@ -17,7 +17,6 @@ class GlobalSettingsFormType extends AbstractType
             ->add('logo', DropzoneType::class, [
                 'label' => "Logo du site",
                 'required' => false,
-                'data_class' => null
             ])
             ->add('damping', NumberType::class, [
                 'label' => 'Niveau de fludité',
