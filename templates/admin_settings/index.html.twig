@@ -7,6 +7,10 @@
     <h2>Configurations générales du site Internet</h2>
     {{ form_start(form) }}
         <fieldset>
+            <legend>Logo du site</legend>
+            {{ form_row(form.logo) }}
+        </fieldset>
+        <fieldset>
             <legend>Scroll de la page</legend>
             {{ form_row(form.damping) }}
         </fieldset>

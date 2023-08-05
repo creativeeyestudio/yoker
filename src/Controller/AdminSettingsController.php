@@ -6,6 +6,7 @@ use App\Entity\GlobalSettings;
 use App\Form\GlobalSettingsFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,20 @@ class AdminSettingsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $logoInput = $form->get('logo')->getData();
+            if ($logoInput) {
+                $ext = $logoInput->guessExtension();
+                $new_name = 'logotype.' . $ext;
+                try {
+                    $logoInput->move(
+                        'uploads/images/logo',
+                        $new_name
+                    );
+                    $settings->setLogo($new_name);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+            }
             $em->flush();
         }
 

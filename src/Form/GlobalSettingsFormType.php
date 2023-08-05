@@ -7,12 +7,18 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class GlobalSettingsFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('logo', DropzoneType::class, [
+                'label' => "Logo du site",
+                'required' => false,
+                'data_class' => null
+            ])
             ->add('damping', NumberType::class, [
                 'label' => 'Niveau de fludité',
                 'html5' => true,
