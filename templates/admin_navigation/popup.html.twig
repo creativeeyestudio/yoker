@@ -4,8 +4,14 @@
     <section>
         <h1>Modifier le lien de navigation</h1>
         {{ form_start(form) }}
-            <p>{{ form_row(form.cus_name, { value: nameFr }) }}</p>
-            <p>{{ form_row(form.cus_link) }}</p>
+            <p>{{ form_row(form.cus_name, { value: name[0] }) }}</p>
+            <p>
+                {% if link is not null %}
+                    {{ form_row(form.cus_link, { value: link[0] }) }}
+                {% else %}
+                    {{ form_row(form.cus_link) }}
+                {% endif %}
+            </p>
             <p>{{ form_widget(form.blank) }} {{ form_label(form.blank) }} </p>
             <p>{{ form_row(form.submit) }}</p>
         {{ form_end(form) }}

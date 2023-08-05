@@ -178,16 +178,20 @@ class AdminNavigationController extends AbstractController
             $name = [
                 $form->get('cus_name')->getData()
             ];
-            dump($name);
+            $link = [
+                $form->get('cus_link')->getData()
+            ];
             $em = $doctrine->getManager();
             $menuLink->setCusName($name);
+            $menuLink->setCusLink($link);
             $em->persist($menuLink);
             $em->flush();
         }
         
         return $this->render('admin_navigation/popup.html.twig', [
             'form' => $form,
-            'nameFr' => $menuLink->getCusName()[0]
+            'name' => $menuLink->getCusName(),
+            'link' => $menuLink->getCusLink(),
         ]);
     }
 

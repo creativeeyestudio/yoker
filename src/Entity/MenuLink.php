@@ -30,8 +30,8 @@ class MenuLink
     #[ORM\Column(nullable: true)]
     private ?array $cus_name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cus_link = null;
+    #[ORM\Column(nullable: true)]
+    private ?array $cus_link = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $blank = null;
@@ -119,12 +119,12 @@ class MenuLink
         return $this;
     }
 
-    public function getCusLink(): ?string
+    public function getCusLink(): ?array
     {
         return $this->cus_link;
     }
 
-    public function setCusLink(?string $cus_link): static
+    public function setCusLink(?array $cus_link): static
     {
         $this->cus_link = $cus_link;
 

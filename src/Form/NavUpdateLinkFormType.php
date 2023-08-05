@@ -20,12 +20,12 @@ class NavUpdateLinkFormType extends AbstractType
             ->add('cus_name', TextType::class, [
                 'label' => 'Nom personnalisé',
                 'required' => false,
-                'data_class' => null,
                 'mapped' => false
             ])
             ->add('cus_link', TextType::class, [
                 'label' => 'URL (Si champ personnalisé)',
-                'required' => false
+                'required' => false,
+                'mapped' => false
             ])
 
 
