@@ -1,21 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{# Langue #}
+{% block lang %}{{ lang_page }}{% endblock %}
 {# Metas #}
-{% block lang %}{{ lang }}{% endblock %}
 {% block title %}{{ meta_title }}{% endblock %}
 {% block desc %}{{ meta_desc }}{% endblock %}
+{# Settings #}
+{% block damping %}{{ settings.damping }}{% endblock %}
+{% block scrollimg %}{{ settings.scrollimg }}{% endblock %}
 
 {% block body %}
-    <div id="content">
-        <div id="website">
-            {% include "webpages/blocks/header.html.twig" %}
-            <main id="main">
-                {% if post_thumb %}
-                    <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
-                {% endif %}
-                {{ post_content | raw }}
-            </main>
-            {% include "webpages/blocks/footer.html.twig" %}
-        </div>
-    </div>
+    {% if post_thumb %}
+        <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
+    {% endif %}
+    {{ post_content | raw }}
 {% endblock %}
