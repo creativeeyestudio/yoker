@@ -13,7 +13,7 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.11.0/css/tarteaucitron.min.css" integrity="sha512-An5uG5l2933DG8oK8mICT7TycnhhY2Ti1xVSj2XW/scxb0jRvE1kLUh8ECth38zr+MlE4LH3l5xblJ+Ns0JINg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.11.0/css/tarteaucitron.min.css" integrity="sha512-An5uG5l2933DG8oK8mICT7TycnhhY2Ti1xVSj2XW/scxb0jRvE1kLUh8ECth38zr+MlE4LH3l5xblJ+Ns0JINg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> #}
         {% endblock %}
     </head>
     <body
@@ -28,20 +28,26 @@
         data-damping='{% block damping %}{% endblock %}'
         data-scrollimg='{% block scrollimg %}{% endblock %}'>
 
-        {% include "webpages/blocks/header.html.twig" %}
 
         <div id="content">
+            {% include "webpages/blocks/header.html.twig" %}
             <div id="website">
                 <main id="main">
                     {% block body %}{% endblock %}
                 </main>
             </div>
+            {% include "webpages/blocks/footer.html.twig" %}
         </div>
 
-        {% include "webpages/blocks/footer.html.twig" %}
 
         {% block javascripts %}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.11.0/tarteaucitron.js" integrity="sha512-bDyrKjNycnlzdeKsBI4TOHhiDmAx9LtNkZo/IfdLZGlzYTREqmAdvgHy876IOBfZ7UUq7mIz4t4ZHoG8w/xTdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script type="text/javascript">
+                window.appData = {
+                    langPage: '{{ lang_page }}',
+                    posts: '{{ posts | json_encode | raw }}'
+                };
+            </script>
             {{ encore_entry_script_tags('modernizr') }}
             {{ encore_entry_script_tags('app') }}
             {{ encore_entry_script_tags('tarteaucitronjs') }}

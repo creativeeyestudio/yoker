@@ -56,7 +56,7 @@ class PagesService extends AbstractController{
 
             // Création / Modification du Meta Title
             $metaTitle = [$form->get('page_meta_title_fr')->getData() ?: $name[0]];
-            $page->setPageMetaTitle([$metaTitle]);
+            $page->setPageMetaTitle($metaTitle);
 
             // Création / Modification du Meta Desc
             $metaDesc = [$form->get('page_meta_desc_fr')->getData() ?: ''];

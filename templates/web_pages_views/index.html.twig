@@ -10,5 +10,6 @@
 {% block scrollimg %}{{ settings.scrollimg }}{% endblock %}
 
 {% block body %}
+    {# <div {{ vue_component('Hello', { 'name': app.user.fullName }) }}></div> #}
     {{ page_content | raw }}
 {% endblock %}
