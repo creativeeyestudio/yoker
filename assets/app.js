@@ -15,7 +15,6 @@ import { ScrollWeb } from './smoothScroll';
 import { Parallax } from './parallax';
 import { createApp } from 'vue';
 import AOS from 'aos';
-import Hello from './vue/controllers/Hello';
 
 // Variables
 // -----------------------------------------------
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function(){
     scrollWeb();
     parallax();
     createApp({
-        components: { Hello }
+        components: { }
     }).mount('#website');
 });
 
