@@ -28,10 +28,10 @@ class AdminPagesController extends AbstractController
     /* AJOUTER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
-    public function add_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request) {
+    public function add_page(PagesService $pageService, Request $request) {
         
         $title = "Ajouter une page";
-        $form = $pageService->PageManager($doctrine, $request, true);
+        $form = $pageService->PageManager($request, true);
         
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages');
@@ -55,7 +55,7 @@ class AdminPagesController extends AbstractController
 
         // Mise à jour du contenu
         $title = "Modifier une page";
-        $form = $pageService->PageManager($doctrine, $request, false, $page_id);   
+        $form = $pageService->PageManager($request, false, $page_id);   
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages_modify', [
