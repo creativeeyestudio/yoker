@@ -33,9 +33,9 @@ class AdminPostsController extends AbstractController
     /* AJOUTER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/posts/ajouter', name: 'admin_posts_add')]
-    public function add_post(PostsService $postService, ManagerRegistry $doctrine, Request $request, Security $security) {
+    public function add_post(Request $request, PostsService $postService, Security $security) {
 
-        $form = $postService->PostManager($doctrine, $request, $security, true);
+        $form = $postService->PostManager($request, $security, true);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_posts');
@@ -50,14 +50,14 @@ class AdminPostsController extends AbstractController
     /* MODIFIER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/posts/modifier/{post_id}', name: 'admin_posts_modify')]
-    public function modify_post(ManagerRegistry $doctrine, Request $request, String $post_id, PostsService $postService, Security $security) {
+    public function modify_post(Request $request, ManagerRegistry $doctrine, String $post_id, PostsService $postService, Security $security) {
 
         // Récupération du contenu de la page
         $em = $doctrine->getManager();
         $post = $em->getRepository(PostsList::class)->find($post_id);
         $link = $post->getPostUrl();
 
-        $form = $postService->PostManager($doctrine, $request, $security, false, $post_id);
+        $form = $postService->PostManager($request, $security, false, $post_id);
         
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_posts_modify', [

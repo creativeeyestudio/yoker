@@ -10,6 +10,15 @@
 {% block scrollimg %}{{ settings.scrollimg }}{% endblock %}
 
 {% block body %}
-    {# <div {{ vue_component('Hello', { 'name': app.user.fullName }) }}></div> #}
     {{ page_content | raw }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.appData = {
+            lastPosts: {{ last_posts | json_encode | raw }}
+        };
+        console.log(window.appData.lastPosts);
+    </script>
 {% endblock %}
