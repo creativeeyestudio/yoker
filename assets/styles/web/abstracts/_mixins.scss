@@ -38,7 +38,7 @@
     }
 }
 
-@mixin applyFlexBlockInit($breakpoint, $max-width) {
+@mixin respFlexBlockInit($breakpoint, $max-width) {
     @media screen and (max-width: $max-width) {
         &-#{$breakpoint} {
             @include flexBlockInit();
@@ -63,37 +63,18 @@
     }
 }
 
-@mixin positionInit($status){
+@mixin positionInit($status) {
     position: $status;
-    &-no{
-        &-lg{
-            @include positionRespInit($status, $lg, 0);
-        }
-        &-md{
-            @include positionRespInit($status, $md, 0);
-        }
-        &-sm{
-            @include positionRespInit($status, $sm, 0);
-        }
-        &-xs{
-            @include positionRespInit($status, $xs, 0);
+    @each $state in no, on {
+        &-#{$state} {
+            @each $breakpoint, $max-width in $breakpoints  {
+                &-#{$breakpoint} {
+                    @include positionRespInit($status, map-get($breakpoints, $breakpoint), if($state == 'on', 1, 0));
+                }
+            }
         }
     }
-    &-on{
-        &-lg{
-            @include positionRespInit($status, $lg, 1);
-        }
-        &-md{
-            @include positionRespInit($status, $md, 1);
-        }
-        &-sm{
-            @include positionRespInit($status, $sm, 1);
-        }
-        &-xs{
-            @include positionRespInit($status, $xs, 1);
-        }
-    }
-}
+}  
 /* #endregion Position */
 
 
@@ -111,37 +92,18 @@
     }
 }
 
-@mixin sizeType($type, $size){
+@mixin sizeType($type, $size) {
     #{$type}: $size;
-    &-no{
-        &-lg{
-            @include sizeInit($type, $size, $lg, 0);
-        }
-        &-md{
-            @include sizeInit($type, $size, $md, 0);
-        }
-        &-sm{
-            @include sizeInit($type, $size, $sm, 0);
-        }
-        &-xs{
-            @include sizeInit($type, $size, $xs, 0);
+    @each $state in no, on {
+        &-#{$state} {
+            @each $breakpoint, $max-width in $breakpoints {
+                &-#{$breakpoint} {
+                    @include sizeInit($type, $size, $max-width, if($state == 'on', 1, 0));
+                }
+            }
         }
     }
-    &-on{
-        &-lg{
-            @include sizeInit($type, $size, $lg, 1);
-        }
-        &-md{
-            @include sizeInit($type, $size, $md, 1);
-        }
-        &-sm{
-            @include sizeInit($type, $size, $sm, 1);
-        }
-        &-xs{
-            @include sizeInit($type, $size, $xs, 1);
-        }
-    }
-}  
+}
 /* #endregion Width / Height */
 
 
@@ -172,17 +134,10 @@
 }
 
 @mixin borderResp($start, $side) {
-    &-lg{
-        @include borderInit($lg, $start, $side);
-    }
-    &-md{
-        @include borderInit($md, $start, $side);
-    }
-    &-sm{
-        @include borderInit($sm, $start, $side);
-    }
-    &-xs{
-        @include borderInit($xs, $start, $side);
+    @each $breakpoint, $max-width in $breakpoints {
+        &-#{$breakpoint} {
+            @include borderInit($max-width, $start, $side);
+        }
     }
 }
 /* #endregion Borders */
@@ -219,14 +174,15 @@
 @mixin margeResp($type, $side, $size) {
     @include margeInit($type, $side);
     @media screen and (max-width: $size) {
-        @if $side == 'null' or $side == 'top' or $side == 'bottom' or $side == 'left' or $side == 'right' {
+        @if $side == 'top' or $side == 'bottom' or $side == 'left' or $side == 'right' {
             #{$type}-#{$side}: $marge-m;
+        } @else if $side == 'null' {  
+            #{$type}: $marge-m;  
         } @else {
             @warn "Invalid value for $side. Use one of: null, top, bottom, left, right.";
         }
     }
 }
-  
 
 @mixin margeType($type){
     &-all{
@@ -395,33 +351,15 @@
 
 @mixin displayInit($display) {
     display: $display;
-    &-no{
-        &-lg{
-            @include display($display, $lg, 0);
-        }
-        &-md{
-            @include display($display, $md, 0);
-        }
-        &-sm{
-            @include display($display, $sm, 0);
-        }
-        &-xs{
-            @include display($display, $xs, 0);
+  
+    @each $state in no, on {
+        &-#{$state} {
+            @each $breakpoint, $max-width in $breakpoints {
+                &-#{$breakpoint} {
+                    @include display($display, $max-width, if($state == 'on', 1, 0));
+                }
+            }
         }
     }
-    &-on{
-        &-lg{
-            @include display($display, $lg, 1);
-        }
-        &-md{
-            @include display($display, $md, 1);
-        }
-        &-sm{
-            @include display($display, $sm, 1);
-        }
-        &-xs{
-            @include display($display, $xs, 1);
-        }
-    }
-}
+  }
 /* #endregion Display */

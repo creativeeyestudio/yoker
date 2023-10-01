@@ -17,7 +17,7 @@
     .col {
         @include flexBlockInit(); // Grille de base
         @each $breakpoint, $max-width in $breakpoints {
-            @include applyFlexBlockInit($breakpoint, $max-width);
+            @include respFlexBlockInit($breakpoint, $max-width);
         }
     }
     @media screen and (max-width: $sm) {
@@ -26,7 +26,4 @@
             column-gap: 0;
         }
     }
-}
-
-    
-    
+}  

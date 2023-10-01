@@ -1,19 +1,39 @@
 $scrollTime: .2s;
 
+
 // GRID
+// -----------------------------------------
 $grid-size: 12;
 $padding-col: 1rem;
 
+
 // MARGES
+// -----------------------------------------
 $marge-m: 2rem;
 $marge-d-x: 10vw;
 $marge-d-y: 5vw;
 
+
+// DISPLAYS
+// -----------------------------------------
+$displayValues: (
+    block: 'block',
+    inline: 'inline',
+    inline-block: 'inline-block',
+    flex: 'flex',
+    grid: 'grid',
+    table: 'table',
+    none: 'none'
+);
+
+
 // SCREEN SIZES
+// -----------------------------------------
 $lg: 1200px;
 $md: 1024px;
 $sm: 768px;
 $xs: 640px;
+
 $breakpoints: (
     lg: $lg,
     md: $md,
@@ -21,11 +41,26 @@ $breakpoints: (
     xs: $xs
 );
 
+$sizesValues: (
+    100: 100%,
+    75: 75%,
+    50: 50%,
+    25: 25%,
+    100vw: 100vw,
+    75vw: 75vw,
+    50vw: 50vw,
+    25vw: 25vw
+);
+
+
 // FONTS
+// -----------------------------------------
 $ff-title: '';
 $ff-body: '';
 
+
 // FONTS SIZES
+// -----------------------------------------
 $fsBody: 16;
 $fsTitle1: 48;
 $fsTitle2: 32;
@@ -33,11 +68,15 @@ $fsTitle3: 28;
 $fsTitle4: 24;
 $fsTitle5: 20;
 
+
 // LINE HEIGHTS
+// -----------------------------------------
 $lhTitle: 1.2;
 $lhText: 1.5;
 
+
 // COLORS
+// -----------------------------------------
 $colorBk: #171717;
 $colorWt: #FFF;
 

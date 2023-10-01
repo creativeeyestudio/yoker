@@ -1,82 +1,25 @@
 /* #region Width */
 .wd{
-    &-100{
-        @include sizeType('width', 100%);
-    }
-    &-75{
-        @include sizeType('width', 75%);
-    }
-    &-50{
-        @include sizeType('width', 50%);
-    }
-    &-25{
-        @include sizeType('width', 25%);
-    }
-    &-100vw{
-        @include sizeType('width', 100vw);
-    }
-    &-75vw{
-        @include sizeType('width', 75vw);
-    }
-    &-50vw{
-        @include sizeType('width', 50vw);
-    }
-    &-25vw{
-        @include sizeType('width', 25vw);
+    @each $class, $value in $sizesValues {
+        &-#{$class} {
+          @include sizeType('width', $value);
+        }
     }
 }
 
 .min-wd{
-    &-100{
-        @include sizeType('min-width', 100%);
-    }
-    &-75{
-        @include sizeType('min-width', 75%);
-    }
-    &-50{
-        @include sizeType('min-width', 50%);
-    }
-    &-25{
-        @include sizeType('min-width', 25%);
-    }
-    &-100vw{
-        @include sizeType('min-width', 100vw);
-    }
-    &-75vw{
-        @include sizeType('min-width', 75vw);
-    }
-    &-50vw{
-        @include sizeType('min-width', 50vw);
-    }
-    &-25vw{
-        @include sizeType('min-width', 25vw);
+    @each $class, $value in $sizesValues {
+        &-#{$class} {
+          @include sizeType('min-width', $value);
+        }
     }
 }
 
 .max-wd{
-    &-100{
-        @include sizeType('max-width', 100%);
-    }
-    &-75{
-        @include sizeType('max-width', 75%);
-    }
-    &-50{
-        @include sizeType('max-width', 50%);
-    }
-    &-25{
-        @include sizeType('max-width', 25%);
-    }
-    &-100vw{
-        @include sizeType('max-width', 100vw);
-    }
-    &-75vw{
-        @include sizeType('max-width', 75vw);
-    }
-    &-50vw{
-        @include sizeType('max-width', 50vw);
-    }
-    &-25vw{
-        @include sizeType('max-width', 25vw);
+    @each $class, $value in $sizesValues {
+        &-#{$class} {
+          @include sizeType('max-width', $value);
+        }
     }
 }
 /* #endregion Width */
@@ -84,83 +27,26 @@
 
 /* #region Height */
 .ht{
-    &-100{
-        @include sizeType('height', 100%);
-    }
-    &-75{
-        @include sizeType('height', 75%);
-    }
-    &-50{
-        @include sizeType('height', 50%);
-    }
-    &-25{
-        @include sizeType('height', 25%);
-    }
-    &-100vh{
-        @include sizeType('height', 100vh);
-    }
-    &-75vh{
-        @include sizeType('height', 75vh);
-    }
-    &-50vh{
-        @include sizeType('height', 50vh);
-    }
-    &-25vh{
-        @include sizeType('height', 25vh);
+    @each $class, $value in $sizesValues {
+        &-#{$class} {
+          @include sizeType('height', $value);
+        }
     }
 }
 
 .min-ht{
-    &-100{
-        @include sizeType('min-height', 100%);
-    }
-    &-75{
-        @include sizeType('min-height', 75%);
-    }
-    &-50{
-        @include sizeType('min-height', 50%);
-    }
-    &-25{
-        @include sizeType('min-height', 25%);
-    }
-    &-100vh{
-        @include sizeType('min-height', 100vh);
-    }
-    &-75vh{
-        @include sizeType('min-height', 75vh);
-    }
-    &-50vh{
-        @include sizeType('min-height', 50vh);
-    }
-    &-25vh{
-        @include sizeType('min-height', 25vh);
+    @each $class, $value in $sizesValues {
+        &-#{$class} {
+          @include sizeType('min-height', $value);
+        }
     }
 }
 
 .max-ht{
-    &-100{
-        @include sizeType('max-height', 100%);
-    }
-    &-75{
-        @include sizeType('max-height', 75%);
-    }
-    &-50{
-        @include sizeType('max-height', 50%);
-    }
-    &-25{
-        @include sizeType('max-height', 25%);
-    }
-    &-100vh{
-        @include sizeType('max-height', 100vh);
-    }
-    &-75vh{
-        @include sizeType('max-height', 75vh);
-    }
-    &-50vh{
-        @include sizeType('max-height', 50vh);
-    }
-    &-25vh{
-        @include sizeType('max-height', 25vh);
+    @each $class, $value in $sizesValues {
+        &-#{$class} {
+          @include sizeType('max-height', $value);
+        }
     }
 }
 /* #endregion Height */
@@ -219,17 +105,16 @@
 
 /* #region Position */
 .position{
-    &-static{
-        @include positionInit(static);
-    }
-    &-fixed{
-        @include positionInit(fixed);
-    }
-    &-absolute{
-        @include positionInit(absolute);
-    }
-    &-relative{
-      @include positionInit(relative);
+    $positions: (
+        static: static,
+        fixed: fixed,
+        absolute: absolute,
+        relative: relative
+    );
+    @each $class, $value in $positions {
+        &-#{$class} {
+            @include positionInit($value);
+        }
     }
 }
 /* #endregion Position */
@@ -275,26 +160,10 @@
 
 /* #region Display */
 .d{
-    &-block{
-        @include displayInit('block');
-    }
-    &-inline{
-        @include displayInit('inline');
-    }
-    &-inline-block{
-        @include displayInit('inline-block');
-    }
-    &-flex{
-        @include displayInit('flex');
-    }
-    &-grid{
-        @include displayInit('grid');
-    }
-    &-table{
-        @include displayInit('table');
-    }
-    &-none{
-        @include displayInit('none');
+    @each $class, $value in $displayValues {
+        &-#{$class} {
+            @include displayInit($value);
+        }
     }
 }
 /* #endregion Display */
