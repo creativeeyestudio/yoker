@@ -1,0 +1,23 @@
+h1{
+    @include font(400, $fsTitle1, true, $ff-title);
+}
+
+h2{
+    @include font(400, $fsTitle2, true, $ff-title);
+}
+
+h3{
+    @include font(400, $fsTitle3, true, $ff-title);
+}
+
+h4{
+    @include font(400, $fsTitle4, true, $ff-title);
+}
+
+h5{
+    @include font(400, $fsTitle5, true, $ff-title);
+}
+
+p{
+    @include font(400, $fsBody, false, $ff-body);
+}

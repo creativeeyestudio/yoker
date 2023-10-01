@@ -11,7 +11,7 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    .col{
+    .col {
         // Grille de base
         @include flexBlockInit();
         // Grille de desktop
@@ -28,10 +28,10 @@
         }
         // Grille de tablette portrait
         @media screen and (max-width: $sm) {
-            &-sm{
-                @include flexBlockInit();
-            }
-        }
+                &-sm{
+                    @include flexBlockInit();
+                }
+}
         // Grille de mobile portrait/paysage
         @media screen and (max-width: $xs) {
             &-xs{

@@ -10,7 +10,35 @@ $marge-d-x: 10vw;
 $marge-d-y: 5vw;
 
 // SCREEN SIZES
-$lg: '1440px';
-$md: '1024px';
-$sm: '768px';
-$xs: '640px';
+$lg: 1200px;
+$md: 1024px;
+$sm: 768px;
+$xs: 640px;
+
+// FONTS
+$ff-title: '';
+$ff-body: '';
+
+// FONTS SIZES
+$fsBody: 16;
+$fsTitle1: 48;
+$fsTitle2: 32;
+$fsTitle3: 28;
+$fsTitle4: 24;
+$fsTitle5: 20;
+
+// LINE HEIGHTS
+$lhTitle: 1.2;
+$lhText: 1.5;
+
+// COLORS
+$colorBk: #171717;
+$colorWt: #FFF;
+
+$color1: #000;
+$color1D: darken($color1, 10%);
+$color1L: lighten($color1, 10%);
+
+$color2: #000;
+$color2D: darken($color2, 10%);
+$color2L: lighten($color2, 10%);

@@ -27,7 +27,6 @@ if (container != null) {
 --------------------------------------------*/
 const dragDropList = document.querySelector('#drag-drop-list');
 let subItems = dragDropList.querySelectorAll('.subitems');
-let navItems = dragDropList.querySelectorAll('.nav-item');
 
 if (dragDropList) {
     document.addEventListener('DOMContentLoaded', () => {
