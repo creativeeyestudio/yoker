@@ -2,8 +2,8 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         site_name: "Nom du site"
-        version: "2.2"
-        date_update: "01/10/2023"
+        version: "2.3"
+        date_update: "02/10/2023"
         google_maps: ""
         recaptcha_public: ''
         recaptcha_private: ''
