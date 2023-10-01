@@ -14,6 +14,12 @@ $lg: 1200px;
 $md: 1024px;
 $sm: 768px;
 $xs: 640px;
+$breakpoints: (
+    lg: $lg,
+    md: $md,
+    sm: $sm,
+    xs: $xs
+);
 
 // FONTS
 $ff-title: '';
