@@ -4,11 +4,12 @@
 
 body{
     margin: 0;
+    font-size: #{$fsBody}px;
     font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
 }
 
 .scroll-content{
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: $lg) {
         height: 100vh;
     }
 }
