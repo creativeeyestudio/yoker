@@ -1,0 +1,29 @@
+header{
+    min-height: $header-ht;
+    background-color: $color-p;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    .main-title{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-transform: uppercase;
+        @include font(600, 19, false, $ff-title);
+    }
+    @media screen and (min-width: $sm) {
+        .main-title{
+            @include font(600, 24, false, $ff-title);
+        }
+    }
+    @media screen and (min-width: $md) {
+        .main-title{
+            @include font(600, 28, false, $ff-title);
+        }
+    }
+    // @media screen and (min-width: $lg) {
+    //     position: absolute;
+    // }
+}

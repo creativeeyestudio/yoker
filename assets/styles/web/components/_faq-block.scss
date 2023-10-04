@@ -1,0 +1,7 @@
+.faq-block{
+    padding: 0 0 $marge-m;
+    margin: 0 $marge-m $marge-m;
+    &:not(:last-child){
+        border-bottom: 0.0625rem solid gray;
+    }
+}

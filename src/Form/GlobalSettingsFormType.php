@@ -16,6 +16,7 @@ class GlobalSettingsFormType extends AbstractType
         $builder
             ->add('logo', DropzoneType::class, [
                 'label' => "Logo du site",
+                'data_class' => null,
                 'required' => false,
             ])
             ->add('damping', NumberType::class, [

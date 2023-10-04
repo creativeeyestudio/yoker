@@ -24,4 +24,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.extraPlugins = 'codemirror,templates,video,widget,responsiveimage';
 	config.removePlugins = 'image';
 	config.height = 300;
+	config.startupMode = 'source'
 };

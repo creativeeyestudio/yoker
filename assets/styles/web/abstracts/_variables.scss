@@ -17,13 +17,13 @@ $marge-d-y: 5vw;
 // DISPLAYS
 // -----------------------------------------
 $displayValues: (
-    block: 'block',
-    inline: 'inline',
-    inline-block: 'inline-block',
-    flex: 'flex',
-    grid: 'grid',
-    table: 'table',
-    none: 'none'
+    block: block,
+    inline: inline,
+    inline-block: inline-block,
+    flex: flex,
+    grid: grid,
+    table: table,
+    none: none
 );
 
 
@@ -55,8 +55,8 @@ $sizesValues: (
 
 // FONTS
 // -----------------------------------------
-$ff-title: '';
-$ff-body: '';
+$ff-title: 'Montserrat';
+$ff-body: 'Raleway';
 
 
 // FONTS SIZES
@@ -80,10 +80,12 @@ $lhText: 1.5;
 $colorBk: #171717;
 $colorWt: #FFF;
 
-$color1: #000;
-$color1D: darken($color1, 10%);
-$color1L: lighten($color1, 10%);
+$color-p: #0073E6;
+$color-s1: #53D769;
+$color-s2: #FFAA00;
+$color-body: #F5F5F5;
 
-$color2: #000;
-$color2D: darken($color2, 10%);
-$color2L: lighten($color2, 10%);
+
+// HEADER
+// -----------------------------------------
+$header-ht: 6rem;

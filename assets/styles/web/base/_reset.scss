@@ -5,6 +5,28 @@
 body{
     margin: 0;
     font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
+    letter-spacing: 0.04em;
+}
+
+figure{
+    margin: 0;
+}
+
+// COULEURS
+.bg-primary{
+    color: white;
+    background-color: $color-p;
+    a:not(.btn-primary){
+        color: white;
+    }
+}
+
+.bg-light{
+    color: black;
+    background-color: $color-body;
+    a{
+        color: black;
+    }
 }
 
 .scroll-content{

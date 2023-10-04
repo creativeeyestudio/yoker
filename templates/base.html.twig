@@ -28,9 +28,8 @@
         data-damping='{% block damping %}{% endblock %}'
         data-scrollimg='{% block scrollimg %}{% endblock %}'>
 
-
+        {% include "webpages/blocks/header.html.twig" %}
         <div id="content">
-            {% include "webpages/blocks/header.html.twig" %}
             <div id="website">
                 <main id="main">
                     {% block body %}{% endblock %}
@@ -39,12 +38,11 @@
             {% include "webpages/blocks/footer.html.twig" %}
         </div>
 
-
         {% block javascripts %}
             {{ encore_entry_script_tags('modernizr') }}
             {{ encore_entry_script_tags('app') }}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.11.0/tarteaucitron.js" integrity="sha512-bDyrKjNycnlzdeKsBI4TOHhiDmAx9LtNkZo/IfdLZGlzYTREqmAdvgHy876IOBfZ7UUq7mIz4t4ZHoG8w/xTdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             {{ encore_entry_script_tags('tarteaucitronjs') }}
-        {% endblock %}
+         {% endblock %}
     </body>
 </html>

@@ -63,7 +63,7 @@ class PagesService extends AbstractController{
             // Création du slug
             $slugify = new Slugify();
             $slugName = $slugify->slugify($name[0]);
-            $slugUrl = $slugify->slugify($form->get('page_url')->getData());
+            $slugUrl = $slugify->slugify($form->get('page_url')->getData() ?? $slugName);
 
             // Création de l'ID Page
             if ($newPage) {

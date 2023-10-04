@@ -1,9 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,400;1,500&family=Raleway:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
 h1{
-    @include font(400, $fsTitle1, true, $ff-title);
+    @include font(400, 28, true, $ff-title);
+    @media screen and (min-width: $md) {
+        @include font(400, $fsTitle1, false, $ff-title);
+    }
 }
 
 h2{
-    @include font(400, $fsTitle2, true, $ff-title);
+    @include font(400, 20, false, $ff-title);
+    @media screen and (min-width: $md) {
+        @include font(400, $fsTitle2, false, $ff-title);
+        &.small{
+            @include font(400, 26, false, $ff-title);
+        }
+    }
 }
 
 h3{
@@ -18,6 +29,17 @@ h5{
     @include font(400, $fsTitle5, true, $ff-title);
 }
 
+p, ul{
+    @include font(400, 16, false, $ff-body);
+    @media screen and (min-width: $md) {
+        @include font(400, 18, false, $ff-body);
+    }
+}
+
 p{
-    @include font(400, $fsBody, false, $ff-body);
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    &:last-child{
+        margin-bottom: 0;
+    }
 }
