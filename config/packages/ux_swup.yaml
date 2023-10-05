@@ -1,4 +1,0 @@
-ux_swup:
-    debug: false
-    events:
-        willReplaceContent: ['changePage']
