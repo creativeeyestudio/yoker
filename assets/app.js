@@ -54,19 +54,4 @@ function parallax() {
 
 // Navigation
 // -----------------------------------------------
-var toggleNav = document.querySelectorAll('.toggle-nav');
-var btnNav = document.querySelectorAll('.main-nav a');
-var htmlContent = document.querySelector('html');
-
-toggleNav.forEach(btn => {
-    btn.addEventListener('click', function() {
-        htmlContent.classList.toggle('nav-open');
-    })
-});
-
-btnNav.forEach(btn => {
-    btn.addEventListener('click', function() {
-        htmlContent.classList.remove('nav-open');
-    })
-});
 

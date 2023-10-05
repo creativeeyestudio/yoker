@@ -13,35 +13,9 @@ figure{
     margin: 0;
 }
 
-// COULEURS
-.bg-primary{
-    color: white;
-    background-color: $color-p;
-    a:not(.btn-primary){
-        color: white;
-    }
-}
-
-.bg-gray{
-    color: black;
-    background-color: $color-gray;
-    a{
-        color: black;
-    }
-}
-
-.bg-light{
-    color: black;
-    background-color: $color-body;
-    a{
-        color: black;
-    }
-}
-
 .scroll-content{
     @media screen and (min-width: $lg) {
         height: 100vh;
-        padding-top: $header-ht;
     }
 }
 
