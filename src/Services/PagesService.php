@@ -36,13 +36,9 @@ class PagesService extends AbstractController{
     {
         // CREATION / RECUPERATION D'UNE PAGE
         // --------------------------------------------------------
-        if ($newPage) {
-            $page = new PagesList();
-        } else {
-            $page = $this->pages_repo->findOneBy(['page_id' => $page_id]);
-            if (!$page) {
-                throw $this->createNotFoundException("Aucune page n'a été trouvée");
-            }
+        $page = ($newPage) ? new PagesList() : $this->pages_repo->findOneBy(['page_id' => $page_id]);
+        if (!$page) {
+            throw $this->createNotFoundException("Aucune page n'a été trouvée");
         }
 
         // INITIALISATION DU FORMULAIRE
@@ -74,15 +70,15 @@ class PagesService extends AbstractController{
             $page->setPageUrl(empty($form->get('page_url')->getData()) ? ($newPage ? $slugName : $page->getPageUrl()) : $slugUrl);
 
             // Création / Modification du Meta Title
-            $metaTitle = [$form->get('page_meta_title_fr')->getData() ?: $name[0]];
+            $metaTitle = [$form->get('page_meta_title_fr')->getData() ?? $name[0]];
             $page->setPageMetaTitle($metaTitle);
 
             // Création / Modification du Meta Desc
-            $metaDesc = [$form->get('page_meta_desc_fr')->getData() ?: ''];
+            $metaDesc = [$form->get('page_meta_desc_fr')->getData() ?? ''];
             $page->setPageMetaDesc($metaDesc);
 
             // Création / Modification du contenu
-            $pageContent = [htmlspecialchars($form->get('page_content_fr')->getData()) ?: "Contenu à ajouter"];
+            $pageContent = [htmlspecialchars($form->get('page_content_fr')->getData()) ?? "Contenu à ajouter"];
             $page->setPageContent($pageContent);
 
             // Envoi des données vers la BDD

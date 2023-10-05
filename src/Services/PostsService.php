@@ -30,13 +30,9 @@ class PostsService extends AbstractController{
 
         // CREATION / RECUPERATION D'UN POST
         // --------------------------------------------------------
-        if ($newPost) {
-            $post = new PostsList();
-        } else {
-            $post = $this->posts_repo->find($postId);
-            if (!$post) {
-                throw $this->createNotFoundException("Aucune post n'a été trouvé");
-            }
+        $post = ($newPost) ? new PostsList() : $this->posts_repo->find($postId);
+        if (!$post) {
+            throw $this->createNotFoundException("Aucune post n'a été trouvé");
         }
 
         // INITIALISATION DU FORMULAIRE
