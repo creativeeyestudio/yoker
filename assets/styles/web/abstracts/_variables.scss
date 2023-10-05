@@ -4,7 +4,6 @@ $scrollTime: .2s;
 // GRID
 // -----------------------------------------
 $grid-size: 12;
-$padding-col: 1rem;
 
 
 // MARGES
@@ -27,6 +26,27 @@ $displayValues: (
 );
 
 
+// TEXTS ALIGNES & TRANSFORMS
+// -----------------------------------------
+$text-align-values: left, center, right, justify;
+$text-transform-values: capitalize, lowercase, uppercase;
+
+
+// POSITIONS
+// -----------------------------------------
+$positions: (
+    static: static,
+    fixed: fixed,
+    absolute: absolute,
+    relative: relative
+);
+
+
+// BORDERS
+// -----------------------------------------
+$border-directions: all, top, bottom, left, right;
+
+
 // SCREEN SIZES
 // -----------------------------------------
 $lg: 1200px;
@@ -41,6 +61,9 @@ $breakpoints: (
     xs: $xs
 );
 
+
+// SIZES
+// -----------------------------------------
 $sizesValues: (
     100: 100%,
     75: 75%,
@@ -49,7 +72,11 @@ $sizesValues: (
     100vw: 100vw,
     75vw: 75vw,
     50vw: 50vw,
-    25vw: 25vw
+    25vw: 25vw,
+    100vh: 100vh,
+    75vh: 75vh,
+    50vh: 50vh,
+    25vh: 25vh
 );
 
 

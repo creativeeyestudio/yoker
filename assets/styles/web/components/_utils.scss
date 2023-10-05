@@ -1,102 +1,56 @@
 /* #region Width */
 .wd{
-    @each $class, $value in $sizesValues {
-        &-#{$class} {
-          @include sizeType('width', $value);
-        }
-    }
+    @include sizeInitType('width');
 }
 
 .min-wd{
-    @each $class, $value in $sizesValues {
-        &-#{$class} {
-          @include sizeType('min-width', $value);
-        }
-    }
+    @include sizeInitType('min-width');
 }
 
 .max-wd{
-    @each $class, $value in $sizesValues {
-        &-#{$class} {
-          @include sizeType('max-width', $value);
-        }
-    }
+    @include sizeInitType('max-width');
 }
 /* #endregion Width */
 
 
 /* #region Height */
 .ht{
-    @each $class, $value in $sizesValues {
-        &-#{$class} {
-          @include sizeType('height', $value);
-        }
-    }
+    @include sizeInitType('height');
 }
 
 .min-ht{
-    @each $class, $value in $sizesValues {
-        &-#{$class} {
-          @include sizeType('min-height', $value);
-        }
-    }
+    @include sizeInitType('min-height');
 }
 
 .max-ht{
-    @each $class, $value in $sizesValues {
-        &-#{$class} {
-          @include sizeType('max-height', $value);
-        }
-    }
+    @include sizeInitType('max-height');
 }
 /* #endregion Height */
 
 
 /* #region Border */
 .border{
-    &-all{
-        border: 1px solid grey;
-        &-no{
-            @include borderResp(0, null);
-        }
-        &-on{
-            @include borderResp(1, null);
-        }
-    }
-    &-top{
-        border-top: 1px solid grey;
-        &-no{
-            @include borderResp(0, top);
-        }
-        &-on{
-            @include borderResp(1, top);
-        }
-    }
-    &-bottom{
-        border-bottom: 1px solid grey;
-        &-no{
-            @include borderResp(0, bottom);
-        }
-        &-on{
-            @include borderResp(1, bottom);
-        }
-    }
-    &-left{
-        border-left: 1px solid grey;
-        &-no{
-            @include borderResp(0, left);
-        }
-        &-on{
-            @include borderResp(1, left);
-        }
-    }
-    &-right{
-        border-right: 1px solid grey;
-        &-no{
-            @include borderResp(0, right);
-        }
-        &-on{
-            @include borderResp(1, right);
+    @each $value in $border-directions {
+        @if $value == all {
+            &-all{
+                border: 1px solid grey;
+                &-no {
+                    @include borderResp(0, null);
+                }
+                &-on {
+                    @include borderResp(1, null);
+                }
+            }
+        } @else {
+            &-#{$value} {
+                border-#{$value}: 1px solid grey;
+                &-no {
+                    @include borderResp(0, $value);
+                }
+                &-on {
+                    @include borderResp(1, $value);
+                }    
+            }    
         }
     }
 }
@@ -105,12 +59,6 @@
 
 /* #region Position */
 .position{
-    $positions: (
-        static: static,
-        fixed: fixed,
-        absolute: absolute,
-        relative: relative
-    );
     @each $class, $value in $positions {
         &-#{$class} {
             @include positionInit($value);
@@ -122,27 +70,16 @@
 
 /* #region Text */
 .text{
-    &-left{
-        text-align: left
+    @each $value in $text-transform-values {
+        &-#{$value} {
+            @include textTransform($value);
+        }
     }
-    &-center{
-        text-align: center
+    @each $value in $text-align-values {
+        &-#{$value} {
+            @include textAlign($value);
+        }
     }
-    &-right{
-        text-align: right
-    }
-    &-justify{
-        text-align: justify
-    }
-    &-capitalize{
-        text-transform: capitalize
-    }
-    &-lowercase{
-        text-transform: lowercase
-    }
-    &-uppercase{
-      text-transform: uppercase
-  }
 }
 /* #endregion Text */
 
