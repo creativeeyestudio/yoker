@@ -74,6 +74,10 @@
 /* #region Grid */
 @mixin flexColSize($size){
     width: calc(100% / $grid-size) * $size;
+    padding: 0 calc($marge-d-x / 2);
+    @media screen and (max-width: $sm) {
+        padding: 0 calc($marge-m / 2);
+    }
 }
 
 @mixin pushColSize($size){
@@ -224,27 +228,43 @@
     }
 }
 
-@mixin margeResp($type, $side, $size) {
+@mixin margeResp($type, $side, $size, $cancel: false) {
     @include margeInit($type, $side);
     @media screen and (max-width: $size) {
-        @if $side == 'top' or $side == 'bottom' or $side == 'left' or $side == 'right' {
-            #{$type}-#{$side}: $marge-m;
-        } @else if $side == 'null' {  
-            #{$type}: $marge-m;  
+        @if $cancel != true {
+            @if $side == 'top' or $side == 'bottom' or $side == 'left' or $side == 'right' {
+                #{$type}-#{$side}: $marge-m;
+            } @else if $side == 'null' {  
+                #{$type}: $marge-m;  
+            }
         } @else {
-            @warn "Invalid value for $side. Use one of: null, top, bottom, left, right.";
+            @if $side == 'top' or $side == 'bottom' or $side == 'left' or $side == 'right' {
+                #{$type}-#{$side}: 0;
+            } @else if $side == 'null' {  
+                #{$type}: 0;  
+            }
         }
+        
     }
 }
 
 @mixin margeType($type){
     &-all{
         @include margeInit($type, 'null');
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
                         @include margeResp($type, 'null', $max-width);
+                    }
+                }
+            }
+        }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'null', $max-width, true);
                     }
                 }
             }
@@ -259,7 +279,7 @@
     &-vertical{
         @include margeInit($type, 'top');
         @include margeInit($type, 'bottom');
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
@@ -269,16 +289,36 @@
                 }
             }
         }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'top', $max-width, true);
+                        @include margeResp($type, 'bottom', $max-width, true);
+                    }
+                }
+            }
+        }
     }
     &-horizontal{
         @include margeInit($type, 'left');
         @include margeInit($type, 'right');
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
                         @include margeResp($type, 'left', $max-width);
                         @include margeResp($type, 'right', $max-width);
+                    }
+                }
+            }
+        }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'left', $max-width, true);
+                        @include margeResp($type, 'right', $max-width, true);
                     }
                 }
             }
@@ -289,11 +329,20 @@
         &-none{
             margin-top: 0;
         }
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
                         @include margeResp($type, 'top', $max-width);
+                    }
+                }
+            }
+        }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'top', $max-width, true);
                     }
                 }
             }
@@ -304,11 +353,20 @@
         &-none{
             margin-bottom: 0;
         }
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
                         @include margeResp($type, 'bottom', $max-width);
+                    }
+                }
+            }
+        }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'bottom', $max-width, true);
                     }
                 }
             }
@@ -319,11 +377,20 @@
         &-none{
             margin-left: 0;
         }
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
                         @include margeResp($type, 'left', $max-width);
+                    }
+                }
+            }
+        }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'left', $max-width, true);
                     }
                 }
             }
@@ -334,11 +401,20 @@
         &-none{
             margin-right: 0;
         }
-        @each $state in no {
+        @each $state in on {
             &-#{$state} {
                 @each $breakpoint, $max-width in $breakpoints {
                     &-#{$breakpoint} {
                         @include margeResp($type, 'right', $max-width);
+                    }
+                }
+            }
+        }
+        @each $state in no {
+            &-#{$state} {
+                @each $breakpoint, $max-width in $breakpoints {
+                    &-#{$breakpoint} {
+                        @include margeResp($type, 'right', $max-width, true);
                     }
                 }
             }

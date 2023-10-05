@@ -26,34 +26,71 @@ figure{
         @extend .wd-100;
         @extend .ht-100;
     }
-    &-32-9{
-        @extend .cover-img;
-        @media screen and (max-width: $sm) {
-            aspect-ratio: 32/9;
+    &-no{
+        &-md{
+            &-32-9{
+                @extend .cover-img;
+                @media screen and (max-width: $md) {
+                    aspect-ratio: 32/9;
+                }
+            }
+            &-21-9{
+                @extend .cover-img;
+                @media screen and (max-width: $md) {
+                    aspect-ratio: 21/9;
+                }
+            }
+            &-16-9{
+                @extend .cover-img;
+                @media screen and (max-width: $md) {
+                    aspect-ratio: 16/9;
+                }
+            }
+            &-4-3{
+                @extend .cover-img;
+                @media screen and (max-width: $md) {
+                    aspect-ratio: 4/3;
+                }
+            }
+            &-3-4{
+                @extend .cover-img;
+                @media screen and (max-width: $md) {
+                    aspect-ratio: 3/4;
+                }
+            }        
+        }
+        &-sm{
+            &-32-9{
+                @extend .cover-img;
+                @media screen and (max-width: $sm) {
+                    aspect-ratio: 32/9;
+                }
+            }
+            &-21-9{
+                @extend .cover-img;
+                @media screen and (max-width: $sm) {
+                    aspect-ratio: 21/9;
+                }
+            }
+            &-16-9{
+                @extend .cover-img;
+                @media screen and (max-width: $sm) {
+                    aspect-ratio: 16/9;
+                }
+            }
+            &-4-3{
+                @extend .cover-img;
+                @media screen and (max-width: $sm) {
+                    aspect-ratio: 4/3;
+                }
+            }
+            &-3-4{
+                @extend .cover-img;
+                @media screen and (max-width: $sm) {
+                    aspect-ratio: 3/4;
+                }
+            }        
         }
     }
-    &-21-9{
-        @extend .cover-img;
-        @media screen and (max-width: $sm) {
-            aspect-ratio: 21/9;
-        }
-    }
-    &-16-9{
-        @extend .cover-img;
-        @media screen and (max-width: $sm) {
-            aspect-ratio: 16/9;
-        }
-    }
-    &-4-3{
-        @extend .cover-img;
-        @media screen and (max-width: $sm) {
-            aspect-ratio: 4/3;
-        }
-    }
-    &-3-4{
-        @extend .cover-img;
-        @media screen and (max-width: $sm) {
-            aspect-ratio: 3/4;
-        }
-    }
+    
 }

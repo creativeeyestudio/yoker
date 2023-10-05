@@ -9,21 +9,14 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    column-gap: $marge-d-y;
-    &-no-marge{
-        @extend .row;
-        column-gap: 0;
+    margin: 0 calc(-#{$marge-d-x} / 2);
+    @media screen and (max-width: $sm) {
+        margin: 0 calc(-#{$marge-m} / 2);
     }
     .col {
         @include flexBlockInit(); // Grille de base
         @each $breakpoint, $max-width in $breakpoints {
             @include respFlexBlockInit($breakpoint, $max-width);
-        }
-    }
-    @media screen and (max-width: $sm) {
-        column-gap: $marge-m;
-        &-no-marge{
-            column-gap: 0;
         }
     }
 }  
