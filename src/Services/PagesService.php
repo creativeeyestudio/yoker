@@ -123,9 +123,7 @@ class PagesService extends AbstractController{
 
         if ($page->isMainPage() && !$main_page) {
             return $this->redirectToRoute('web_index');
-        }
-
-        if (!$page || !$page->isStatus()) {
+        } else if (!$page || !$page->isStatus()) {
             return (!$page) ? $this->redirectToRoute('web_index') : throw $this->createNotFoundException("Cette page n'est pas disponible");
         }
 
