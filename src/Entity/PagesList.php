@@ -43,6 +43,9 @@ class PagesList
     #[ORM\OneToMany(mappedBy: 'page', targetEntity: MenuLink::class)]
     private Collection $menuLinks;
 
+    #[ORM\Column]
+    private ?bool $main_page = null;
+
     public function __construct()
     {
         $this->menuLinks = new ArrayCollection();
@@ -175,6 +178,18 @@ class PagesList
                 $menuLink->setPage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isMainPage(): ?bool
+    {
+        return $this->main_page;
+    }
+
+    public function setMainPage(bool $main_page): static
+    {
+        $this->main_page = $main_page;
 
         return $this;
     }

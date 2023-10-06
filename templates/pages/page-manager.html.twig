@@ -40,6 +40,8 @@
 
         <hr />
         
+        <p>{{ form_row(form.main_page) }}</p>
+
         <p>{{ form_row(form.page_url) }}</p>
 
         <p {% if is_granted('ROLE_EDITOR') == false %} class="d-none" {% endif %} >

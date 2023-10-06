@@ -32,7 +32,9 @@ class AdminPagesController extends AbstractController
         
         $title = "Ajouter une page";
         $form = $pageService->PageManager($request, true);
-        return ($form->isSubmitted() && $form->isValid()) ?: $this->redirectToRoute('admin_pages');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->redirectToRoute('admin_pages');
+        }
 
         return $this->render('pages/page-manager.html.twig', [
             'title' => $title,

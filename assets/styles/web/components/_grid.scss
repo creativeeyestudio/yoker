@@ -9,10 +9,7 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 calc(-#{$marge-d-x} / 2);
-    @media screen and (max-width: $sm) {
-        margin: 0 calc(-#{$marge-m} / 2);
-    }
+    padding: 0 calc($marge-d-x / 2);
     .col {
         @include flexBlockInit(); // Grille de base
         @each $breakpoint, $max-width in $breakpoints {

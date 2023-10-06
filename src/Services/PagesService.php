@@ -66,6 +66,16 @@ class PagesService extends AbstractController{
                 $page->setPageId($slugName);
             }
 
+            // Page principale
+            if ($form->get('main_page')->getData()) {
+                # code...
+                $main_page = $this->pages_repo->findOneBy(['main_page' => 1]);
+                if ($main_page) {
+                    $main_page->setMainPage(0);
+                }
+                $page->setMainPage(1);
+            }
+
             // Création / Modification de l'URL
             $page->setPageUrl(empty($form->get('page_url')->getData()) ? ($newPage ? $slugName : $page->getPageUrl()) : $slugUrl);
 
@@ -91,10 +101,29 @@ class PagesService extends AbstractController{
     #endregion
 
     #region Affichage d'une page
-    public function getPage(Request $request, string $page_id)
+    public function getMainPage(Request $request) {
+        $page = $this->getPageStatus($request, true);
+        return $page;
+    }
+
+    public function getPage(Request $request, string $page_id){
+        $page = $this->getPageStatus($request, false, $page_id);
+        return $page;
+    }
+
+    public function getPageStatus(Request $request, bool $main_page, string $page_id = null)
     {
-        $page = $this->pages_repo->findOneBy(['page_url' => $page_id]);
+        if($main_page){
+            $page = $this->pages_repo->findOneBy(['main_page' => 1]);
+        } else {
+            $page = $this->pages_repo->findOneBy(['page_url' => $page_id]);
+        }
+        
         $lang = $this->lang_web($request);
+
+        if ($page->isMainPage() && !$main_page) {
+            return $this->redirectToRoute('web_index');
+        }
 
         if (!$page || !$page->isStatus()) {
             return (!$page) ? $this->redirectToRoute('web_index') : throw $this->createNotFoundException("Cette page n'est pas disponible");

@@ -43,6 +43,9 @@ class PagesAdminFormType extends AbstractType
             ])
 
             // Global
+            ->add('main_page', CheckboxType::class, [
+                'label' => "Page principale"
+            ])
             ->add('page_url', TextType::class, [
                 'label' => 'URL de la page',
                 'required' => false,

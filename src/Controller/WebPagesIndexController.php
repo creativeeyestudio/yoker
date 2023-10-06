@@ -23,7 +23,7 @@ class WebPagesIndexController extends AbstractController
     #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => 'fr'])]
     public function index(Request $request): Response
     {
-        return $this->pages_services->getPage($request, 'index');
+        return $this->pages_services->getMainPage($request);
     }
 
     // Other Page
@@ -31,7 +31,7 @@ class WebPagesIndexController extends AbstractController
     #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => 'fr'])]
     public function page(Request $request, string $page_slug): Response
     {
-        return ($page_slug === 'index') ? $this->redirectBase() : $this->pages_services->getPage($request, $page_slug);
+        return $this->pages_services->getPage($request, $page_slug);
     }
     
     // Post Page
