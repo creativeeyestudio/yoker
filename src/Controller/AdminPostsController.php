@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\MenuLink;
 use App\Entity\PostsList;
 use App\Services\PostsService;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -14,28 +15,37 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminPostsController extends AbstractController
 {
+    private $em;
+    private $postService;
+    private $security;
+    private $postsRepo;
+    private $menusRepo;
+
+    public function __construct(EntityManagerInterface $em, PostsService $postService, Security $security) {
+        $this->em = $em;
+        $this->postService = $postService;
+        $this->security = $security;
+        $this->postsRepo = $this->em->getRepository(PostsList::class);
+        $this->menusRepo = $this->em->getRepository(MenuLink::class);
+    }
 
     /* LISTE DES POSTS
     ------------------------------------------------------- */
     #[Route('/admin/posts', name: 'admin_posts')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(): Response
     {
-        $entityManager = $doctrine->getManager();
-        $postsRepo = $entityManager->getRepository(PostsList::class);
-        $posts = $postsRepo->findAll();
-
         return $this->render('posts/index.html.twig', [
-            'controller_name' => 'AdminPostsController',
-            "posts" => $posts
+            "posts" => $this->postsRepo->findAll()
         ]);
     }
+
 
     /* AJOUTER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/posts/ajouter', name: 'admin_posts_add')]
-    public function add_post(Request $request, PostsService $postService, Security $security) {
-
-        $form = $postService->PostManager($request, $security, true);
+    public function add_post(Request $request) 
+    {
+        $form = $this->postService->PostManager($request, $this->security, true);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_posts');
@@ -47,18 +57,18 @@ class AdminPostsController extends AbstractController
         ]);
     }
 
+
     /* MODIFIER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/posts/modifier/{post_id}', name: 'admin_posts_modify')]
-    public function modify_post(Request $request, ManagerRegistry $doctrine, String $post_id, PostsService $postService, Security $security) {
-
+    public function modify_post(Request $request, String $post_id)
+    {
         // Récupération du contenu de la page
-        $em = $doctrine->getManager();
-        $post = $em->getRepository(PostsList::class)->find($post_id);
-        $link = $post->getPostUrl();
+        $post = $this->postsRepo->find($post_id);
 
-        $form = $postService->PostManager($request, $security, false, $post_id);
-        
+        // Initialisation du formulaire
+        $form = $this->postService->PostManager($request, $this->security, false, $post_id);
+
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_posts_modify', [
                 'post_id' => $post_id
@@ -75,23 +85,23 @@ class AdminPostsController extends AbstractController
         ]);
     }
 
+
     /* SUPPRIMER UN POST
     ------------------------------------------------------- */
     #[Route('/admin/post/supprimer/{post_id}', name: 'admin_posts_delete')]
-    public function delete_post(ManagerRegistry $doctrine, string $post_id)
+    public function delete_post(string $post_id)
     {
-        $em = $doctrine->getManager();
-        $post = $em->getRepository(PostsList::class)->find($post_id);
-        $menuLink = $em->getRepository(MenuLink::class)->findBy(['post' => $post]);
+        $post = $this->postsRepo->find($post_id);
+        $menuLink = $this->menusRepo->findBy(['post' => $post]);
 
         if ($post) {
             if ($menuLink) {
                 foreach($menuLink as $link){
-                    $em->remove($link);
+                    $this->em->remove($link);
                 }
             }
-            $em->remove($post);
-            $em->flush();
+            $this->em->remove($post);
+            $this->em->flush();
         } else {
             throw $this->createNotFoundException("Aucun post n'a été trouvé");
         }

@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\GlobalSettings;
 use App\Form\GlobalSettingsFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
-use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +36,7 @@ class AdminSettingsController extends AbstractController
                     );
                     $settings->setLogo($new_name);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    throw $th;
                 }
             }
             $em->flush();

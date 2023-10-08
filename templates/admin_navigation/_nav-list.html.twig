@@ -3,7 +3,7 @@
         {% set postType = item.post is not null ? 'Post' %}
         {% set itemType = item.page is not null ? 'Page' : 'Lien' %}
         {% set cusname = item.cusname[0] ?: '' %}
-        <span>[{{ itemType ? itemType : postType }}] - {{ cusname }}</span>
+        <span>[{{ postType ? postType : itemType }}] - {{ cusname }}</span>
         <ul>
             <li><span class="nav-update" data-url="{{ path('app_admin_nav_manage_link', { id_link: item.id }) }}">Modifier</span></li>
             <li><span class="nav-remove" data-id="{{ item.id }}">Supprimer</span></li>

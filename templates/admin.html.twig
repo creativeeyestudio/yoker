@@ -37,12 +37,6 @@
                     <li>
                         <a href="{{ path('admin_posts') }}">Actualités</a>
                     </li>
-                    {# <li>
-                        <a href="{{ path('add_admin_header') }}">En-tête du site</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('add_admin_footer') }}">Pied de page du site</a>
-                    </li> #}
                     <li>
                         <a href="{{ path('app_admin_emails') }}">Modèles d'E-Mails</a>
                     </li>
@@ -51,21 +45,21 @@
                     </li>
 
                     {% if is_granted('ROLE_EDITOR') %}
-                        <li>
-                            <a href="{{ path('admin_users') }}">Utilisateurs</a>
-                        </li>
-                        <li>
-                            <a target='_blank' rel='noopener'>Matomo</a>
-                        </li>
-                        <li>
-                            <a target='_blank' rel='noopener'>Google Search Console</a>
-                        </li>  
-                    {% endif %}
-
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li>
-                            <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
-                        </li>
+                    <li>
+                        <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                    </li>
+                    <li>
+                        <a target='_blank' rel='noopener'>Matomo</a>
+                    </li>
+                    <li>
+                        <a target='_blank' rel='noopener'>Google Analytics</a>
+                    </li> 
+                    <li>
+                        <a target='_blank' rel='noopener'>Google Search Console</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
+                    </li>  
                     {% endif %}
 
                     <li>

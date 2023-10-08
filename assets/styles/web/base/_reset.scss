@@ -3,7 +3,7 @@
 }
 
 body{
-    margin: 0;
+    @extend .margin-none;
     font-size: #{$fsBody}px;
     font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
     letter-spacing: 0.04em;
@@ -20,7 +20,7 @@ figure{
 }
 
 .cover-img{
-    @extend .position-relative;
+    @extend .margin-none;
     img{
         @extend .position-absolute;
         @extend .wd-100;

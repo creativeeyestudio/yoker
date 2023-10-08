@@ -6,7 +6,6 @@ use App\Entity\MenuLink;
 use App\Entity\PagesList;
 use App\Services\PagesService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,24 +13,32 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminPagesController extends AbstractController
 {
-    #[Route('/admin/pages', name: 'admin_pages')]
-    public function index(EntityManagerInterface $em): Response
-    {
-        $pagesRepo = $em->getRepository(PagesList::class);
-        $pages = $pagesRepo->findAll();
+    private $pageRepo;
+    private $em;
+    private $pageService;
 
+    public function __construct(EntityManagerInterface $em, PagesService $pageService) {
+        $this->em = $em;
+        $this->pageRepo = $this->em->getRepository(PagesList::class);
+        $this->pageService = $pageService;
+    }
+
+    #[Route('/admin/pages', name: 'admin_pages')]
+    public function index(): Response 
+    {
         return $this->render('pages/index.html.twig', [
-            "pages" => $pages
+            "pages" => $this->pageRepo->findAll()
         ]);
     }
 
     /* AJOUTER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
-    public function add_page(PagesService $pageService, Request $request) {
-        
+    public function add_page(Request $request) 
+    {
         $title = "Ajouter une page";
-        $form = $pageService->PageManager($request, true);
+        $form = $this->pageService->PageManager($request, true);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->redirectToRoute('admin_pages');
         }
@@ -45,16 +52,15 @@ class AdminPagesController extends AbstractController
     /* MODIFIER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
-    public function modify_page(PagesService $pageService, ManagerRegistry $doctrine, Request $request, String $page_id) {
-
+    public function modify_page(Request $request, String $page_id) 
+    {
         // Récupération du lien de la page
-        $entityManager = $doctrine->getManager();
-        $page = $entityManager->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
+        $page = $this->pageRepo->findOneBy(['page_id' => $page_id]);
         $link = $page->getPageUrl();
 
         // Mise à jour du contenu
         $title = "Modifier une page";
-        $form = $pageService->PageManager($request, false, $page_id);   
+        $form = $this->pageService->PageManager($request, false, $page_id);   
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages_modify', [
@@ -76,19 +82,19 @@ class AdminPagesController extends AbstractController
     /* SUPPRIMER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/supprimer/{page_id}', name: 'admin_pages_delete')]
-    public function delete_page(ManagerRegistry $doctrine, string $page_id) {
-        $em = $doctrine->getManager();
-        $page = $em->getRepository(PagesList::class)->findOneBy(['page_id' => $page_id]);
-        $menuLink = $em->getRepository(MenuLink::class)->findBy(['page' => $page]);
+    public function delete_page(string $page_id) 
+    {
+        $page = $this->pageRepo->findOneBy(['page_id' => $page_id]);
+        $menuLink = $this->em->getRepository(MenuLink::class)->findBy(['page' => $page]);
 
         if($page) {
             if ($menuLink) {
                 foreach($menuLink as $link){
-                    $em->remove($link);
+                    $this->em->remove($link);
                 }
             }
-            $em->remove($page);
-            $em->flush();
+            $this->em->remove($page);
+            $this->em->flush();
         } else {
             throw $this->createNotFoundException("Aucune page n'a été trouvée");
         }

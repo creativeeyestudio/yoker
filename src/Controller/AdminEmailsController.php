@@ -60,7 +60,7 @@ class AdminEmailsController extends AbstractController
     }
 
     #[Route('/admin/email/{emailId}', name: 'app_admin_emails_update')]
-    public function update(Request $request, EntityManagerInterface $em, ManagerRegistry $doctrine, string $emailId)
+    public function update(Request $request, EntityManagerInterface $em, string $emailId)
     {
         $form = $this->createForm(EmailAdminFormType::class);
         $form->handleRequest($request);

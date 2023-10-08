@@ -3,7 +3,6 @@ $headings: (h1, $fsTitle1), (h2, $fsTitle2), (h3, $fsTitle3), (h4, $fsTitle4), (
 @each $heading, $fontSize in $headings {
   #{$heading} {
     @include font(400, $fontSize, false, $ff-title);
-    
     @media screen and (min-width: $md) {
       @include font(400, $fontSize, false, $ff-title);
     }

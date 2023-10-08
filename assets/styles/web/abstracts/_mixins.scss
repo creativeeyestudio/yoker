@@ -75,8 +75,14 @@
 @mixin flexColSize($size){
     width: calc(100% / $grid-size) * $size;
     padding: 0 calc($marge-d-x / 2);
+    &-no-marge{
+        padding: 0;  
+    }  
     @media screen and (max-width: $sm) {
         padding: 0 calc($marge-m / 2);
+        &-no-marge{
+            padding: 0;  
+        } 
     }
 }
 

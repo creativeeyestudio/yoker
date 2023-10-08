@@ -1,15 +1,24 @@
 .container{
+    @extend .margin-auto;
     max-width: 1400px;
-    margin: auto;
     &-fluid{
         max-width: 100%;
     }
 }
 
 .row {
-    display: flex;
+    @extend .d-flex;
     flex-wrap: wrap;
     padding: 0 calc($marge-d-x / 2);
+    &-no-marge{
+        padding: 0;  
+    } 
+    @media screen and (max-width: $md) {
+        padding: 0 calc($marge-m / 2);
+        &-no-marge{
+            padding: 0;  
+        } 
+    }
     .col {
         @include flexBlockInit(); // Grille de base
         @each $breakpoint, $max-width in $breakpoints {

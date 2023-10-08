@@ -83,7 +83,7 @@ class AdminNavigationController extends AbstractController
                 $menuLink->setOrderLink(0);
                 $menuLink->setMenu($menu);
                 $menuLink->setCusName([$cusName]);
-                $menuLink->setCusLink($cusLink);
+                $menuLink->setCusLink([$cusLink]);
                 $menuLinksToInsert[] = $menuLink;
             }
 
