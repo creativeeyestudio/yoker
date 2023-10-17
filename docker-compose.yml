@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: "database"
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+
+  dreamsite:
+    container_name: "dreamsite"
+    build: .
+    environment:
+      APP_ENV: dev
+      DATABASE_URL: mysql://user:password@db:3306/db?serverVersion=5.7&charset=utf8mb4
+    ports:
+      - 8010:80
+
+  phpmyadmin:
+    container_name: "phpmyadmin"
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      PMA_USER: user          # Nom d'utilisateur root pour PhpMyAdmin
+      PMA_PASSWORD: password  # Mot de passe root pour PhpMyAdmin
+    ports:
+      - '8080:80'
+
+  maildev:
+    container_name: "maildev"
+    image: djfarrelly/maildev
+    ports:
+      - '25:25'   # Port SMTP
+      - '80:80'   # Port Web
+
+# Names our volume
+volumes:
+  my-db:

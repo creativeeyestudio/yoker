@@ -24,7 +24,7 @@ class PagesService extends AbstractController{
 
     function __construct(ManagerRegistry $doctrine, PostsService $posts_services){
         $this->em = $doctrine->getManager();
-        $this->settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 0]);
+        $this->settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 1]);
         $this->pages_repo = $doctrine->getRepository(PagesList::class);
         $this->posts_repo = $doctrine->getRepository(PostsList::class);
         $this->menus = $doctrine->getRepository(Menu::class);

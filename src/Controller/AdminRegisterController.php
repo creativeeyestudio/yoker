@@ -48,7 +48,7 @@ class AdminRegisterController extends AbstractController
 
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            $formService->validateRegister($user->getEmail(), 'user', 'token');
+            $formService->validateRegister($user->getEmail(), $user->getFirstName(), $token);
 
             $notif = "Le compte a bien été crée";
         }

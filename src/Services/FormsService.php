@@ -25,13 +25,16 @@ class FormsService
         $this->mailer->send($email);
     }
 
-    public function validateRegister(string $userMail, string $user, string $token){
+    public function validateRegister(string $userMail, string $userName,  string $token){
         $this->send(
             'no-reply@creative-eye.fr',
             $userMail,
             "Création de votre compte sur le site",
             'register',
-            compact($user, $token)
+            [
+                'user' => $userName,
+                'token' => $token
+            ]
         );
     }
 }
