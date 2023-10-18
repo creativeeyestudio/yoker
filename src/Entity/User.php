@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $firstname = null;
 
     #[ORM\Column]
-    private ?bool $is_verified = null;
+    public ?bool $is_verified = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: PostsList::class)]
     private Collection $postsLists;
