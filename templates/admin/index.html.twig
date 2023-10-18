@@ -4,7 +4,13 @@
 
 {% block body %}
 <!-- Col Contenu du CMS -->
-<section class="row col-3">
+<section 
+    {% if is_granted('ROLE_EDITOR') %}
+        class="row col-3"
+    {% else %}
+        class="row col-2"
+    {% endif %}
+>
     <div class="block">
         <h2>Dernières pages</h2>
         {% for page in pagesList %}
@@ -19,6 +25,7 @@
             <a class="btn-link mt" href="{{ path('admin_pages') }}">Voir toutes les pages</a>
         </p>
     </div>
+
     <div class="block">
         <h2>Derniers articles</h2>
         {% for post in postsList %}
@@ -33,6 +40,7 @@
             <a class="btn-link mt" href="{{ path('admin_posts') }}">Voir tous les articles</a>
         </p>
     </div>
+    {% if is_granted('ROLE_EDITOR') %}
     <div class="block">
         <h2>Utilisateurs</h2>
         {% for user in usersList %}
@@ -50,6 +58,7 @@
             <a class="btn-link mt" href="{{ path('admin_users') }}">Gérer les utilisateurs</a>
         </p>
     </div>
+    {% endif %}
 </section>
 
 <!-- Col Infos versions -->
