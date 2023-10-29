@@ -1,0 +1,20 @@
+@media screen and (min-width: 1200px) {
+    body:not(.no-js){
+        [data-aos=reveal-left]{
+            @include animate-image("left", "right");
+        }
+
+        [data-aos=reveal-right]{
+            @include animate-image("right", "left");
+        }
+
+        [data-aos=reveal-left-reverse]{
+            @include animate-image("left", "left");
+        }
+
+        [data-aos=reveal-right-reverse]{
+            @include animate-image("right", "right");
+        }
+    }
+    
+}
