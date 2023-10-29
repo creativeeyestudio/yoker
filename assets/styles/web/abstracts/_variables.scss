@@ -17,10 +17,14 @@ $marge-d-y: 5vw;
 // -----------------------------------------
 $displayValues: (
     block: block,
-    inline: inline,
-    inline-block: inline-block,
+    contents: contents,
     flex: flex,
     grid: grid,
+    inline: inline,
+    inline-block: inline-block,
+    inline-flex: inline-flex,
+    inline-grid: inline-grid,
+    inline-table: inline-table,
     table: table,
     none: none
 );
@@ -28,17 +32,20 @@ $displayValues: (
 
 // TEXTS ALIGNES & TRANSFORMS
 // -----------------------------------------
-$text-align-values: left, center, right, justify;
-$text-transform-values: capitalize, lowercase, uppercase;
+$text-align-values: left, center, right, justify, initial, inherit;
+$text-transform-values: none, capitalize, uppercase, lowercase, initial, inherit;
 
 
 // POSITIONS
 // -----------------------------------------
 $positions: (
     static: static,
-    fixed: fixed,
     absolute: absolute,
-    relative: relative
+    fixed: fixed,
+    relative: relative,
+    sticky: sticky,
+    initial: initial,
+    inherit: inherit
 );
 
 
@@ -107,3 +114,5 @@ $lhText: 1.5;
 // -----------------------------------------
 $colorBk: #171717;
 $colorWt: #FFF;
+
+$colorP: '';

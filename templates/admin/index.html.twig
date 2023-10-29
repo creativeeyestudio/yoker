@@ -32,7 +32,7 @@
             <div class="line">
                 <p>{{ post.postname[0] }}</p>
                 <ul>
-                    <li><a href="{{ path('web_post', {post_url: post.posturl}) }}" target="_blank" rel="noopener">Voir</a></li>
+                    <li><a href="{{ path('web_post', {post_slug: post.posturl}) }}" target="_blank" rel="noopener">Voir</a></li>
                 </ul>
             </div>
         {% endfor %}
