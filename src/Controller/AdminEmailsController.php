@@ -30,7 +30,7 @@ class AdminEmailsController extends AbstractController
     {
         $form = $this->createForm(EmailAdminFormType::class);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupération des valeurs
             $emailName = $form->get('email_name')->getData();
@@ -80,7 +80,7 @@ class AdminEmailsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $emailName = $form->get('email_name')->getData();
             $emailContent = $form->get('email_content')->getData();
-            
+
             // Modification du fichier
             $filePath = "../templates/emails/" . $email->getEmailId() . '.html.twig';
             if (file_exists($filePath)) {
@@ -110,7 +110,7 @@ class AdminEmailsController extends AbstractController
         if (!$email) {
             throw $this->createNotFoundException("L'E-Mail n'a pas été trouvé");
         }
-        
+
         // Suppression du fichier
         $filePath = "../templates/emails/" . $email->getEmailId() . ".html.twig";
         if (file_exists($filePath)) {

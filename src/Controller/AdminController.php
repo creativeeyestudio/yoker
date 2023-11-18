@@ -16,16 +16,13 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(EntityManagerInterface $em): Response
     {
-        $pagesList = $em->getRepository(PagesList::class)->findBy([], ['id' => 'DESC'], 5);
-        $postsList = $em->getRepository(PostsList::class)->findBy([], ['id' => 'DESC'], 5);
-        $usersList = $em->getRepository(User::class)->findBy([], ['id' => 'DESC'], 5);
-
+        $limit = 5;
         return $this->render('admin/index.html.twig', [
             'phpversion' => phpversion(),
             'symfonyversion' => Kernel::VERSION,
-            'pagesList' => $pagesList,
-            'postsList' => $postsList,
-            'usersList' => $usersList,
+            'pagesList' => $em->getRepository(PagesList::class)->findBy([], ['id' => 'DESC'], $limit),
+            'postsList' => $em->getRepository(PostsList::class)->findBy([], ['id' => 'DESC'], $limit),
+            'usersList' => $em->getRepository(User::class)->findBy([], ['id' => 'DESC'], $limit),
         ]);
     }
 }
