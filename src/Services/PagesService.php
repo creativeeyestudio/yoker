@@ -116,6 +116,7 @@ class PagesService extends AbstractController{
         if ($page->isMainPage() && $page_id) {
             return $this->redirectToRoute('web_index');
         }
+        
         $lang = $this->lang_web($request);
 
         return $this->render('web_pages_views/index.html.twig', [
