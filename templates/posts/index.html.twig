@@ -10,7 +10,7 @@
         <div class="line">
             <p>{{ post.postname[0] }}</p>
             <ul>
-                <li><a href="{{ path('web_post', {_locale: 'fr', post_url: post.posturl}) }}" target="_blank" rel="noopener">Voir</a></li>
+                <li><a href="{{ path('web_post', {_locale: 'fr', post_slug: post.posturl}) }}" target="_blank" rel="noopener">Voir</a></li>
                 <li><a href="{{ path('admin_posts_modify', {post_id: post.id}) }}">Modifier</a></li>
                 <li><a href="{{ path('admin_posts_delete', {post_id: post.id}) }}">Supprimer</a></li>
             </ul>

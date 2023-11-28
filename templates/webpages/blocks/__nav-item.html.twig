@@ -10,7 +10,7 @@
             {{ cusname ?? item.page.pagename[lang] }}
         </a>
     {% elseif item.post %}
-        <a href="{{ path('web_post', {post_url: postUrl}) }}" {{ targetAttr }}>
+        <a href="{{ path('web_post', {post_slug: postUrl}) }}" {{ targetAttr }}>
             {{ cusname ?? item.post.postname[lang] }}
         </a>
     {% else %}

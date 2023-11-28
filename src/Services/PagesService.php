@@ -8,6 +8,7 @@ use App\Entity\PagesList;
 use App\Entity\PostsList;
 use App\Form\PagesAdminFormType;
 use Cocur\Slugify\Slugify;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,12 @@ class PagesService extends AbstractController{
     private $posts_repo;
     private $posts_services;
 
-    function __construct(ManagerRegistry $doctrine, PostsService $posts_services){
-        $this->em = $doctrine->getManager();
-        $this->settings = $doctrine->getRepository(GlobalSettings::class)->findOneBy(['id' => 1]);
-        $this->pages_repo = $doctrine->getRepository(PagesList::class);
-        $this->posts_repo = $doctrine->getRepository(PostsList::class);
-        $this->menus = $doctrine->getRepository(Menu::class);
+    function __construct(EntityManagerInterface $em, PostsService $posts_services){
+        $this->em = $em;
+        $this->settings = $this->em->getRepository(GlobalSettings::class)->findOneBy(['id' => 1]);
+        $this->pages_repo = $this->em->getRepository(PagesList::class);
+        $this->posts_repo = $this->em->getRepository(PostsList::class);
+        $this->menus = $this->em->getRepository(Menu::class);
         $this->posts_services = $posts_services;
     }
     
@@ -100,30 +101,22 @@ class PagesService extends AbstractController{
 
     #region Affichage d'une page
     public function getMainPage(Request $request) {
-        $page = $this->getPageStatus($request, true);
+        $page = $this->getPageStatus($request);
         return $page;
     }
 
     public function getPage(Request $request, string $page_id){
-        $page = $this->getPageStatus($request, false, $page_id);
+        $page = $this->getPageStatus($request, $page_id);
         return $page;
     }
 
-    public function getPageStatus(Request $request, bool $main_page, string $page_id = null)
+    public function getPageStatus(Request $request, string $page_id = null)
     {
-        if($main_page){
-            $page = $this->pages_repo->findOneBy(['main_page' => 1]);
-        } else {
-            $page = $this->pages_repo->findOneBy(['page_url' => $page_id]);
-        }
-        
-        $lang = $this->lang_web($request);
-
-        if ($page->isMainPage() && !$main_page) {
+        $page = $this->pages_repo->findOneBy(['page_url' => $page_id]) ?? $this->pages_repo->findOneBy(['page_url' => "index"]);
+        if ($page->isMainPage() && $page_id) {
             return $this->redirectToRoute('web_index');
-        } else if (!$page || !$page->isStatus()) {
-            return (!$page) ? $this->redirectToRoute('web_index') : throw $this->createNotFoundException("Cette page n'est pas disponible");
         }
+        $lang = $this->lang_web($request);
 
         return $this->render('web_pages_views/index.html.twig', [
             'page_content' => htmlspecialchars_decode($page->getPageContent()[$lang]),
@@ -144,7 +137,6 @@ class PagesService extends AbstractController{
     {
         $post = $this->posts_repo->findOneBy(['post_url' => $post_id]);
         $lang = $this->lang_web($request);
-        $locales = $this->locales_web();
 
         if (!$post || !$post->isOnline()) {
             throw $this->createNotFoundException("Cet article n'est pas disponible");
@@ -153,13 +145,13 @@ class PagesService extends AbstractController{
         return $this->render('web_pages_views/post.html.twig', [
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
-            'post_content' => htmlspecialchars_decode($post->getPostContent()[array_search($lang, $locales)]),
+            'post_content' => htmlspecialchars_decode($post->getPostContent()[$lang]),
             'settings' => $this->settings,
             'menus' => $this->menus,
             'lang' => $this->lang_web($request),
             'lang_page' => $this->locales_web()[$lang],
-            'meta_title' => $post->getPostMetaTitle()[array_search($lang, $locales)],
-            'meta_desc' => $post->getPostMetaDesc()[array_search($lang, $locales)],
+            'meta_title' => $post->getPostMetaTitle()[$lang],
+            'meta_desc' => $post->getPostMetaDesc()[$lang],
         ]);
     }
     #endregion
@@ -169,7 +161,7 @@ class PagesService extends AbstractController{
     {
         $locales = Locales::getLocales();
         $localesSite = [
-            $locales[280], // FR
+            $locales[281], // FR
             // $locales[96] // EN
         ];
         return $localesSite;
@@ -177,9 +169,10 @@ class PagesService extends AbstractController{
 
     private function lang_web(Request $request) 
     {
-        $lang = $request->getLocale();
-        $localesSite = $this->locales_web();
-        $lang = array_search($lang, $localesSite);
+        $lang = array_search(
+            $request->getLocale(), 
+            $this->locales_web()
+        );
         return $lang;
     }
     #endregion   

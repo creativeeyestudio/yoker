@@ -24,7 +24,6 @@ Encore
     .addEntry('tarteaucitronjs', './assets/tarteaucitronjs.js')
     .addEntry('modernizr', './assets/modernizr.js')
     .addEntry('app-admin', './assets/app-admin.js')
-    .addEntry('grapesjs', './node_modules/grapesjs/dist/grapes.min.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -60,7 +59,7 @@ Encore
     })
 
     // uncomment if you use VueJS
-    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    .enableVueLoader()
 
     // enables Sass/SCSS support
     .enableSassLoader()

@@ -19,11 +19,11 @@
     <body
         {{ stimulus_controller('symfony/ux-swup/swup', {
             containers: ['#main', '#nav'],
-            animationSelector: '[class*="transition-"]',
-            theme: 'fade',
             animateHistoryBrowsing: true,
+            animationSelector: '[class*="transition-"]',
             cache: true,
-            debug: false
+            theme: 'fade',
+            debug: true
         }) }}
         data-damping='{% block damping %}{% endblock %}'
         data-scrollimg='{% block scrollimg %}{% endblock %}'>
@@ -39,9 +39,9 @@
         </div>
 
         {% block javascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.15.0/tarteaucitron.min.js" integrity="sha512-1t2Estaw36hVOgbIl4AdmTBbZapUqm08dH8xgoqQTBBpszCdw7nCidrLbNbHVKX4Hz67sLzTwMduMqI4hREXlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             {{ encore_entry_script_tags('modernizr') }}
             {{ encore_entry_script_tags('app') }}
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.11.0/tarteaucitron.js" integrity="sha512-bDyrKjNycnlzdeKsBI4TOHhiDmAx9LtNkZo/IfdLZGlzYTREqmAdvgHy876IOBfZ7UUq7mIz4t4ZHoG8w/xTdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             {{ encore_entry_script_tags('tarteaucitronjs') }}
          {% endblock %}
     </body>

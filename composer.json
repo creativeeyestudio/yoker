@@ -50,7 +50,7 @@
         "symfony/translation": "6.3.*",
         "symfony/twig-bundle": "6.3.*",
         "symfony/ux-dropzone": "^2.13.2",
-        "symfony/ux-swup": "^2.13.2",
+        "symfony/ux-swup": "^2.13",
         "symfony/ux-vue": "^2.13.2",
         "symfony/validator": "6.3.*",
         "symfony/web-link": "6.3.*",
