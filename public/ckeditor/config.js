@@ -25,3 +25,23 @@ CKEDITOR.editorConfig = function( config ) {
 	config.height = 300;
 	config.startupMode = 'source'
 };
+
+CKEDITOR.on( 'dialogDefinition', function( ev ) {
+    var dialogName = ev.data.name;
+    var dialogDefinition = ev.data.definition;
+    var editorO = ev.data.definition.dialog.getParentEditor();
+
+    if ( dialogName == 'image' || dialogName == 'image2' ) {
+        var infoTab = dialogDefinition.getContents( 'info' );
+        if( dialogName == 'image' ){
+            infoTab.remove('txtWidth');
+            infoTab.remove('txtHeight');
+            infoTab.remove('ratioLock');
+        }
+        else{
+            infoTab.remove('width');
+            infoTab.remove('height');
+            infoTab.remove('lock');
+        }
+    }
+});
