@@ -9,5 +9,7 @@ fos_ck_editor:
     js_path: 'ckeditor/ckeditor.js'
     configs:
         main_config:
-            filebrowserBrowseRoute: elfinder
-            filebrowserBrowseRouteParameters: []
+            filebrowserBrowseRoute: file_manager
+            filebrowserBrowseRouteParameters:
+                conf: default
+                module: ckeditor
