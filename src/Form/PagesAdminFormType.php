@@ -56,7 +56,8 @@ class PagesAdminFormType extends AbstractType
                 'mapped' => false,
                 'help' => 'Max 63 caractères',
                 'attr' => [
-                    'maxlength' => 63
+                    'maxlength' => 63,
+                    'class' => 'metatitle_fr',
                 ]
             ])
             ->add('page_meta_desc_fr', TextareaType::class, [
@@ -65,7 +66,8 @@ class PagesAdminFormType extends AbstractType
                 'mapped' => false,
                 'help' => 'Max 100 caractères',
                 'attr' => [
-                    'maxlength' => 100
+                    'maxlength' => 100,
+                    'class' => 'metadesc_fr',
                 ]
             ])
 

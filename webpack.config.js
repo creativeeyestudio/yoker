@@ -24,6 +24,7 @@ Encore
     .addEntry('tarteaucitronjs', './assets/tarteaucitronjs.js')
     .addEntry('modernizr', './assets/modernizr.js')
     .addEntry('app-admin', './assets/app-admin.js')
+    .addEntry('seoptimize', './assets/seoptimize.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
