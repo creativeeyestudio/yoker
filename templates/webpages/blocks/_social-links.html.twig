@@ -1,0 +1,26 @@
+{% set socialNetworks = {
+    'Facebook': 'fa-facebook',
+    'Twitter': 'fa-twitter',
+    'Instagram': 'fa-instagram',
+    'Youtube': 'fa-youtube',
+    'Pinterest': 'fa-pinterest',
+    'Slideshare': 'fa-slideshare',
+    'Xing': 'fa-xing',
+    'AngelList': 'fa-angellist',
+    'Behance': 'fa-behance',
+    'Meetup': 'fa-meetup',
+    'Reddit': 'fa-reddit',
+    'Quora': 'fa-quora',
+    'Whatsapp': 'fa-whatsapp',
+} %}
+
+{% for network, iconClass in socialNetworks %}
+    {% set socialUrl = attribute(social, 'get' ~ network|capitalize) %}
+    {% if socialUrl is not empty %}
+        <li>
+            <a href="{{ socialUrl }}">
+                <i class="fa-brands fa-2x {{ iconClass }}"></i>
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}

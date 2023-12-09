@@ -19,50 +19,68 @@
             <nav class="navigation">
                 <span class="website-title">{{ site_name }}</span>
                 <ul>
-                    <li>
+                    <li class="link">
                         <a href="{{ path('app_admin') }}">Accueil</a>
                     </li>
-                    <li>
+                    <li class="link">
                         <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
                     </li>
-                    <li>
-                        <a href="{{ path('app_admin_files') }}">Médias</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_admin_nav') }}">Navigation</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_pages') }}">Pages du site</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_posts') }}">Actualités</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_admin_emails') }}">Modèles d'E-Mails</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
+                    <li class="base">
+                        <span>Contenus</span>
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_nav') }}">Navigation</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_pages') }}">Pages du site</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_posts') }}">Actualités</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_files') }}">Médias</a>
+                            </li>
+                        </ul>
                     </li>
 
-                    {% if is_granted('ROLE_EDITOR') %}
-                    <li>
-                        <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                    <li class="base">
+                        <span>Extentions</span>
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_social_manager') }}">Social Manager</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_emails') }}">Mails Manager</a>
+                            </li>
+                            <li>
+                                <a target='_blank' rel='noopener'>Matomo</a>
+                            </li>
+                            <li>
+                                <a target='_blank' rel='noopener'>Google Analytics</a>
+                            </li> 
+                            <li>
+                                <a target='_blank' rel='noopener'>Google Search Console</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a target='_blank' rel='noopener'>Matomo</a>
-                    </li>
-                    <li>
-                        <a target='_blank' rel='noopener'>Google Analytics</a>
-                    </li> 
-                    <li>
-                        <a target='_blank' rel='noopener'>Google Search Console</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
-                    </li>  
-                    {% endif %}
 
-                    <li>
+                    <li class="base">
+                        <span>Paramétrage</span>
+                        <ul>
+                        <li>
+                            <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
+                        </li>    
+                        {% if is_granted('ROLE_EDITOR') %}
+                        <li>
+                            <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
+                        </li>  
+                        {% endif %}
+                        </ul>
+                    </li>
+                    <li class="link">
                         <a href="{{ path('app_logout') }}">Se déconnecter</a>
                     </li>
                 </ul>

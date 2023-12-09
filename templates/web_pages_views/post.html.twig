@@ -9,6 +9,10 @@
 {% block damping %}{{ settings.damping }}{% endblock %}
 {% block scrollimg %}{{ settings.scrollimg }}{% endblock %}
 
+{% block socialList %}
+    {{ include('webpages/blocks/_social-links.html.twig', { social: social }) }}
+{% endblock %}
+
 {% block body %}
     {% if post_thumb %}
         <img src="{{ posts_img_directory }}/{{ post_thumb }}" />

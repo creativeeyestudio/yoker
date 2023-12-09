@@ -6,6 +6,7 @@ use App\Entity\GlobalSettings;
 use App\Entity\Menu;
 use App\Entity\PagesList;
 use App\Entity\PostsList;
+use App\Entity\SocialManager;
 use App\Form\PagesAdminFormType;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Locales;
 
-class PagesService extends AbstractController{
+class PagesService extends AbstractController
+{
 
     private $em;
     private $settings;
@@ -22,16 +24,19 @@ class PagesService extends AbstractController{
     private $pages_repo;
     private $posts_repo;
     private $posts_services;
+    private $social;
 
-    function __construct(EntityManagerInterface $em, PostsService $posts_services){
+    function __construct(EntityManagerInterface $em, PostsService $posts_services)
+    {
         $this->em = $em;
-        $this->settings = $this->em->getRepository(GlobalSettings::class)->findOneBy(['id' => 1]);
+        $this->settings = $this->em->getRepository(GlobalSettings::class)->find(1);
         $this->pages_repo = $this->em->getRepository(PagesList::class);
         $this->posts_repo = $this->em->getRepository(PostsList::class);
         $this->menus = $this->em->getRepository(Menu::class);
+        $this->social = $this->em->getRepository(SocialManager::class)->find(1);
         $this->posts_services = $posts_services;
     }
-    
+
     #region Page Manager
     function PageManager(Request $request, bool $newPage, string $page_id = null)
     {
@@ -100,12 +105,14 @@ class PagesService extends AbstractController{
     #endregion
 
     #region Affichage d'une page
-    public function getMainPage(Request $request) {
+    public function getMainPage(Request $request)
+    {
         $page = $this->getPageStatus($request);
         return $page;
     }
 
-    public function getPage(Request $request, string $page_id){
+    public function getPage(Request $request, string $page_id)
+    {
         $page = $this->getPageStatus($request, $page_id);
         return $page;
     }
@@ -116,7 +123,7 @@ class PagesService extends AbstractController{
         if ($page->isMainPage() && $page_id) {
             return $this->redirectToRoute('web_index');
         }
-        
+
         $lang = $this->lang_web($request);
 
         return $this->render('web_pages_views/index.html.twig', [
@@ -128,7 +135,8 @@ class PagesService extends AbstractController{
             'last_posts' => $this->posts_services->getLastPosts(),
             'posts' => $this->posts_services->getAllPosts(),
             'settings' => $this->settings,
-            'menus' => $this->menus
+            'menus' => $this->menus,
+            'social' => $this->social,
         ]);
     }
     #endregion
@@ -153,6 +161,7 @@ class PagesService extends AbstractController{
             'lang_page' => $this->locales_web()[$lang],
             'meta_title' => $post->getPostMetaTitle()[$lang],
             'meta_desc' => $post->getPostMetaDesc()[$lang],
+            'social' => $this->social,
         ]);
     }
     #endregion
@@ -168,10 +177,10 @@ class PagesService extends AbstractController{
         return $localesSite;
     }
 
-    private function lang_web(Request $request) 
+    private function lang_web(Request $request)
     {
         $lang = array_search(
-            $request->getLocale(), 
+            $request->getLocale(),
             $this->locales_web()
         );
         return $lang;

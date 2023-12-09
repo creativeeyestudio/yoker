@@ -19,6 +19,7 @@ class WebPagesIndexController extends AbstractController
         $this->request = new Request();
     }
     
+    
     // Index Page
     // -------------------------------------------------------------------------------------------
     #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => 'fr|en'])]
@@ -26,6 +27,7 @@ class WebPagesIndexController extends AbstractController
     {
         return $this->pages_services->getPageStatus($request);
     }
+
 
     // Other Page
     // -------------------------------------------------------------------------------------------
@@ -39,6 +41,7 @@ class WebPagesIndexController extends AbstractController
         }
     }
     
+
     // Post Page
     // -------------------------------------------------------------------------------------------
     #[Route('/{_locale}/blog/{post_slug}', name: 'web_post', requirements: ['_locale' => 'fr|en'])]
@@ -47,12 +50,14 @@ class WebPagesIndexController extends AbstractController
         return $this->pages_services->getPost($this->request, $post_slug);
     }
 
+
     // Redirections
     // -------------------------------------------------------------------------------------------
     #[Route('/', name: 'web_redirect')]
     public function redirectBase(){
         return $this->redirectToRoute('web_index');
     }
+
 
     // API
     // -------------------------------------------------------------------------------------------
