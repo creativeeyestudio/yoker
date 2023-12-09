@@ -119,7 +119,7 @@ class PagesService extends AbstractController
 
     public function getPageStatus(Request $request, string $page_id = null)
     {
-        $page = $this->pages_repo->findOneBy(['page_url' => $page_id]) ?? $this->pages_repo->findOneBy(['page_url' => "index"]);
+        $page = $this->pages_repo->findOneBy(['page_url' => $page_id]) ?? $this->pages_repo->findOneBy(['main_page' => 1]);
         if ($page->isMainPage() && $page_id) {
             return $this->redirectToRoute('web_index');
         }

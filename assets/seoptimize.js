@@ -4,8 +4,7 @@ var bTitle = document.querySelectorAll('.b-title');
 var bDesc = document.querySelectorAll('.b-desc');
 
 function updateContent(element, dataAttribute, fallbackText) {
-    let inputTarget = element.getAttribute(dataAttribute);
-    let inputElement = document.querySelector('.' + inputTarget);
+    let inputElement = document.querySelector('.' + element.getAttribute(dataAttribute));
 
     if (inputElement) {
         element.textContent = inputElement.value || fallbackText;
@@ -16,18 +15,16 @@ function updateContent(element, dataAttribute, fallbackText) {
     }
 }
 
-if (googleSerp) {
-    console.log('Les éléments de SEOptimize ont été localisés');
+if (googleSerp && googleSerp.length > 0) {
+    const elementsToUpdate = [
+        { elements: bUrl, dataAttribute: 'data-url-target', fallbackText: '' },
+        { elements: bTitle, dataAttribute: 'data-title-target', fallbackText: 'Meta Title' },
+        { elements: bDesc, dataAttribute: 'data-desc-target', fallbackText: 'Meta Description' }
+    ];
 
-    for (const url of bUrl) {
-        updateContent(url, 'data-url-target', '');
-    }
-
-    for (const title of bTitle) {
-        updateContent(title, 'data-title-target', 'Meta Title');
-    }
-
-    for (const desc of bDesc) {
-        updateContent(desc, 'data-desc-target', 'Meta Description');
+    for (const { elements, dataAttribute, fallbackText } of elementsToUpdate) {
+        for (const element of elements) {
+            updateContent(element, dataAttribute, fallbackText);
+        }
     }
 }
