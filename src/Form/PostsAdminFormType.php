@@ -31,12 +31,20 @@ class PostsAdminFormType extends AbstractType
             ->add('post_meta_title_fr', TextType::class, [
                 'label' => "Meta Title de l'article (FR)",
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'attr' => [
+                    'maxlength' => 63,
+                    'class' => 'metatitle_fr',
+                ]
             ])
             ->add('post_meta_desc_fr', TextareaType::class, [
                 'label' => "Meta Description de l'article (FR)",
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'attr' => [
+                    'maxlength' => 63,
+                    'class' => 'metadesc_fr',
+                ]
             ])
 
             // GLOBAL

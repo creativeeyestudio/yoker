@@ -27,6 +27,21 @@
 
                 {% set postMetaDescField = attribute(form, 'post_meta_desc_' ~ prefix) %}
                 <p>{{ form_row(postMetaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}</p>
+                
+                <div class="google-serp">
+                    <div class="google-serp-width">
+                        <div class="serp-url">
+                            <p>{{ app.request.schemeAndHttpHost }} > {{ prefix }} > <span class="b-url" data-url-target="metaurl"></span></p>
+                        </div>
+                        <div class="serp-title">
+                            <p class="b-title" data-title-target="metatitle_{{ prefix }}"></p>
+                        </div>
+                        <div class="serp-desc">
+                            <p class="b-desc" data-desc-target="metadesc_{{ prefix }}">Balise desc</p>
+                        </div>
+                    </div>
+                </div>
+                
             </fieldset>
             {% endfor %}
             <hr />
