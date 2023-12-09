@@ -79,6 +79,9 @@ class PagesAdminFormType extends AbstractType
             ->add('page_url', TextType::class, [
                 'label' => 'URL de la page',
                 'required' => false,
+                'attr' => [
+                    'class' => 'metaurl',
+                ]
             ])
             ->add('status', $this->blockedPageAccess(), [
                 'label' => "Page visible",

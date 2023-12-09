@@ -19,6 +19,10 @@ function updateContent(element, dataAttribute, fallbackText) {
 if (googleSerp) {
     console.log('Les éléments de SEOptimize ont été localisés');
 
+    for (const url of bUrl) {
+        updateContent(url, 'data-url-target', '');
+    }
+
     for (const title of bTitle) {
         updateContent(title, 'data-title-target', 'Meta Title');
     }
