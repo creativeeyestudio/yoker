@@ -19,34 +19,56 @@
             {% for language, prefix in {'Français': 'fr'} %}
                 <fieldset class="tab-pane {% if loop.index == 1 %}active{% endif %}">
                     <legend>Contenu en {{ language }}</legend>
-
-                    {% set metaNameField = attribute(form, 'page_name_' ~ prefix) %}
-                    <p>{{ form_row(metaNameField, { 'value': attribute(_context, 'name_' ~ prefix)|default }) }}</p>
-
-                    {% set contentField = attribute(form, 'page_content_' ~ prefix) %}
                     <p>
+                        {% set metaNameField = attribute(form, 'page_name_' ~ prefix) %}
+                        {{ form_row(metaNameField, { 'value': attribute(_context, 'name_' ~ prefix)|default }) }}
+                    </p>
+
+                    <p>
+                        {% set contentField = attribute(form, 'page_content_' ~ prefix) %}
                         {{ form_label(contentField) }}<br />
                         {{ form_widget(contentField, { 'value': attribute(_context, 'pageContent_' ~ prefix)|default }) }}
                     </p>
 
-                    {% set metaTitleField = attribute(form, 'page_meta_title_' ~ prefix) %}
-                    <p>{{ form_row(metaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}</p>
+                    <hr>
 
-                    {% set metaDescField = attribute(form, 'page_meta_desc_' ~ prefix) %}
-                    <p>{{ form_row(metaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}</p>
+                    <p>
+                        {% set metaTitleField = attribute(form, 'page_meta_title_' ~ prefix) %}
+                        {{ form_row(metaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}
+                    </p>
+
+                    <p>
+                        {% set metaDescField = attribute(form, 'page_meta_desc_' ~ prefix) %}
+                        {{ form_row(metaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}
+                    </p>
+
+                    <div class="google-serp">
+                        <div class="google-serp-width">
+                            <div class="serp-url">
+                                <p>{{ app.request.schemeAndHttpHost }} > {{ prefix }} > </p>
+                            </div>
+                            <div class="serp-title">
+                                <p>Balise title</p>
+                            </div>
+                            <div class="serp-desc">
+                                <p>Balise desc</p>
+                            </div>
+                        </div>
+                    </div>
                 </fieldset>
             {% endfor %}
         </div>
 
         <hr />
 
-        <p>{{ form_row(form.page_url) }}</p>
+        <fieldset>
+            <legend>Configuration de la page</legend>
+            <p>{{ form_row(form.page_url) }}</p>
+            <p>{{ form_row(form.main_page) }}</p>
+            <p>{{ form_row(form.status) }}</p>
+            <p>{{ form_row(form.blocked_page) }}</p>
+        </fieldset>
         
-        <p>{{ form_row(form.main_page) }}</p>
-
-        <p>{{ form_row(form.status) }}</p>
-
-        <p>{{ form_row(form.blocked_page) }}</p>
 
         <!-- Submit -->
         <div class="btn-list">

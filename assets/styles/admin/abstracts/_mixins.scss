@@ -39,3 +39,13 @@
         }
     }
 }
+
+@mixin serp-text($fontSize, $lineHeight, $color) {
+    p{
+        font: 400 #{$fontSize}/#{$lineHeight} 'arial', 'sans-serif';
+        color: $color;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;    
+    }
+}

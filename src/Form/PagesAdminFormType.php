@@ -53,12 +53,20 @@ class PagesAdminFormType extends AbstractType
             ->add('page_meta_title_fr', TextType::class, [
                 'label' => 'Balise Meta Title (FR)',
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'help' => 'Max 63 caractères',
+                'attr' => [
+                    'maxlength' => 63
+                ]
             ])
             ->add('page_meta_desc_fr', TextareaType::class, [
                 'label' => 'Balise Meta Description (FR)',
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'help' => 'Max 100 caractères',
+                'attr' => [
+                    'maxlength' => 100
+                ]
             ])
 
             // Global
