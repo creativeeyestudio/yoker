@@ -22,13 +22,11 @@ class UserService extends AbstractController
     }
 
     function getUsersCMS(){
-        $users = $this->userRepo->findAll();
-        return $users;
+        return $this->userRepo->findAll();
     }
 
     function getUserCMS(int $id){
-        $user = $this->userRepo->findOneBy(['id' => $id]);
-        return $user;
+        return $this->userRepo->findOneBy(['id' => $id]);
     }
 
     function updateUser(Request $request, int $id){
@@ -41,11 +39,13 @@ class UserService extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) { 
             $newRole = explode(',', $form->get('roles')->getData());
             $user->setRoles($newRole);
-            if ($form->get('remake_pass')->getData() != null) {
+
+            if ($form->get('remake_pass')->getData() !== null) {
                 $newPwd = 'changePassword!!!';
                 $password = $this->encoder->hashPassword($user, $newPwd);
                 $user->setPassword($password);
             }
+
             $this->em->persist($user);
             $this->em->flush();
 
@@ -53,10 +53,9 @@ class UserService extends AbstractController
         }
 
         return $this->render('admin_users/user-manager.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
             'userRole' => $role
         ]);
-        return $user;
     }
 
     function deleteUser(int $id){

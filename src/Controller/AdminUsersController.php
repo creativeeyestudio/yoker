@@ -19,9 +19,8 @@ class AdminUsersController extends AbstractController
     #[Route('/admin/users', name: 'admin_users')]
     public function index(): Response
     {
-        $users = $this->userService->getUsersCMS();
         return $this->render('admin_users/index.html.twig', [
-            'users' => $users
+            'users' => $this->userService->getUsersCMS()
         ]);
     }
 
@@ -35,7 +34,6 @@ class AdminUsersController extends AbstractController
     public function delete(Request $request, String $id)
     {
         $this->userService->deleteUser($id);
-        // Retour à la liste
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }

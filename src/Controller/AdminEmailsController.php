@@ -15,6 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminEmailsController extends AbstractController
 {
+    private $em;
+
+    function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     #[Route('/admin/emails', name: 'app_admin_emails')]
     public function index(EmailsListRepository $emailsRepo): Response
     {
@@ -26,7 +33,7 @@ class AdminEmailsController extends AbstractController
     }
 
     #[Route('/admin/emails/ajouter', name: 'app_admin_emails_create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request): Response
     {
         $form = $this->createForm(EmailAdminFormType::class);
         $form->handleRequest($request);
@@ -48,8 +55,8 @@ class AdminEmailsController extends AbstractController
             $email = new EmailsList();
             $email->setEmailName($emailName);
             $email->setEmailId($emailId);
-            $em->persist($email);
-            $em->flush();
+            $this->em->persist($email);
+            $this->em->flush();
         }
 
         return $this->render('admin_emails/email_manager.html.twig', [
@@ -60,13 +67,13 @@ class AdminEmailsController extends AbstractController
     }
 
     #[Route('/admin/email/{emailId}', name: 'app_admin_emails_update')]
-    public function update(Request $request, EntityManagerInterface $em, string $emailId)
+    public function update(Request $request, string $emailId)
     {
         $form = $this->createForm(EmailAdminFormType::class);
         $form->handleRequest($request);
 
         // Récupération de l'E-mail
-        $emailRepository = $em->getRepository(EmailsList::class);
+        $emailRepository = $this->em->getRepository(EmailsList::class);
         $email = $emailRepository->findOneBy(['email_id' => $emailId]);
 
         if (!$email) {
@@ -90,7 +97,8 @@ class AdminEmailsController extends AbstractController
 
             // Envoi des données vers la BDD
             $email->setEmailName($emailName);
-            $em->flush();
+            $this->em->flush();
+            $this->em->flush();
         }
 
         return $this->render('admin_emails/email_manager.html.twig', [
@@ -101,11 +109,10 @@ class AdminEmailsController extends AbstractController
     }
 
     #[Route('/admin/email/{emailId}/delete', name: 'app_admin_emails_delete')]
-    public function delete(Request $request, EntityManagerInterface $entityManager, string $emailId)
+    public function delete(Request $request, string $emailId)
     {
         // Récupération de l'E-mail
-        $emailRepository = $entityManager->getRepository(EmailsList::class);
-        $email = $emailRepository->findOneBy(['email_id' => $emailId]);
+        $email = $this->em->getRepository(EmailsList::class)->findOneBy(['email_id' => $emailId]);
 
         if (!$email) {
             throw $this->createNotFoundException("L'E-Mail n'a pas été trouvé");
@@ -118,8 +125,8 @@ class AdminEmailsController extends AbstractController
         }
 
         // Suppression dans la DB
-        $entityManager->remove($email);
-        $entityManager->flush();
+        $this->em->remove($email);
+        $this->em->flush();
 
         // Retour à la liste
         $referer = $request->headers->get('referer');

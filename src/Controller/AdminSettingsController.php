@@ -25,10 +25,13 @@ class AdminSettingsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $logoInput = $form->get('logo')->getData();
+
             if ($logoInput) {
                 $ext = $logoInput->guessExtension();
                 $new_name = 'logotype.' . $ext;
+                
                 try {
                     $logoInput->move(
                         'uploads/images/logo',
@@ -39,6 +42,7 @@ class AdminSettingsController extends AbstractController
                     throw $th;
                 }
             }
+
             $em->persist($settings);
             $em->flush();
         }

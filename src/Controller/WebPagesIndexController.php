@@ -11,18 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebPagesIndexController extends AbstractController
 {
     private $pages_services;
-    private $request;
 
     public function __construct(PagesService $pages_services)
     {
         $this->pages_services = $pages_services;
-        $this->request = new Request();
     }
-    
-    
+
+
     // Index Page
     // -------------------------------------------------------------------------------------------
-    #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => 'fr|en'])]
+    #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => LocaleConstraint::LOCALE_PATTERN])]
     public function index(Request $request): Response
     {
         return $this->pages_services->getPageStatus($request);
@@ -31,23 +29,19 @@ class WebPagesIndexController extends AbstractController
 
     // Other Page
     // -------------------------------------------------------------------------------------------
-    #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => 'fr|en'])]
+    #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => LocaleConstraint::LOCALE_PATTERN])]
     public function page(Request $request, string $page_slug): Response
     {
-        if ($page_slug != 'index') {
-            return $this->pages_services->getPageStatus($request, $page_slug);
-        } else {
-            return $this->redirectBase();
-        }
+        return $this->pages_services->getPageStatus($request, $page_slug);
     }
-    
+
 
     // Post Page
     // -------------------------------------------------------------------------------------------
-    #[Route('/{_locale}/blog/{post_slug}', name: 'web_post', requirements: ['_locale' => 'fr|en'])]
-    public function post(string $post_slug): Response
+    #[Route('/{_locale}/blog/{post_slug}', name: 'web_post', requirements: ['_locale' => LocaleConstraint::LOCALE_PATTERN])]
+    public function post(Request $request, string $post_slug): Response
     {
-        return $this->pages_services->getPost($this->request, $post_slug);
+        return $this->pages_services->getPost($request, $post_slug);
     }
 
 
@@ -57,8 +51,11 @@ class WebPagesIndexController extends AbstractController
     public function redirectBase(){
         return $this->redirectToRoute('web_index');
     }
+}
 
 
-    // API
-    // -------------------------------------------------------------------------------------------
+
+class LocaleConstraint
+{
+    const LOCALE_PATTERN = 'fr|en';
 }

@@ -42,7 +42,7 @@ class PagesService extends AbstractController
     {
         // CREATION / RECUPERATION D'UNE PAGE
         // --------------------------------------------------------
-        $page = ($newPage) ? new PagesList() : $this->pages_repo->findOneBy(['page_id' => $page_id]);
+        $page = $newPage ? new PagesList() : $this->pages_repo->findOneBy(['page_id' => $page_id]);
         if (!$page) {
             throw $this->createNotFoundException("Aucune page n'a été trouvée");
         }
@@ -74,7 +74,6 @@ class PagesService extends AbstractController
 
             // Page principale
             if ($form->get('main_page')->getData()) {
-                # code...
                 $main_page = $this->pages_repo->findOneBy(['main_page' => 1]);
                 if ($main_page) $main_page->setMainPage(0);
                 $page->setMainPage(1);

@@ -38,6 +38,7 @@ class AdminPagesController extends AbstractController
     {
         // Création du contenu
         $form = $this->pageService->PageManager($request, true);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->redirectToRoute('admin_pages');
         }
@@ -57,7 +58,8 @@ class AdminPagesController extends AbstractController
         $page = $this->pageRepo->findOneBy(['page_id' => $page_id]);
 
         // Mise à jour du contenu
-        $form = $this->pageService->PageManager($request, false, $page_id);   
+        $form = $this->pageService->PageManager($request, false, $page_id);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages_modify', [
                 'page_id' => $page_id

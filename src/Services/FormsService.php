@@ -30,7 +30,6 @@ class FormsService
 
         try {
             $this->mailer->send($email);
-            echo "Mail envoyé";
         } catch (\Exception $e) {
             echo $e;
         }

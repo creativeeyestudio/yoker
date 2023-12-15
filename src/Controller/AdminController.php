@@ -17,6 +17,7 @@ class AdminController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $limit = 5;
+
         return $this->render('admin/index.html.twig', [
             'phpversion' => phpversion(),
             'symfonyversion' => Kernel::VERSION,
