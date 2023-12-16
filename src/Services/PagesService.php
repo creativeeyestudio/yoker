@@ -147,7 +147,7 @@ class PagesService extends AbstractController
         $post = $this->em->getRepository(PostsList::class)->findOneBy(['post_url' => $post_id]);
 
         // Récupération des commentaires associés à l'article
-        $comments = $this->em->getRepository(Comments::class)->findBy(['post' => $post]);
+        $comments = $this->em->getRepository(Comments::class)->findBy(['post' => $post], ['id' => 'DESC']);
 
         // Détection de la langue à partir de la requête HTTP
         $lang = $this->lang_web($request);
@@ -186,11 +186,27 @@ class PagesService extends AbstractController
             $this->em->flush();
 
             // Retourner la vue après le traitement du formulaire
-            return $render;
+            return $this->redirectToRoute('web_post', [
+                '_locale' => 'fr',
+                'post_slug' => $post->getPostUrl()
+            ]);
         }
 
         // Retourner la vue (également utilisé en cas de non soumission du formulaire)
-        return $render;
+        return $this->render('web_pages_views/post.html.twig', [
+            'post_slug' => $post->getPostUrl(),
+            'post_thumb' => $post->getPostThumb(),
+            'post_content' => htmlspecialchars_decode($post->getPostContent()[$lang]),
+            'meta_title' => $post->getPostMetaTitle()[$lang],
+            'meta_desc' => $post->getPostMetaDesc()[$lang],
+            'social' => $this->social,
+            'settings' => $this->settings,
+            'menus' => $this->menus,
+            'lang' => $this->lang_web($request),
+            'lang_page' => $this->locales_web()[$lang],
+            'comments' => $comments,
+            'form' => $form->createView(),
+        ]);
     }
     #endregion
 
