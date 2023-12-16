@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\Entity\Comments;
 use App\Entity\GlobalSettings;
 use App\Entity\Menu;
 use App\Entity\PagesList;
 use App\Entity\PostsList;
 use App\Entity\SocialManager;
+use App\Form\CommentsFormType;
 use App\Form\PagesAdminFormType;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Locales;
@@ -22,7 +23,6 @@ class PagesService extends AbstractController
     private $settings;
     private $menus;
     private $pages_repo;
-    private $posts_repo;
     private $posts_services;
     private $social;
 
@@ -31,7 +31,6 @@ class PagesService extends AbstractController
         $this->em = $em;
         $this->settings = $this->em->getRepository(GlobalSettings::class)->find(1);
         $this->pages_repo = $this->em->getRepository(PagesList::class);
-        $this->posts_repo = $this->em->getRepository(PostsList::class);
         $this->menus = $this->em->getRepository(Menu::class);
         $this->social = $this->em->getRepository(SocialManager::class)->find(1);
         $this->posts_services = $posts_services;
@@ -106,14 +105,12 @@ class PagesService extends AbstractController
     #region Affichage d'une page
     public function getMainPage(Request $request)
     {
-        $page = $this->getPageStatus($request);
-        return $page;
+        return $this->getPageStatus($request);
     }
 
     public function getPage(Request $request, string $page_id)
     {
-        $page = $this->getPageStatus($request, $page_id);
-        return $page;
+        return $this->getPageStatus($request, $page_id);
     }
 
     public function getPageStatus(Request $request, string $page_id = null)
@@ -143,25 +140,57 @@ class PagesService extends AbstractController
     #region Affichage d'un post
     public function getPost(Request $request, string $post_id)
     {
-        $post = $this->posts_repo->findOneBy(['post_url' => $post_id]);
+        // Création d'une nouvelle instance de commentaire
+        $newComment = new Comments();
+
+        // Récupération de l'article basé sur l'identifiant fourni
+        $post = $this->em->getRepository(PostsList::class)->findOneBy(['post_url' => $post_id]);
+
+        // Récupération des commentaires associés à l'article
+        $comments = $this->em->getRepository(Comments::class)->findBy(['post' => $post]);
+
+        // Détection de la langue à partir de la requête HTTP
         $lang = $this->lang_web($request);
 
+        // Vérification de la disponibilité de l'article
         if (!$post || !$post->isOnline()) {
+            // Lancer une exception si l'article n'est pas disponible
             throw $this->createNotFoundException("Cet article n'est pas disponible");
         }
 
-        return $this->render('web_pages_views/post.html.twig', [
+        // Création du formulaire de commentaire
+        $form = $this->createForm(CommentsFormType::class, $newComment);
+        $form->handleRequest($request);
+
+        // Rendu de la vue avec les données nécessaires
+        $render = $this->render('web_pages_views/post.html.twig', [
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
             'post_content' => htmlspecialchars_decode($post->getPostContent()[$lang]),
+            'meta_title' => $post->getPostMetaTitle()[$lang],
+            'meta_desc' => $post->getPostMetaDesc()[$lang],
+            'social' => $this->social,
             'settings' => $this->settings,
             'menus' => $this->menus,
             'lang' => $this->lang_web($request),
             'lang_page' => $this->locales_web()[$lang],
-            'meta_title' => $post->getPostMetaTitle()[$lang],
-            'meta_desc' => $post->getPostMetaDesc()[$lang],
-            'social' => $this->social,
+            'comments' => $comments,
+            'form' => $form->createView(),
         ]);
+
+        // Traitement du formulaire s'il a été soumis et est valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Associer le commentaire à l'article, le persister et le sauvegarder
+            $newComment->setPost($post);
+            $this->em->persist($newComment);
+            $this->em->flush();
+
+            // Retourner la vue après le traitement du formulaire
+            return $render;
+        }
+
+        // Retourner la vue (également utilisé en cas de non soumission du formulaire)
+        return $render;
     }
     #endregion
 

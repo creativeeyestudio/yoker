@@ -49,9 +49,13 @@ class PostsList
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: MenuLink::class)]
     private Collection $menuLinks;
 
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comments::class)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->menuLinks = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +207,36 @@ class PostsList
             // set the owning side to null (unless already changed)
             if ($menuLink->getPost() === $this) {
                 $menuLink->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
             }
         }
 

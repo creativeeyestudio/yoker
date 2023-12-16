@@ -18,4 +18,11 @@
         <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
     {% endif %}
     {{ post_content | raw }}
+    {{ form(form) }}
+    {% for comment in comments %}
+        <p>
+            Posté par {{ comment.pseudo }}
+        </p>
+        <p>{{ comment.content }}</p>
+    {% endfor %}
 {% endblock %}
