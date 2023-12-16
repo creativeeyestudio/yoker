@@ -1,7 +1,6 @@
 // assets/controllers/myswup_controller.js
 
 import { Controller } from '@hotwired/stimulus';
-import SwupMatomoPlugin from '@swup/matomo-plugin';
 
 export default class extends Controller {
     connect() {
@@ -22,7 +21,6 @@ export default class extends Controller {
 
     _onConnect(event) {
         // Swup has just been intialized and you can access details from the event
-        event.detail.swup.use(new SwupMatomoPlugin());
         console.log(event.detail.swup); // Swup instance
         console.log(event.detail.options); // Options used to initialize Swup
     }

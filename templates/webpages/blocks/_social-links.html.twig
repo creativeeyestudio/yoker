@@ -18,7 +18,7 @@
     {% set socialUrl = attribute(social, 'get' ~ network|capitalize) %}
     {% if socialUrl is not empty %}
         <li>
-            <a href="{{ socialUrl }}">
+            <a href="{{ socialUrl }}" target="_blank" rel="noopener">
                 <i class="fa-brands fa-2x {{ iconClass }}"></i>
             </a>
         </li>

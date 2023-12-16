@@ -1,0 +1,44 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}CodeWeave{% endblock %}
+
+{% block body %}
+<section class="block">
+    <a href="{{ path('codeweave_create_file') }}" class="btn-link float-right">Créer un nouveau fichier</a>
+    <h2>CodeWeave</h2>
+    <div class="tab-container">
+        <div class="tabs tabs-btn">
+            <li class="tab active">SCSS</li>
+            <li class="tab">JavaScript</li>
+        </div>
+        <hr>
+        <div class="tab-panes">
+            <div class="tab-pane active">
+                <h3>Fichiers SCSS</h3>
+                {% for item in cssList %}
+                <div class="line">
+                    <span class="title">{{ item.nom }}</span>
+                    <ul>
+                        <li><a href="">Modifier</a></li>
+                        <li><a href="">Supprimer</a></li>
+                    </ul>
+                </div>    
+                {% endfor %}
+                
+            </div>
+            <div class="tab-pane">
+                <h3>Fichiers JS</h3>
+                {% for item in jsList %}
+                <div class="line">
+                    <span class="title">{{ item.nom }}</span>
+                    <ul>
+                        <li><a href="">Modifier</a></li>
+                        <li><a href="">Supprimer</a></li>
+                    </ul>
+                </div>    
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
