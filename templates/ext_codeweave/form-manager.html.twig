@@ -2,20 +2,46 @@
 
 {% extends 'admin.html.twig' %}
 
-{% block title %}CodeWeave - {{ title }}{% endblock %}
-
 {% block head %}
     {{ parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css" integrity="sha512-gFMl3u9d0xt3WR8ZeW05MWm3yZ+ZfgsBVXLSOiFz2xeVrZ8Neg0+V1kkRIo9LikyA/T9HuS91kDfc2XWse0K0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/monokai.css" integrity="sha512-ydiVnNxD8+43yEu9v9w0QjxVSHP4fAF81M311Flq1+qtJHF0uKLYRET18hBNn04FKBSYg9TyrJNVgJPnrYuqtg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 {% endblock %}
+
+{% block title %}CodeWeave - {{ title }}{% endblock %}
 
 {% block body %}
     <section class="block">
         <h2> {{ title }} </h2>
         {{ form(form) }}
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js" integrity="sha512-8RnEqURPUc5aqFEN04aQEiPlSAdE0jlFS/9iGgUyNtwFnSKCXhmB6ZTNl7LnDtDWKabJIASzXrzD0K+LYexU9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/css/css.min.js" integrity="sha512-rQImvJlBa8MV1Tl1SXR5zD2bWfmgCEIzTieFegGg89AAt7j/NBEe50M5CqYQJnRwtkjKMmuYgHBqtD1Ubbk5ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/sass/sass.js" integrity="sha512-x2syE7u2S6nuUOHwEgjFdA5u9/VjXv5+ubpot5IbAemqUjCyFFDAgejvMZPLSlyx/dZ6j1O+nMkTg9PGOauw9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js" integrity="sha512-I6CdJdruzGtvDyvdO4YsiAq+pkWf2efgd1ZUSK2FnM/u2VuRASPC7GowWQrWyjxCZn6CT89s3ddGI+be0Ak9Fg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/matchbrackets.min.js" integrity="sha512-GSYCbN/le5gNmfAWVEjg1tKnOH7ilK6xCLgA7c48IReoIR2g2vldxTM6kZlN6o3VtWIe6fHu/qhwxIt11J8EBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closetag.min.js" integrity="sha512-XYx5xhl4B5vKNlaRBWh/nlti0+IPM6eT+dSFc3/oc4rERn2DpwbS3q4OblprqqBLXyRSVePKmf+8mHkDLtGZpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var textarea = document.getElementById('code_weave_code');
+
+        var editor = CodeMirror.fromTextArea(textarea, {
+            lineNumbers: true,
+            mode: '{{ mode }}',
+            theme: 'monokai',
+            matchBrackets: true,
+            autoCloseTags: true,
+        });
+
+        editor.on('change', function(instance) {
+            textarea.value = instance.getValue();
+        })
+
+        textarea.addEventListener('input', function() {
+            editor.setValue(textarea.value);
+        });
+    </script>
 {% endblock %}

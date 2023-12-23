@@ -29,7 +29,6 @@ CKEDITOR.editorConfig = function( config ) {
 CKEDITOR.on( 'dialogDefinition', function( ev ) {
     var dialogName = ev.data.name;
     var dialogDefinition = ev.data.definition;
-    var editorO = ev.data.definition.dialog.getParentEditor();
 
     if ( dialogName == 'image' || dialogName == 'image2' ) {
         var infoTab = dialogDefinition.getContents( 'info' );

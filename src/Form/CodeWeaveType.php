@@ -24,22 +24,8 @@ class CodeWeaveType extends AbstractType
                 ]
             ])
 
-            ->add('type', ChoiceType::class, [
-                'label' => "Type du fichier",
-                'choices' => [
-                    "SCSS" => 0,
-                    "JavaScript" => 1, 
-                ],
-                'row_attr' => [
-                    'class' => 'mb',
-                ]
-            ])
-
             ->add('code', TextareaType::class, [
                 'label' => "Code",
-                'attr' => [
-                    'class' => 'monaco-editor monaco-editor-scss',
-                ],
                 'row_attr' => [
                     'class' => 'mb',
                 ]

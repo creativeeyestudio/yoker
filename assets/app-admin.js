@@ -165,39 +165,3 @@ if (navLinksRemove.length > 0 && dragDropList) {
         });
     });
 }
-
-
-//
-//
-document.addEventListener('DOMContentLoaded', function () {
-    var editor = document.querySelector('.monaco-editor');
-
-    if (editor !== null) {
-        initCodeMirror(editor);
-        var selectCodeType = document.querySelector('#code_weave_type');
-
-        selectCodeType.addEventListener('change', function () {
-            editor.CodeMirror.toTextArea(editor.CodeMirror); // Supprime l'éditeur actuel
-            if (selectCodeType.value == 0) {
-                initCodeMirror(editor, 'css');
-            } else {
-                initCodeMirror(editor, 'javascript');
-            }
-            console.log("Changé");
-        });
-
-        editor.addEventListener('input', function () {
-            document.querySelector('#code_weave_code').value = editor.CodeMirror.getValue();
-            console.log(document.querySelector('#code_weave_code').value);
-        });
-    }
-});
-
-function initCodeMirror(editor, mode) {
-    CodeMirror.fromTextArea(editor, {
-        mode: mode || 'css',
-        lineNumbers: true,
-        matchBrackets: true,
-        autoCloseTags: true,
-    });
-}
