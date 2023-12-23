@@ -13,6 +13,7 @@ use App\Form\PagesAdminFormType;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Locales;
 
@@ -25,14 +26,22 @@ class PagesService extends AbstractController
     private $pages_repo;
     private $posts_services;
     private $social;
+    private $file_path;
+    private $css_file;
+    private $js_file;
+    private $params;
 
-    function __construct(EntityManagerInterface $em, PostsService $posts_services)
+    function __construct(EntityManagerInterface $em, PostsService $posts_services, ParameterBagInterface $params)
     {
         $this->em = $em;
         $this->settings = $this->em->getRepository(GlobalSettings::class)->find(1);
         $this->pages_repo = $this->em->getRepository(PagesList::class);
         $this->menus = $this->em->getRepository(Menu::class);
         $this->social = $this->em->getRepository(SocialManager::class)->find(1);
+        $this->params = $params;
+        $this->file_path = "/build/";
+        $this->css_file = $this->file_path . $this->params->get('css_js_path') . ".css";
+        $this->js_file = $this->file_path . $this->params->get('css_js_path') . ".js";
         $this->posts_services = $posts_services;
     }
 
@@ -133,6 +142,8 @@ class PagesService extends AbstractController
             'settings' => $this->settings,
             'menus' => $this->menus,
             'social' => $this->social,
+            'css' => $this->css_file,
+            'js' => $this->js_file,
         ]);
     }
     #endregion
@@ -172,6 +183,8 @@ class PagesService extends AbstractController
             'social' => $this->social,
             'settings' => $this->settings,
             'menus' => $this->menus,
+            // 'css' => $this->css_file,
+            // 'js' => $this->js_file,
             'lang' => $this->lang_web($request),
             'lang_page' => $this->locales_web()[$lang],
             'comments' => $comments,
