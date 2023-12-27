@@ -181,6 +181,7 @@ class PagesService extends AbstractController
 
         // Retourner la vue (également utilisé en cas de non soumission du formulaire)
         return $this->render('web_pages_views/post.html.twig', [
+            'post_name' => $post->getPostName()[$lang],
             'post_slug' => $post->getPostUrl(),
             'post_thumb' => $post->getPostThumb(),
             'post_content' => htmlspecialchars_decode($post->getPostContent()[$lang]),

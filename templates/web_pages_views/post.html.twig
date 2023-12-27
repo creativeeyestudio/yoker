@@ -19,7 +19,7 @@
 
 {% block body %}
     {% if post_thumb %}
-        <img src="{{ posts_img_directory }}/{{ post_thumb }}" />
+        <img src="{{ posts_img_directory }}/{{ post_thumb }}" alt="{{ post_name }}" />
     {% endif %}
     {{ post_content | raw }}
     {{ form(form) }}
