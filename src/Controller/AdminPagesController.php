@@ -8,6 +8,7 @@ use App\Services\PagesService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,7 +18,7 @@ class AdminPagesController extends AbstractController
     private $em;
     private $pageService;
 
-    public function __construct(EntityManagerInterface $em, PagesService $pageService) {
+    public function __construct(EntityManagerInterface $em, PagesService $pageService, RequestStack $request) {
         $this->em = $em;
         $this->pageRepo = $this->em->getRepository(PagesList::class);
         $this->pageService = $pageService;
@@ -34,10 +35,10 @@ class AdminPagesController extends AbstractController
     /* AJOUTER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
-    public function add_page(Request $request) 
+    public function add_page() 
     {
         // Création du contenu
-        $form = $this->pageService->PageManager($request, true);
+        $form = $this->pageService->PageManager(true);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->redirectToRoute('admin_pages');
@@ -52,13 +53,13 @@ class AdminPagesController extends AbstractController
     /* MODIFIER UNE PAGE
     ------------------------------------------------------- */
     #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
-    public function modify_page(Request $request, String $page_id) 
+    public function modify_page(string $page_id) 
     {
         // Récupération du lien de la page
         $page = $this->pageRepo->findOneBy(['page_id' => $page_id]);
 
         // Mise à jour du contenu
-        $form = $this->pageService->PageManager($request, false, $page_id);
+        $form = $this->pageService->PageManager(false, $page_id);
         
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirectToRoute('admin_pages_modify', [

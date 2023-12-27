@@ -14,7 +14,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Locales;
 
 class PagesService extends AbstractController
@@ -30,23 +30,25 @@ class PagesService extends AbstractController
     private $css_file;
     private $js_file;
     private $params;
+    private $request;
 
-    function __construct(EntityManagerInterface $em, PostsService $posts_services, ParameterBagInterface $params)
+    function __construct(EntityManagerInterface $em, PostsService $posts_services, ParameterBagInterface $params, RequestStack $request)
     {
         $this->em = $em;
-        $this->settings = $this->em->getRepository(GlobalSettings::class)->find(1);
         $this->pages_repo = $this->em->getRepository(PagesList::class);
         $this->menus = $this->em->getRepository(Menu::class);
+        $this->settings = $this->em->getRepository(GlobalSettings::class)->find(1);
         $this->social = $this->em->getRepository(SocialManager::class)->find(1);
         $this->params = $params;
         $this->file_path = "/build/";
         $this->css_file = $this->file_path . $this->params->get('css_js_path') . ".css";
         $this->js_file = $this->file_path . $this->params->get('css_js_path') . ".js";
         $this->posts_services = $posts_services;
+        $this->request = $request->getCurrentRequest();
     }
 
     #region Page Manager
-    function PageManager(Request $request, bool $newPage, string $page_id = null)
+    function PageManager(bool $newPage, string $page_id = null)
     {
         // CREATION / RECUPERATION D'UNE PAGE
         // --------------------------------------------------------
@@ -58,7 +60,7 @@ class PagesService extends AbstractController
         // INITIALISATION DU FORMULAIRE
         // --------------------------------------------------------
         $form = $this->createForm(PagesAdminFormType::class, $page);
-        $form->handleRequest($request);
+        $form->handleRequest($this->request);
 
         // ENVOI DU FORMULAIRE
         // --------------------------------------------------------
@@ -112,24 +114,14 @@ class PagesService extends AbstractController
     #endregion
 
     #region Affichage d'une page
-    public function getMainPage(Request $request)
-    {
-        return $this->getPageStatus($request);
-    }
-
-    public function getPage(Request $request, string $page_id)
-    {
-        return $this->getPageStatus($request, $page_id);
-    }
-
-    public function getPageStatus(Request $request, string $page_id = null)
+    public function getPageStatus(string $page_id = null)
     {
         $page = $this->pages_repo->findOneBy(['page_url' => $page_id]) ?? $this->pages_repo->findOneBy(['main_page' => 1]);
         if ($page->isMainPage() && $page_id) {
             return $this->redirectToRoute('web_index');
         }
 
-        $lang = $this->lang_web($request);
+        $lang = $this->lang_web($this->request);
 
         return $this->render('web_pages_views/index.html.twig', [
             'page_content' => htmlspecialchars_decode($page->getPageContent()[$lang]),
@@ -149,7 +141,7 @@ class PagesService extends AbstractController
     #endregion
 
     #region Affichage d'un post
-    public function getPost(Request $request, string $post_id)
+    public function getPost(string $post_id)
     {
         // Création d'une nouvelle instance de commentaire
         $newComment = new Comments();
@@ -161,7 +153,7 @@ class PagesService extends AbstractController
         $comments = $this->em->getRepository(Comments::class)->findBy(['post' => $post], ['id' => 'DESC']);
 
         // Détection de la langue à partir de la requête HTTP
-        $lang = $this->lang_web($request);
+        $lang = $this->lang_web($this->request);
 
         // Vérification de la disponibilité de l'article
         if (!$post || !$post->isOnline()) {
@@ -171,25 +163,7 @@ class PagesService extends AbstractController
 
         // Création du formulaire de commentaire
         $form = $this->createForm(CommentsFormType::class, $newComment);
-        $form->handleRequest($request);
-
-        // Rendu de la vue avec les données nécessaires
-        $render = $this->render('web_pages_views/post.html.twig', [
-            'post_slug' => $post->getPostUrl(),
-            'post_thumb' => $post->getPostThumb(),
-            'post_content' => htmlspecialchars_decode($post->getPostContent()[$lang]),
-            'meta_title' => $post->getPostMetaTitle()[$lang],
-            'meta_desc' => $post->getPostMetaDesc()[$lang],
-            'social' => $this->social,
-            'settings' => $this->settings,
-            'menus' => $this->menus,
-            // 'css' => $this->css_file,
-            // 'js' => $this->js_file,
-            'lang' => $this->lang_web($request),
-            'lang_page' => $this->locales_web()[$lang],
-            'comments' => $comments,
-            'form' => $form->createView(),
-        ]);
+        $form->handleRequest($this->request);
 
         // Traitement du formulaire s'il a été soumis et est valide
         if ($form->isSubmitted() && $form->isValid()) {
@@ -215,10 +189,12 @@ class PagesService extends AbstractController
             'social' => $this->social,
             'settings' => $this->settings,
             'menus' => $this->menus,
-            'lang' => $this->lang_web($request),
+            'lang' => $this->lang_web($this->request),
             'lang_page' => $this->locales_web()[$lang],
             'comments' => $comments,
             'form' => $form->createView(),
+            'css' => $this->css_file,
+            'js' => $this->js_file,
         ]);
     }
     #endregion
@@ -234,10 +210,10 @@ class PagesService extends AbstractController
         return $localesSite;
     }
 
-    private function lang_web(Request $request)
+    private function lang_web()
     {
         $lang = array_search(
-            $request->getLocale(),
+            $this->request->getLocale(),
             $this->locales_web()
         );
         return $lang;

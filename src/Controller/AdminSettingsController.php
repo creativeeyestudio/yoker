@@ -8,14 +8,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminSettingsController extends AbstractController
 {
     #[Route('/admin/settings', name: 'admin_settings')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, KernelInterface $kernel): Response
     {
-        $settings = $em->getRepository(GlobalSettings::class)->findOneBy(['id' => 1]);
+        $settings = $em->getRepository(GlobalSettings::class)->find(1);
 
         if (!$settings) {
             $settings = new GlobalSettings();
@@ -30,14 +31,13 @@ class AdminSettingsController extends AbstractController
 
             if ($logoInput) {
                 $ext = $logoInput->guessExtension();
-                $new_name = 'logotype.' . $ext;
+                $newName = 'logotype.' . $ext;
+
+                $uploadsDirectory = $kernel->getProjectDir() . '/public/uploads/images/logo';
                 
                 try {
-                    $logoInput->move(
-                        'uploads/images/logo',
-                        $new_name
-                    );
-                    $settings->setLogo($new_name);
+                    $logoInput->move($uploadsDirectory, $newName);
+                    $settings->setLogo($newName);
                 } catch (\Throwable $th) {
                     throw $th;
                 }

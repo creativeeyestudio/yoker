@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Services\PagesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,27 +21,27 @@ class WebPagesIndexController extends AbstractController
     // Index Page
     // -------------------------------------------------------------------------------------------
     #[Route('/{_locale}', name: 'web_index', requirements: ['_locale' => LocaleConstraint::LOCALE_PATTERN])]
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        return $this->pages_services->getPageStatus($request);
+        return $this->pages_services->getPageStatus();
     }
 
 
     // Other Page
     // -------------------------------------------------------------------------------------------
     #[Route('/{_locale}/{page_slug}', name: 'web_page', requirements: ['_locale' => LocaleConstraint::LOCALE_PATTERN])]
-    public function page(Request $request, string $page_slug): Response
+    public function page(string $page_slug): Response
     {
-        return $this->pages_services->getPageStatus($request, $page_slug);
+        return $this->pages_services->getPageStatus($page_slug);
     }
 
 
     // Post Page
     // -------------------------------------------------------------------------------------------
     #[Route('/{_locale}/blog/{post_slug}', name: 'web_post', requirements: ['_locale' => LocaleConstraint::LOCALE_PATTERN])]
-    public function post(Request $request, string $post_slug): Response
+    public function post(string $post_slug): Response
     {
-        return $this->pages_services->getPost($request, $post_slug);
+        return $this->pages_services->getPost($post_slug);
     }
 
 
@@ -52,8 +52,6 @@ class WebPagesIndexController extends AbstractController
         return $this->redirectToRoute('web_index');
     }
 }
-
-
 
 class LocaleConstraint
 {

@@ -35,7 +35,11 @@ security:
         - { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
         - { path: '^/admin/users', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
         - { path: '^/admin/register', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
+        - { path: '^/admin/settings', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
+        - { path: '^/admin/social-manager', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
+        - { path: '^/admin/emails', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
         - { path: '^/admin/settings', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/codeweave', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
     role_hierarchy:
         ROLE_CONTRIBUTOR: ROLE_USER
         ROLE_EDITOR: ROLE_CONTRIBUTOR

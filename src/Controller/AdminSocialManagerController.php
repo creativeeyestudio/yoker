@@ -16,6 +16,7 @@ class AdminSocialManagerController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em): Response
     {
         $social = $em->getRepository(SocialManager::class)->find(1);
+        
         if (!$social) {
             $social = new SocialManager();
         }

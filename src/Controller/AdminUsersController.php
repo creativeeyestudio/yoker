@@ -31,10 +31,9 @@ class AdminUsersController extends AbstractController
     }
 
     #[Route('/admin/users/delete/{id}', name: 'admin_users_delete')]
-    public function delete(Request $request, String $id)
+    public function delete(Request $request, int $id)
     {
         $this->userService->deleteUser($id);
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        return $this->redirectToRoute('admin_users');
     }
 }

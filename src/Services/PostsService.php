@@ -11,19 +11,22 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class PostsService extends AbstractController
 {
     private $em;
     private $posts_repo;
+    private $request;
 
-    function __construct(EntityManagerInterface $em) {
+    function __construct(EntityManagerInterface $em, RequestStack $request) {
         $this->em = $em;
         $this->posts_repo = $this->em->getRepository(PostsList::class);
+        $this->request = $request->getCurrentRequest();
     }
 
     #region Création / Modification d'un post
-    function PostManager(Request $request, Security $security, bool $newPost, string $postId = null)
+    function PostManager(Security $security, bool $newPost, string $postId = null)
     {
         $slugify = new Slugify();
 
@@ -37,7 +40,7 @@ class PostsService extends AbstractController
         // INITIALISATION DU FORMULAIRE
         // --------------------------------------------------------
         $form = $this->createForm(PostsAdminFormType::class, $post);
-        $form->handleRequest($request);
+        $form->handleRequest($this->request);
 
         // ENVOI DU FORMULAIRE
         // --------------------------------------------------------

@@ -11,23 +11,25 @@ use App\Form\NavUpdateLinkFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminNavigationController extends AbstractController
 {
     private $em;
+    private $request;
 
-    function __construct(EntityManagerInterface $em)
+    function __construct(EntityManagerInterface $em, RequestStack $request)
     {
         $this->em = $em;
+        $this->request = $request->getCurrentRequest();
     }
 
-    private function navLinksForm(Request $request, int $id_menu)
+    private function navLinksForm(int $id_menu)
     {
         $nav_links_form = $this->createForm(NavLinksFormType::class);
-        $nav_links_form->handleRequest($request);
+        $nav_links_form->handleRequest($this->request);
 
         if ($nav_links_form->isSubmitted() && $nav_links_form->isValid()) {
             // $em = $doctrine->getManager();
@@ -106,10 +108,10 @@ class AdminNavigationController extends AbstractController
         return $nav_links_form;
     }
 
-    private function navSelectForm(Request $request)
+    private function navSelectForm()
     {
         $nav_select_form = $this->createForm(NavSelectFormType::class);
-        $nav_select_form->handleRequest($request);
+        $nav_select_form->handleRequest($this->request);
 
         if ($nav_select_form->isSubmitted() && $nav_select_form->isValid()) {
             $id_menu = $nav_select_form->get('nav_select')->getData()->getId();
@@ -118,11 +120,11 @@ class AdminNavigationController extends AbstractController
         return $nav_select_form;
     }
 
-    private function navCreateForm(Request $request)
+    private function navCreateForm()
     {
         $menu = new Menu();
         $nav_create_form = $this->createForm(NavCreateFormType::class, $menu);
-        $nav_create_form->handleRequest($request);
+        $nav_create_form->handleRequest($this->request);
         if ($nav_create_form->isSubmitted() && $nav_create_form->isValid()) {
             $this->em->persist($menu);
             $this->em->flush();
@@ -131,17 +133,17 @@ class AdminNavigationController extends AbstractController
         return $nav_create_form;
     }
 
-    private function initPage(Request $request, string $title = '', int $id_menu = 0)
+    private function initPage(string $title = '', int $id_menu = 0)
     {
-        $nav_links_form = $this->navLinksForm($request, $id_menu);
-        $nav_select_form = $this->navSelectForm($request);
-        $nav_create_form = $this->navCreateForm($request);
+        $nav_links_form = $this->navLinksForm($id_menu);
+        $nav_select_form = $this->navSelectForm();
+        $nav_create_form = $this->navCreateForm();
 
         $menusBase = $this->em->getRepository(Menu::class);
         $menus = $menusBase->findAll();
         $menu = $menusBase->findOneBy(['pos' => $id_menu]);
 
-        $route_name = $request->attributes->get('_route');
+        $route_name = $this->request->attributes->get('_route');
 
         return $this->render('admin_navigation/index.html.twig', [
             'nav_form' => $nav_links_form->createView(),
@@ -156,29 +158,29 @@ class AdminNavigationController extends AbstractController
     }
 
     #[Route('/admin/navigation', name: 'app_admin_nav')]
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        return $this->initPage($request, "Navigation du site");
+        return $this->initPage("Navigation du site");
     }
 
     #[Route('/admin/navigation/menu', name: 'app_admin_nav_menu')]
-    public function createMenu(Request $request): Response
+    public function createMenu(): Response
     {
-        return $this->initPage($request, "Créer un nouveau menu");
+        return $this->initPage("Créer un nouveau menu");
     }
 
     #[Route('/admin/navigation/{id_menu}', name: 'app_admin_nav_select')]
-    public function navSelected(Request $request, int $id_menu): Response
+    public function navSelected(int $id_menu): Response
     {
-        return $this->initPage($request, "Navigation du site", $id_menu);
+        return $this->initPage("Navigation du site", $id_menu);
     }
 
     #[Route('/admin/navigation/manage-link/{id_link}', name: 'app_admin_nav_manage_link')]
-    public function manageLink(Request $request, int $id_link)
+    public function manageLink(int $id_link)
     {
         $menuLink = $this->em->getRepository(MenuLink::class)->find($id_link);
         $form = $this->createForm(NavUpdateLinkFormType::class, $menuLink);
-        $form->handleRequest($request);
+        $form->handleRequest($this->request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $name = [
@@ -201,9 +203,9 @@ class AdminNavigationController extends AbstractController
     }
 
     #[Route(path: '/delete-nav', name: 'delete_link', methods: ['POST'])]
-    public function deleteNav(Request $request)
+    public function deleteNav()
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode($this->request->getContent(), true);
         $menu = $this->em->getRepository(Menu::class)->findOneBy(['id' => $data]);
         $menuItems = $this->em->getRepository(MenuLink::class)->findBy(['menu' => $menu->getId()]);
 
@@ -218,9 +220,9 @@ class AdminNavigationController extends AbstractController
     }
 
     #[Route(path: '/order-nav-link', name: 'order_nav_link', methods: ['POST'])]
-    public function orderNavLink(Request $request)
+    public function orderNavLink()
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode($this->request->getContent(), true);
 
         foreach ($data as $item) {
             $link = $this->em->getRepository(MenuLink::class)->findOneBy(['id' => $item['id']]);
@@ -239,9 +241,9 @@ class AdminNavigationController extends AbstractController
     }
 
     #[Route(path: '/delete-nav-link', name: 'delete_nav_link', methods: ['POST'])]
-    public function deleteNavLink(Request $request)
+    public function deleteNavLink()
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode($this->request->getContent(), true);
 
         $link = $this->em->getRepository(MenuLink::class)->findOneBy(['id' => $data]);
         $this->em->remove($link);
