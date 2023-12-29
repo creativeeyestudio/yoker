@@ -20,4 +20,6 @@ return [
     Symfony\UX\Swup\SwupBundle::class => ['all' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
     Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
+    Symandy\DatabaseBackupBundle\SymandyDatabaseBackupBundle::class => ['all' => true],
+    Vatri\GoogleDriveBundle\VatriGoogleDriveBundle::class => ['all' => true],
 ];

@@ -6,8 +6,12 @@
 parameters:
     app.jwtsecret: '%env(JWT_SECRET)%'
     posts_img_directory: '%kernel.project_dir%/public/uploads/images/posts'
+    mysqldump_path: '%env(MYSQL_DUMP)%'
     css_js_directory: '%kernel.project_dir%/public/build'
     css_js_path: 'app_65873a0311d3c'
+    googleClientId: '%env(CLIENT_ID)%'
+    googleClientSecret: '%env(CLIENT_SECRET)%'
+    site_name: '%env(SITE_NAME)%'
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +27,14 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    App\Services\BackupService:
+        arguments:
+            $databaseUrl: '%env(DATABASE_URL)%'
+    
+    App\Command\BackupDatabaseCommand:
+        arguments:
+            $backupService: '@App\Services\BackupService'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

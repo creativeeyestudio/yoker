@@ -50,6 +50,18 @@
             "config/packages/fos_ckeditor.yaml"
         ]
     },
+    "google/apiclient": {
+        "version": "2.15",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.10",
+            "ref": "07a97ec434d43b7903c78069a04c92adb6442e52"
+        },
+        "files": [
+            "./config/packages/google_apiclient.yaml"
+        ]
+    },
     "helios-ag/fm-elfinder-bundle": {
         "version": "12.2",
         "recipe": {
@@ -76,6 +88,9 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
+    },
+    "symandy/database-backup-bundle": {
+        "version": "v0.4.0"
     },
     "symfony/apache-pack": {
         "version": "1.0",
@@ -358,5 +373,8 @@
     },
     "twig/extra-bundle": {
         "version": "v3.4.0"
+    },
+    "vatri/google-drive-bundle": {
+        "version": "v1.4.2"
     }
 }
