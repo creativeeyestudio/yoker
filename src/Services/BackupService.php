@@ -16,20 +16,22 @@ use ZipArchive;
 class BackupService extends AbstractController
 {
     private $databaseUrl;
-    private $sqlPath;
     private $mailer;
-    private $uploadsPath;
-    private $uploadsPathZip;
     private $params;
+    private $uploadsPath;
+    private $uploadedZip;
+    private $sqlPath;
+    private $zipPath;
 
     function __construct(string $databaseUrl, MailerInterface $mailer, ParameterBagInterface $params)
     {
         $this->databaseUrl = $databaseUrl;
         $this->mailer = $mailer;
-        $this->sqlPath = './src/Backups/db_backup_' . date("m-Y") . '.sql';
         $this->params = $params;
         $this->uploadsPath = $this->params->get('kernel.project_dir') . "/public/uploads";
-        $this->uploadsPathZip = $this->uploadsPath . '/upl_' . date("m-Y") . '.zip';
+        $this->uploadedZip = $this->uploadsPath . '/upl_' . date("m-Y") . '.zip';
+        $this->sqlPath = './src/Backups/db_backup_' . date("m-Y") . '.sql';
+        $this->zipPath = './src/Backups/upl_' . date("m-Y") . '.zip';
     }
 
     public function createBackup()
@@ -44,7 +46,39 @@ class BackupService extends AbstractController
             throw new ProcessFailedException($process);
         }
 
+        $this->getUploadsFolderToZip();
         $this->sendDumpByMail();
+    }
+
+    private function getUploadsFolderToZip()
+    {
+        $zip = new ZipArchive();
+        $zip->open($this->uploadedZip, ZipArchive::CREATE);
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($this->uploadsPath),
+            RecursiveIteratorIterator::LEAVES_ONLY
+        );
+
+        foreach ($files as $file) {
+            if (!$file->isDir()) {
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($this->uploadsPath) + 1);
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+
+        $zip->close();
+
+        // Vérifier si le fichier ZIP a été créé
+        if (file_exists($this->uploadedZip)) {
+            // Déplacer le fichier ZIP dans le dossier 'Backups'
+            $filesystem = new Filesystem();
+            $filesystem->rename(
+                $this->uploadedZip,
+                $this->getParameter('kernel.project_dir') . '\src\Backups\upl_' . date("m-Y") . '.zip',
+                true
+            );
+        }        
     }
 
     private function getMysqlDumpCommand(): array
@@ -82,6 +116,7 @@ class BackupService extends AbstractController
             ->to('creative.eye.fr@gmail.com') // Adresse e-mail du destinataire.
             ->subject("Backup mensuel du site " . $this->getParameter('site_name')) // Sujet de l'e-mail.
             ->text("Ci-joint le Backup mensuel du site " . $this->getParameter('site_name')) // Corps du message texte de l'e-mail.
+            ->attachFromPath($this->zipPath, 'upl_backup_' . date("m-Y") . '.zip') // Joindre le fichier de sauvegarde avec un nom spécifique basé sur la date.
             ->attachFromPath($this->sqlPath, 'db_backup_' . date("m-Y") . '.sql'); // Joindre le fichier de sauvegarde avec un nom spécifique basé sur la date.
 
         // Utilisation du service Mailer de Symfony pour envoyer l'e-mail.
