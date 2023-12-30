@@ -22,4 +22,5 @@ return [
     Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
     Symandy\DatabaseBackupBundle\SymandyDatabaseBackupBundle::class => ['all' => true],
     Vatri\GoogleDriveBundle\VatriGoogleDriveBundle::class => ['all' => true],
+    Zenstruck\ScheduleBundle\ZenstruckScheduleBundle::class => ['all' => true],
 ];

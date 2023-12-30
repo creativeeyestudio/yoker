@@ -65,7 +65,8 @@
         "symfonycasts/verify-email-bundle": "^1.14.0",
         "twig/extra-bundle": "^3.7.1",
         "twig/twig": "^3.7.1",
-        "vatri/google-drive-bundle": "^1.4"
+        "vatri/google-drive-bundle": "^1.4",
+        "zenstruck/schedule-bundle": "^1.8"
     },
     "config": {
         "allow-plugins": {

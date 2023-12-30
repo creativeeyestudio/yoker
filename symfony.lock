@@ -376,5 +376,8 @@
     },
     "vatri/google-drive-bundle": {
         "version": "v1.4.2"
+    },
+    "zenstruck/schedule-bundle": {
+        "version": "v1.8.0"
     }
 }
