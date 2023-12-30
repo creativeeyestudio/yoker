@@ -10,15 +10,15 @@ class BackupDatabaseSchedule implements ScheduleBuilder
     public function buildSchedule(Schedule $schedule): void
     {
         $schedule
-            ->timezone('UTC')
-            ->environments('dev')
+            ->timezone('Europe/Paris')
+            ->environments('prod')
         ;
 
         $schedule
             ->addCommand('backup-database')
             ->description('Sauvegarde les données du site Internet')
-            ->daily()
-            ->at(9)
+            ->monthly()
+            ->at(1)
         ;
     }
 }
