@@ -2,7 +2,7 @@
     "devDependencies": {
         "@babel/core": "^7.23.6",
         "@babel/node": "^7.22.19",
-        "@babel/plugin-transform-class-properties": "^7.23.3",
+        "@babel/plugin-transform-class-properties": "^7.24.1",
         "@babel/preset-env": "^7.23.6",
         "@babel/preset-react": "^7.23.3",
         "@hotwired/stimulus": "^3.2.2",
@@ -40,6 +40,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@jridgewell/sourcemap-codec": "^1.4.15",
+        "@rollup/plugin-terser": "^0.4.4",
         "aos": "^2.3.4",
         "axios": "^1.6.2",
         "codemirror": "^6.0.1",
