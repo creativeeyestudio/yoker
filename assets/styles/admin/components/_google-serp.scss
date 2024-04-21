@@ -11,11 +11,13 @@
     }
 
     .serp-title {
-        margin: 5px 0 3px;
         @include serp-text(20px, 26px, #1a0dab);
+        margin: 5px 0 3px;
+        white-space: nowrap;
     }
 
     .serp-desc {
         @include serp-text(14px, 22.12px, #4d5156);
+        max-height: 44px;
     }
 }

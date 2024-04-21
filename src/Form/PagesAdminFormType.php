@@ -64,9 +64,9 @@ class PagesAdminFormType extends AbstractType
                 'label' => 'Balise Meta Description (FR)',
                 'required' => false,
                 'mapped' => false,
-                'help' => 'Max 100 caractères',
+                'help' => 'Max 150 caractères',
                 'attr' => [
-                    'maxlength' => 100,
+                    'maxlength' => 150,
                     'class' => 'metadesc_fr',
                 ]
             ])
