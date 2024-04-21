@@ -32,14 +32,14 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: '^/login', roles: PUBLIC_ACCESS }
-        - { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
-        - { path: '^/admin/users', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
-        - { path: '^/admin/register', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
-        - { path: '^/admin/settings', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
-        - { path: '^/admin/social-manager', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
-        - { path: '^/admin/emails', roles: [IS_AUTHENTICATED_FULLY, ROLE_EDITOR] }
-        - { path: '^/admin/settings', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
-        - { path: '^/admin/codeweave', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin', roles: ROLE_USER }
+        - { path: '^/admin/users', roles: ROLE_EDITOR }
+        - { path: '^/admin/register', roles: ROLE_EDITOR }
+        - { path: '^/admin/settings', roles: ROLE_EDITOR }
+        - { path: '^/admin/social-manager', roles: ROLE_EDITOR }
+        - { path: '^/admin/emails', roles: ROLE_EDITOR }
+        - { path: '^/admin/settings', roles: ROLE_ADMIN }
+        - { path: '^/admin/codeweave', roles: ROLE_ADMIN }
     role_hierarchy:
         ROLE_CONTRIBUTOR: ROLE_USER
         ROLE_EDITOR: ROLE_CONTRIBUTOR

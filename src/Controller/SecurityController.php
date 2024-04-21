@@ -21,16 +21,26 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $user = $this->security->getUser();
+
         if ($user && $user->isVerified()) {
             return $this->redirectToRoute('app_admin');
         }
+
+        $notVerified = ($user && !$user->isVerified()) 
+            ? true 
+            : false;
+
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername, 
+            'error' => $error,
+            'not_verified' => $notVerified,
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
