@@ -47,4 +47,4 @@ Lancez la commande : `php bin/console app:create-user` et suivez les instruction
 ## Accès à l'interface
 Lancez `symfony serve`
 
-Vous pouvez désormais accéder à l'interface d'utilisation pour commencer à gérer les contenus du site internet depuis cette URL : https://127.0.0.1/admin
+Vous pouvez désormais accéder à l'interface d'utilisation pour commencer à gérer les contenus du site internet depuis cette URL : https://127.0.0.1:8000/admin
