@@ -297,6 +297,9 @@
     "symfony/ux-swup": {
         "version": "v2.9.1"
     },
+    "symfony/ux-turbo": {
+        "version": "v2.17.0"
+    },
     "symfony/ux-vue": {
         "version": "v2.7.1"
     },

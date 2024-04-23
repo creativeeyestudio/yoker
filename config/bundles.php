@@ -23,4 +23,5 @@ return [
     Symandy\DatabaseBackupBundle\SymandyDatabaseBackupBundle::class => ['all' => true],
     Vatri\GoogleDriveBundle\VatriGoogleDriveBundle::class => ['all' => true],
     Zenstruck\ScheduleBundle\ZenstruckScheduleBundle::class => ['all' => true],
+    Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
 ];
