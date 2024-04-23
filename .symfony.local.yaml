@@ -1,0 +1,3 @@
+workers:
+  yarn_encore_watch: 
+    cmd: ['yarn', 'encore', 'dev', '--watch']
