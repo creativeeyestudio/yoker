@@ -88,7 +88,7 @@ class PagesAdminFormType extends AbstractType
                 'required' => false, 
             ])
             ->add('blocked_page', CheckboxType::class, [
-                'label' => 'Page fixe',
+                'label' => 'Page fixe (Ne peut être supprimée)',
                 'required' => false, 
             ])
 

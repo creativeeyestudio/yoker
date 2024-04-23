@@ -1,57 +1,75 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}
+	{{ title }}
+{% endblock %}
 
 {% block body %}
-    <section class="block tab-container">
-        <h2>{{ title }}</h2>
+	<section class="block tab-container">
+		<h2>{{ title }}</h2>
 
-        {# <ul class="tabs tabs-btn">
-        {% for language in ['Français'] %}
-            <li><a class="tab {% if loop.index == 1 %}active{% endif %}" tabindex='2'>{{ language }}</a></li>
-        {% endfor %}
-        </ul> #}
+		{# <ul class="tabs tabs-btn">
+										        {% for language in ['Français'] %}
+										            <li><a class="tab {% if loop.index == 1 %}active{% endif %}" tabindex='2'>{{ language }}</a></li>
+										        {% endfor %}
+										        </ul> #}
 
-        {{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
-            {% for language, prefix in {'Français': 'fr'} %}
-            <fieldset class="tab-pane {% if loop.index == 1 %}active{% endif %}">
-                <legend>Contenu en {{ language }}</legend>
-                {% set postNameField = attribute(form, 'post_name_' ~ prefix) %}
-                <p>{{ form_row(postNameField, { 'value': attribute(_context, 'postName_' ~ prefix)|default }) }}</p>
+		{{ form_start(form, { 'attr' : { 'class': 'tab-panes' } }) }}
+		{% for language, prefix in {'Français': 'fr'} %}
+			<fieldset class="tab-pane {% if loop.index == 1 %}active{% endif %}">
+				<legend>Contenu en
+					{{ language }}</legend>
+				{% set postNameField = attribute(form, 'post_name_' ~ prefix) %}
+				<p>{{ form_row(postNameField, { 'value': attribute(_context, 'postName_' ~ prefix)|default }) }}</p>
 
-                {% set postContentField = attribute(form, 'post_content_' ~ prefix) %}
-                <p>{{ form_row(postContentField, { 'value': attribute(_context, 'postContent_' ~ prefix)|default }) }}</p>
-                
-                {% set postMetaTitleField = attribute(form, 'post_meta_title_' ~ prefix) %}
-                <p>{{ form_row(postMetaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}</p>
+				{% set postContentField = attribute(form, 'post_content_' ~ prefix) %}
+				<p>{{ form_row(postContentField, { 'value': attribute(_context, 'postContent_' ~ prefix)|default }) }}</p>
 
-                {% set postMetaDescField = attribute(form, 'post_meta_desc_' ~ prefix) %}
-                <p>{{ form_row(postMetaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}</p>
-                
-                <div class="google-serp">
-                    <div class="google-serp-width">
-                        <div class="serp-url">
-                            <p>{{ app.request.schemeAndHttpHost }} > {{ prefix }} > <span class="b-url" data-url-target="metaurl"></span></p>
-                        </div>
-                        <div class="serp-title">
-                            <p class="b-title" data-title-target="metatitle_{{ prefix }}"></p>
-                        </div>
-                        <div class="serp-desc">
-                            <p class="b-desc" data-desc-target="metadesc_{{ prefix }}">Balise desc</p>
-                        </div>
-                    </div>
-                </div>
-                
-            </fieldset>
-            {% endfor %}
-            <hr />
-            <fieldset>
-                <legend>Autres informations</legend>
-                <p>{{ form_row(form.online) }}</p>
-                <p>{{ form_row(form.post_thumb) }}</p>
-                <p>{{ form_row(form.post_url) }}</p>
-            </fieldset>
-            <p>{{ form_row(form.submit) }}</p>
-        {{ form_end(form) }}
-    </section>
+				{% set postMetaTitleField = attribute(form, 'post_meta_title_' ~ prefix) %}
+				<p>{{ form_row(postMetaTitleField, { 'value': attribute(_context, 'metaTitle_' ~ prefix)|default }) }}</p>
+
+				{% set postMetaDescField = attribute(form, 'post_meta_desc_' ~ prefix) %}
+				<p>{{ form_row(postMetaDescField, { 'value': attribute(_context, 'metaDesc_' ~ prefix)|default }) }}</p>
+
+				<div class="google-serp">
+					<div class="google-serp-width">
+						<div class="serp-url">
+							<p>{{ app.request.schemeAndHttpHost }}
+								>
+								{{ prefix }}
+								>
+								<span class="b-url" data-url-target="metaurl"></span>
+							</p>
+						</div>
+						<div class="serp-title">
+							<p class="b-title" data-title-target="metatitle_{{ prefix }}"></p>
+						</div>
+						<div class="serp-desc">
+							<p class="b-desc" data-desc-target="metadesc_{{ prefix }}">Balise desc</p>
+						</div>
+					</div>
+				</div>
+
+			</fieldset>
+		{% endfor %}
+		<hr/>
+		<fieldset>
+			<legend>Autres informations</legend>
+			<p>{{ form_row(form.post_thumb) }}</p>
+            <p>
+                <strong>Statut de l'article *</strong>
+            </p>
+			{% for child in form.online.children %}
+				<div class="radio">
+				<label for="{{ child.vars.id }}">
+					{{ child.vars.label }}
+				</label>
+				{{ form_widget(child) }}
+				</div>
+				
+			{% endfor %}
+		</fieldset>
+		<p>{{ form_row(form.submit) }}</p>
+		{{ form_end(form) }}
+	</section>
 {% endblock %}

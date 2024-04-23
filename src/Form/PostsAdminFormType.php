@@ -32,6 +32,7 @@ class PostsAdminFormType extends AbstractType
                 'label' => "Meta Title de l'article (FR)",
                 'required' => false,
                 'mapped' => false,
+                'help' => 'Max 63 caractères',
                 'attr' => [
                     'maxlength' => 63,
                     'class' => 'metatitle_fr',
@@ -60,6 +61,8 @@ class PostsAdminFormType extends AbstractType
             ])
             ->add('online', ChoiceType::class, [
                 'label' => "Visibilité de l'article",
+                'expanded' => true,
+                'required' => true,
                 'choices' => [
                     "En brouillon" => false,
                     "Publié" => true

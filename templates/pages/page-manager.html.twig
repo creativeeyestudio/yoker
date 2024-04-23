@@ -26,7 +26,7 @@
 
                     <p>
                         {% set contentField = attribute(form, 'page_content_' ~ prefix) %}
-                        {{ form_label(contentField) }}<br />
+                        {{ form_label(contentField) }}
                         {{ form_widget(contentField, { 'value': attribute(_context, 'pageContent_' ~ prefix)|default }) }}
                     </p>
 
@@ -63,10 +63,18 @@
 
         <fieldset>
             <legend>Configuration de la page</legend>
-            <p>{{ form_row(form.page_url) }}</p>
-            <p>{{ form_row(form.main_page) }}</p>
-            <p>{{ form_row(form.status) }}</p>
-            <p>{{ form_row(form.blocked_page) }}</p>
+            <p>
+                {{ form_row(form.page_url) }}
+            </p>
+            <p>
+                {{ form_row(form.main_page, {'row_attr': {'class': 'checkbox'}}) }}
+            </p>
+            <p>
+                {{ form_row(form.status, {'row_attr': {'class': 'checkbox'}}) }}
+            </p>
+            <p>
+                {{ form_row(form.blocked_page, {'row_attr': {'class': 'checkbox'}}) }}
+            </p>
         </fieldset>
         
 
