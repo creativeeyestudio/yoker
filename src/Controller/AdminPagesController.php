@@ -7,11 +7,11 @@ use App\Entity\PagesList;
 use App\Services\PagesService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin/pages')]
 class AdminPagesController extends AbstractController
 {
     private $pageRepo;
@@ -24,7 +24,7 @@ class AdminPagesController extends AbstractController
         $this->pageService = $pageService;
     }
 
-    #[Route('/admin/pages', name: 'admin_pages')]
+    #[Route('/', name: 'admin_pages')]
     public function index(): Response 
     {
         return $this->render('pages/index.html.twig', [
@@ -34,8 +34,8 @@ class AdminPagesController extends AbstractController
 
     /* AJOUTER UNE PAGE
     ------------------------------------------------------- */
-    #[Route('/admin/pages/ajouter', name: 'admin_pages_add')]
-    public function add_page() 
+    #[Route('/ajout', name: 'admin_pages_add')]
+    public function create() 
     {
         // Création du contenu
         $form = $this->pageService->PageManager(true);
@@ -52,8 +52,8 @@ class AdminPagesController extends AbstractController
 
     /* MODIFIER UNE PAGE
     ------------------------------------------------------- */
-    #[Route('/admin/pages/modifier/{page_id}', name: 'admin_pages_modify')]
-    public function modify_page(string $page_id) 
+    #[Route('/modif/{page_id}', name: 'admin_pages_modify')]
+    public function update(string $page_id) 
     {
         // Récupération du lien de la page
         $page = $this->pageRepo->findOneBy(['page_id' => $page_id]);
@@ -80,8 +80,8 @@ class AdminPagesController extends AbstractController
 
     /* SUPPRIMER UNE PAGE
     ------------------------------------------------------- */
-    #[Route('/admin/pages/supprimer/{page_id}', name: 'admin_pages_delete')]
-    public function delete_page(string $page_id) 
+    #[Route('/suppr/{page_id}', name: 'admin_pages_delete')]
+    public function delete(string $page_id) 
     {
         $page = $this->pageRepo->findOneBy(['page_id' => $page_id]);
         if (!$page) {

@@ -1,22 +1,29 @@
 {{ form_start(menu_create_form) }}
-    <p>{{ form_row(menu_create_form.name) }}</p>
-    <p>
-        {{ form_label(menu_create_form.pos) }}<br />
-        {{ form_widget(menu_create_form.pos) }}
-    </p>
-    <p>{{ form_row(menu_create_form.submit) }}</p>
+
+<p>{{ form_row(menu_create_form.name) }}</p>
+
+{% for child in menu_create_form.pos.children %}
+	<div class="radio">
+		<label for="{{ child.vars.id }}">
+			{{ child.vars.label }}
+		</label>
+		{{ form_widget(child) }}
+	</div>
+{% endfor %}
+
+<p>{{ form_row(menu_create_form.submit) }}</p>
+
 {{ form_end(menu_create_form) }}
 
-<hr />
+<hr/>
 
 {% for menu in menus %}
-    <div class="line menu-{{ menu.id }}">
-        <p>{{ menu.name }}</p>
-        <ul>
-            <li><span 
-                class="menu-remove" 
-                data-id="{{ menu.id }}"
-                data-removeurl="{{ path('delete_link') }}">Supprimer</span></li>
-        </ul>
-    </div>
+	<div class="line menu-{{ menu.id }}">
+		<p>{{ menu.name }}</p>
+		<ul>
+			<li>
+				<span class="menu-remove" data-id="{{ menu.id }}" data-removeurl="{{ path('delete_link') }}">Supprimer</span>
+			</li>
+		</ul>
+	</div>
 {% endfor %}

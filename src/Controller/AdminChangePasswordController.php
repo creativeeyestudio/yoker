@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin')]
 class AdminChangePasswordController extends AbstractController
 {
-    #[Route('/admin/manage-infos', name: 'app_admin_change_password')]
+    #[Route('/manage-infos', name: 'app_admin_change_password')]
     public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $encoder): Response
     {
         $user = $this->getUser();

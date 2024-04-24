@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin/emails')]
 class AdminEmailsController extends AbstractController
 {
     private $em;
@@ -25,7 +26,7 @@ class AdminEmailsController extends AbstractController
         $this->emailsRepo = $emailsRepo;
     }
 
-    #[Route('/admin/emails', name: 'app_admin_emails')]
+    #[Route('/', name: 'app_admin_emails')]
     public function index(): Response
     {
         return $this->render('admin_emails/index.html.twig', [
@@ -33,7 +34,7 @@ class AdminEmailsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/emails/ajouter', name: 'app_admin_emails_create')]
+    #[Route('/ajout', name: 'app_admin_emails_create')]
     public function create(): Response
     {
         $form = $this->createForm(EmailAdminFormType::class);
@@ -67,7 +68,7 @@ class AdminEmailsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/email/{emailId}', name: 'app_admin_emails_update')]
+    #[Route('/modif/{emailId}', name: 'app_admin_emails_update')]
     public function update(string $emailId): Response
     {
         $form = $this->createForm(EmailAdminFormType::class);
@@ -108,7 +109,7 @@ class AdminEmailsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/email/{emailId}/delete', name: 'app_admin_emails_delete')]
+    #[Route('/suppr/{emailId}', name: 'app_admin_emails_delete')]
     public function delete(string $emailId)
     {
         // Récupération de l'E-mail
