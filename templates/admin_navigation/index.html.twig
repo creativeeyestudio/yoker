@@ -1,77 +1,87 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}
+	{{ title }}
+{% endblock %}
 
 {% block body %}
 
-    <section class="block">
+	<section class="block">
 
-        {% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
-            <a class="btn-link float-right" href="{{ path('app_admin_nav_menu') }}">Créer un menu</a>
-        {% elseif route_name == 'app_admin_nav_menu' %}
-            <a class="btn-link float-right" href="{{ path('app_admin_nav') }}">Retour à la liste</a>
-        {% endif %}
+		{% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
+			<a class="btn-link float-right" href="{{ path('app_admin_nav_menu') }}">Créer un menu</a>
+		{% elseif route_name == 'app_admin_nav_menu' %}
+			<a class="btn-link float-right" href="{{ path('app_admin_nav') }}">Retour à la liste</a>
+		{% endif %}
 
-        <h2>{{ title }}</h2>
+		<h2>{{ title }}</h2>
 
-        {% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
-            <div id="popup-container">
-                <iframe src="" frameborder="0" id="popup"></iframe>
-            </div>
-            
-            <div class="nav-blocks">
-                <div class="block links tab-container">
-                    <ul class="tabs tabs-btn">
-                        <li><a class="tab active">Pages</a></li>
-                        <li><a class="tab">Posts</a></li>
-                        <li><a class="tab">Lien</a></li>
-                    </ul>
-                    <div class="tab-panes mt">
-                        {{ form_start(nav_form) }}
-                        <div class="tab-pane active">
-                            {% for item in nav_form.pages %}
-                                <div class="item">
-                                    {{ form_widget(item) }} {{ form_label(item) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="tab-pane">
-                            {% for item in nav_form.posts %}
-                                <div class="item">
-                                    {{ form_widget(item) }} {{ form_label(item) }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="tab-pane">
-                            <p>{{ form_row(nav_form.cus_name) }}</p>
-                            <p>{{ form_row(nav_form.cus_link) }}</p>
-                        </div>
-                        <div class="mt">
-                            {{ form_row(nav_form.submit) }}
-                        </div>
-                        {{ form_end(nav_form) }}
-                    </div>
-                </div>
+		{% if route_name == 'app_admin_nav' or route_name == 'app_admin_nav_select' %}
+			<div id="popup-container">
+				<iframe src="" frameborder="0" id="popup"></iframe>
+			</div>
 
-                <div class="block navsite">
-                    {{ form_start(menu_form) }}
-                        {{ form_widget(menu_form.nav_select, { 'value': id_menu }) }}
-                    {{ form_end(menu_form) }}
+			<div class="nav-blocks">
+				<div class="block links tab-container">
+					<ul class="tabs tabs-btn">
+						<li>
+							<a class="tab active">Pages</a>
+						</li>
+						<li>
+							<a class="tab">Posts</a>
+						</li>
+						<li>
+							<a class="tab">Lien</a>
+						</li>
+					</ul>
+					<div class="tab-panes mt">
+						{{ form_start(nav_form) }}
+						<div class="tab-pane active">
+							{% for item in nav_form.pages %}
+								<div class="item checkbox">
+									{{ form_label(item) }}
+									{{ form_widget(item) }}
+								</div>
+							{% endfor %}
+						</div>
+						<div class="tab-pane">
+							{% for item in nav_form.posts %}
+								<div class="item checkbox">
+									{{ form_label(item) }}
+									{{ form_widget(item) }}
+								</div>
+							{% endfor %}
+						</div>
+						<div class="tab-pane">
+							<p>{{ form_row(nav_form.cus_name) }}</p>
+							<p>{{ form_row(nav_form.cus_link) }}</p>
+						</div>
+						<div class="mt">
+							{{ form_row(nav_form.submit) }}
+						</div>
+						{{ form_end(nav_form) }}
+					</div>
+				</div>
 
-                    <div id="drag-drop-list" data-sublist="null" data-url="{{ path('order_nav_link') }}" data-urldel="{{ path('delete_nav_link') }}">
-                        {% if menu is not null %}
-                            {% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
-                                {% if item.parent is null %} 
-                                    {{ include('admin_navigation/_nav-list.html.twig', { "item": item }) }}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        {% elseif route_name == 'app_admin_nav_menu' %}
-            {{ include('admin_navigation/_create-menu-form.html.twig') }}
-        {% endif %}
-    </section>
+				<div class="block navsite">
+					{{ form_start(menu_form) }}
+					{{ form_widget(menu_form.nav_select, { 'value': id_menu }) }}
+					{{ form_end(menu_form) }}
+
+					<div id="drag-drop-list" data-sublist="null" data-url="{{ path('order_nav_link') }}" data-urldel="{{ path('delete_nav_link') }}">
+						{% if menu is not null %}
+							{% for item in menu.menulinks | sort((a, b) => a.orderlink <=> b.orderlink) %}
+								{% if item.parent is null %}
+									{{ include('admin_navigation/_nav-list.html.twig', { "item": item }) }}
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% elseif route_name == 'app_admin_nav_menu' %}
+			{{ include('admin_navigation/_create-menu-form.html.twig') }}
+		{% endif %}
+	</section>
 
 {% endblock %}

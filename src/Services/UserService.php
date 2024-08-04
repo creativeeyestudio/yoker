@@ -6,14 +6,15 @@ use App\Entity\User;
 use App\Form\UserAdminFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService extends AbstractController
 {
-    private $em;
+    private EntityManagerInterface $em;
+    private UserPasswordHasherInterface $encoder;
     private $userRepo;
-    private $encoder;
 
     function __construct(EntityManagerInterface $em, UserPasswordHasherInterface $encoder){
         $this->em = $em;
@@ -21,15 +22,15 @@ class UserService extends AbstractController
         $this->encoder = $encoder;
     }
 
-    function getUsersCMS(){
+    function getUsersCMS() : array {
         return $this->userRepo->findAll();
     }
 
-    function getUserCMS(int $id){
+    function getUserCMS(int $id) : User {
         return $this->userRepo->findOneBy(['id' => $id]);
     }
 
-    function updateUser(Request $request, int $id){
+    function updateUser(Request $request, int $id) : RedirectResponse {
         $user = $this->getUserCMS($id);
         $role = $user->getRoles()[0];
 
@@ -58,7 +59,7 @@ class UserService extends AbstractController
         ]);
     }
 
-    function deleteUser(int $id){
+    function deleteUser(int $id) : User {
         $user = $this->getUserCMS($id);
         $this->em->remove($user);
         $this->em->flush();

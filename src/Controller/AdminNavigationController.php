@@ -10,6 +10,7 @@ use App\Form\NavSelectFormType;
 use App\Form\NavUpdateLinkFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminNavigationController extends AbstractController
 {
-    private $em;
+    private EntityManagerInterface $em;
     private $request;
 
     function __construct(EntityManagerInterface $em, RequestStack $request)
@@ -26,13 +27,12 @@ class AdminNavigationController extends AbstractController
         $this->request = $request->getCurrentRequest();
     }
 
-    private function navLinksForm(int $id_menu)
+    private function navLinksForm(int $id_menu) : FormInterface
     {
         $nav_links_form = $this->createForm(NavLinksFormType::class);
         $nav_links_form->handleRequest($this->request);
 
         if ($nav_links_form->isSubmitted() && $nav_links_form->isValid()) {
-            // $em = $doctrine->getManager();
             $menu = $this->em->getRepository(Menu::class)->findOneBy(['pos' => $id_menu]);
 
             $pagesToInsert = [];
@@ -44,57 +44,23 @@ class AdminNavigationController extends AbstractController
             $pages = $nav_links_form->get('pages')->getData();
             $posts = $nav_links_form->get('posts')->getData();
 
-            foreach ($pages as $link) {
-                $oldLink = $this->em->getRepository(MenuLink::class)->findOneBy([
-                    'menu' => $menu->getId(),
-                    'page' => $link
-                ]);
-
-                if (!$oldLink) {
-                    $pagesToInsert[] = $link;
-                }
-            }
-
-            foreach ($posts as $link) {
-                $oldLink = $this->em->getRepository(MenuLink::class)->findOneBy([
-                    'menu' => $id_menu,
-                    'post' => $link
-                ]);
-
-                if (!$oldLink) {
-                    $postsToInsert[] = $link;
-                }
-            }
+            $this->findAndStoreLink($pages, $menu->getId(), 'page', $pagesToInsert, $this->em);
+            $this->findAndStoreLink($posts, $id_menu, 'post', $postsToInsert, $this->em);
 
             // Combine insertions
             $menuLinksToInsert = [];
 
             foreach ($pagesToInsert as $link) {
-                $menuLink = new MenuLink();
-                $menuLink->setMenu($menu);
-                $menuLink->setCusName($link->getPageName());
-                $menuLink->setPage($link);
-                $menuLink->setOrderLink(0);
-                $menuLinksToInsert[] = $menuLink;
+                $menuLinksToInsert[] = $this->createMenuLink($menu, $link, $link, 'page');
             }
 
             foreach ($postsToInsert as $link) {
-                $menuLink = new MenuLink();
-                $menuLink->setMenu($menu);
-                $menuLink->setCusName($link->getPostName());
-                $menuLink->setPost($link);
-                $menuLink->setOrderLink(0);
-                $menuLinksToInsert[] = $menuLink;
+                $menuLinksToInsert[] = $this->createMenuLink($menu, $link, $link, 'post');
             }
 
             // Insert custom link if both name and link are provided
             if ($cusName && $cusLink) {
-                $menuLink = new MenuLink();
-                $menuLink->setOrderLink(0);
-                $menuLink->setMenu($menu);
-                $menuLink->setCusName([$cusName]);
-                $menuLink->setCusLink([$cusLink]);
-                $menuLinksToInsert[] = $menuLink;
+                $menuLinksToInsert[] = $this->createMenuLink($menu, $cusName, $cusLink, 'custom');
             }
 
             // Batch insert all menu links
@@ -108,7 +74,41 @@ class AdminNavigationController extends AbstractController
         return $nav_links_form;
     }
 
-    private function navSelectForm()
+    private function findAndStoreLink($links, $menuId, $entityType, &$toInsert, $entityManager)
+    {
+        foreach ($links as $link) {
+            $oldLink = $entityManager->getRepository(MenuLink::class)->findOneBy([
+                'menu' => $menuId,
+                $entityType => $link
+            ]);
+
+            if (!$oldLink) {
+                $toInsert[] = $link;
+            }
+        }
+    }
+
+    private function createMenuLink($menu, $name, $link, $entityType = null) : MenuLink
+    {
+        $menuLink = new MenuLink();
+        $menuLink->setMenu($menu);
+        $menuLink->setOrderLink(0);
+
+        if ($entityType === 'page') {
+            $menuLink->setCusName($name->getPageName());
+            $menuLink->setPage($link);
+        } elseif ($entityType === 'post') {
+            $menuLink->setCusName($name->getPostName());
+            $menuLink->setPost($link);
+        } elseif ($entityType === 'custom') {
+            $menuLink->setCusName([$name]);
+            $menuLink->setCusLink([$link]);
+        }
+
+        return $menuLink;
+    }
+
+    private function navSelectForm() : FormInterface
     {
         $nav_select_form = $this->createForm(NavSelectFormType::class);
         $nav_select_form->handleRequest($this->request);
@@ -120,7 +120,7 @@ class AdminNavigationController extends AbstractController
         return $nav_select_form;
     }
 
-    private function navCreateForm()
+    private function navCreateForm() : FormInterface
     {
         $menu = new Menu();
         $nav_create_form = $this->createForm(NavCreateFormType::class, $menu);
@@ -133,7 +133,7 @@ class AdminNavigationController extends AbstractController
         return $nav_create_form;
     }
 
-    private function initPage(string $title = '', int $id_menu = 0)
+    private function initPage(string $title, int $id_menu = 0) : Response
     {
         $nav_links_form = $this->navLinksForm($id_menu);
         $nav_select_form = $this->navSelectForm();
@@ -176,7 +176,7 @@ class AdminNavigationController extends AbstractController
     }
 
     #[Route('/admin/navigation/manage-link/{id_link}', name: 'app_admin_nav_manage_link')]
-    public function manageLink(int $id_link)
+    public function manageLink(int $id_link) : Response
     {
         $menuLink = $this->em->getRepository(MenuLink::class)->find($id_link);
         $form = $this->createForm(NavUpdateLinkFormType::class, $menuLink);
@@ -189,8 +189,9 @@ class AdminNavigationController extends AbstractController
             $link = [
                 $form->get('cus_link')->getData()
             ];
-            $menuLink->setCusName($name);
-            $menuLink->setCusLink($link);
+            $menuLink
+                ->setCusName($name)
+                ->setCusLink($link);
             $this->em->persist($menuLink);
             $this->em->flush();
         }
@@ -210,9 +211,7 @@ class AdminNavigationController extends AbstractController
         $menuItems = $this->em->getRepository(MenuLink::class)->findBy(['menu' => $menu->getId()]);
 
         foreach ($menuItems as $item) {
-            if ($item) {
-                $this->em->remove($item);
-            }
+            if ($item) $this->em->remove($item);
         }
 
         $this->em->remove($menu);
@@ -220,7 +219,7 @@ class AdminNavigationController extends AbstractController
     }
 
     #[Route(path: '/order-nav-link', name: 'order_nav_link', methods: ['POST'])]
-    public function orderNavLink()
+    public function orderNavLink() : JsonResponse
     {
         $data = json_decode($this->request->getContent(), true);
 
@@ -237,11 +236,11 @@ class AdminNavigationController extends AbstractController
         }
 
         $this->em->flush();
-        return new JsonResponse(['message' => 'Ordre des liens enregistré avec succès.']);
+        return $this->json(['message' => 'Ordre des liens enregistré avec succès.']);
     }
 
     #[Route(path: '/delete-nav-link', name: 'delete_nav_link', methods: ['POST'])]
-    public function deleteNavLink()
+    public function deleteNavLink() : JsonResponse
     {
         $data = json_decode($this->request->getContent(), true);
 
@@ -249,6 +248,6 @@ class AdminNavigationController extends AbstractController
         $this->em->remove($link);
         $this->em->flush();
 
-        return new JsonResponse(['message' => 'Ordre des liens enregistré avec succès.']);
+        return $this->json(['message' => 'Ordre des liens enregistré avec succès.']);
     }
 }

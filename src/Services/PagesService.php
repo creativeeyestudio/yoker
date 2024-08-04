@@ -14,13 +14,15 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Intl\Locales;
 
 class PagesService extends AbstractController
 {
 
-    private $em;
+    private EntityManagerInterface $em;
     private $settings;
     private $menus;
     private $pages_repo;
@@ -35,10 +37,10 @@ class PagesService extends AbstractController
     function __construct(EntityManagerInterface $em, PostsService $posts_services, ParameterBagInterface $params, RequestStack $request)
     {
         $this->em = $em;
-        $this->pages_repo = $this->em->getRepository(PagesList::class);
-        $this->menus = $this->em->getRepository(Menu::class);
-        $this->settings = $this->em->getRepository(GlobalSettings::class)->find(1);
-        $this->social = $this->em->getRepository(SocialManager::class)->find(1);
+        $this->pages_repo = $this->getRepo(PagesList::class);
+        $this->menus = $this->getRepo(Menu::class);
+        $this->settings = $this->getRepo(GlobalSettings::class)->find(1);
+        $this->social = $this->getRepo(SocialManager::class)->find(1);
         $this->params = $params;
         $this->file_path = "/build/";
         $this->css_file = $this->file_path . $this->params->get('css_js_path') . ".css";
@@ -47,8 +49,12 @@ class PagesService extends AbstractController
         $this->request = $request->getCurrentRequest();
     }
 
+    function getRepo($entity) {
+        return $this->em->getRepository($entity);
+    }
+
     #region Page Manager
-    function PageManager(bool $newPage, string $page_id = null)
+    function PageManager(bool $newPage, string $page_id = null) : FormInterface
     {
         // CREATION / RECUPERATION D'UNE PAGE
         // --------------------------------------------------------
@@ -70,17 +76,11 @@ class PagesService extends AbstractController
 
             // Création du nom
             $name = [$form->get('page_name_fr')->getData()];
-            $page->setPageName($name);
 
             // Création du slug
             $slugify = new Slugify();
             $slugName = $slugify->slugify($name[0]);
             $slugUrl = $slugify->slugify($form->get('page_url')->getData() ?? $slugName);
-
-            // Création de l'ID Page
-            if ($newPage) {
-                $page->setPageId($slugName);
-            }
 
             // Page principale
             if ($form->get('main_page')->getData()) {
@@ -90,19 +90,24 @@ class PagesService extends AbstractController
             }
 
             // Création / Modification de l'URL
-            $page->setPageUrl(empty($form->get('page_url')->getData()) ? ($newPage ? $slugName : $page->getPageUrl()) : $slugUrl);
+            $pageSlug = empty($form->get('page_url')->getData()) ? ($newPage ? $slugName : $page->getPageUrl()) : $slugUrl;
 
             // Création / Modification du Meta Title
             $metaTitle = [$form->get('page_meta_title_fr')->getData() ?? $name[0]];
-            $page->setPageMetaTitle($metaTitle);
 
             // Création / Modification du Meta Desc
             $metaDesc = [$form->get('page_meta_desc_fr')->getData() ?? ''];
-            $page->setPageMetaDesc($metaDesc);
 
             // Création / Modification du contenu
             $pageContent = [htmlspecialchars($form->get('page_content_fr')->getData()) ?? "Contenu à ajouter"];
-            $page->setPageContent($pageContent);
+            
+            $page
+                ->setPageName($name)
+                ->setPageMetaTitle($metaTitle)
+                ->setPageMetaDesc($metaDesc)
+                ->setPageId($newPage ? $slugName : $page->getPageId())
+                ->setPageUrl($pageSlug)
+                ->setPageContent($pageContent);
 
             // Envoi des données vers la BDD
             $this->em->persist($page);
@@ -114,14 +119,14 @@ class PagesService extends AbstractController
     #endregion
 
     #region Affichage d'une page
-    public function getPageStatus(string $page_id = null)
+    public function getPageStatus(string $page_id = null) : Response
     {
         $page = $this->pages_repo->findOneBy(['page_url' => $page_id]) ?? $this->pages_repo->findOneBy(['main_page' => 1]);
+        $lang = $this->lang_web($this->request);
+
         if ($page->isMainPage() && $page_id) {
             return $this->redirectToRoute('web_index');
         }
-
-        $lang = $this->lang_web($this->request);
 
         return $this->render('web_pages_views/index.html.twig', [
             'page_content' => htmlspecialchars_decode($page->getPageContent()[$lang]),
@@ -141,7 +146,7 @@ class PagesService extends AbstractController
     #endregion
 
     #region Affichage d'un post
-    public function getPost(string $post_id)
+    public function getPost(string $post_id): Response
     {
         // Création d'une nouvelle instance de commentaire
         $newComment = new Comments();
@@ -201,17 +206,16 @@ class PagesService extends AbstractController
     #endregion
 
     #region Sélection de la langue
-    private function locales_web()
+    private function locales_web() : array
     {
         $locales = Locales::getLocales();
-        $localesSite = [
+        return [
             $locales[281], // FR
             // $locales[96] // EN
         ];
-        return $localesSite;
     }
 
-    private function lang_web()
+    private function lang_web() : int | String | false
     {
         $lang = array_search(
             $this->request->getLocale(),

@@ -8,7 +8,7 @@ use Symfony\Component\Mime\Address;
 
 class FormsService
 {
-    private $mailer;
+    private MailerInterface $mailer;
 
     public function __construct(MailerInterface $mailer)
     {

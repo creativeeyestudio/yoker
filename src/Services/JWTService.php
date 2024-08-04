@@ -88,7 +88,7 @@ class JWTService{
     }
 
     // On vérifie la signature du Token
-    public function check(string $token, string $secret)
+    public function check(string $token, string $secret) : bool
     {
         // On récupère le header et le payload
         $header = $this->getHeader($token);

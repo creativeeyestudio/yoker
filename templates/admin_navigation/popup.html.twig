@@ -12,7 +12,10 @@
                     {{ form_row(form.cus_link) }}
                 {% endif %}
             </p>
-            <p>{{ form_widget(form.blank) }} {{ form_label(form.blank) }} </p>
+            <p class="checkbox">
+                {{ form_label(form.blank) }}
+                {{ form_widget(form.blank) }}  
+            </p>
             <p>{{ form_row(form.submit) }}</p>
         {{ form_end(form) }}
     </section>
