@@ -43,7 +43,7 @@ class PagesAdminFormType extends AbstractType
         $builder
             // Contenu en FR
             ->add('page_name_fr', TextType::class, [
-                'label' => 'Nom de la page',
+                'label' => 'Nom de la page (FR)',
                 'mapped' => false,
             ])
             ->add('page_content_fr', CKEditorType::class, [
@@ -68,6 +68,36 @@ class PagesAdminFormType extends AbstractType
                 'attr' => [
                     'maxlength' => 150,
                     'class' => 'metadesc_fr',
+                ]
+            ])
+
+            // Contenu en EN
+            ->add('page_name_en', TextType::class, [
+                'label' => 'Nom de la page (EN)',
+                'mapped' => false,
+            ])
+            ->add('page_content_en', CKEditorType::class, [
+                'label' => 'Contenu de la page (EN)',
+                'mapped' => false,
+            ])
+            ->add('page_meta_title_en', TextType::class, [
+                'label' => 'Balise Meta Title (EN)',
+                'required' => false,
+                'mapped' => false,
+                'help' => 'Max 63 caractères',
+                'attr' => [
+                    'maxlength' => 63,
+                    'class' => 'metatitle_en',
+                ]
+            ])
+            ->add('page_meta_desc_en', TextareaType::class, [
+                'label' => 'Balise Meta Description (EN)',
+                'required' => false,
+                'mapped' => false,
+                'help' => 'Max 150 caractères',
+                'attr' => [
+                    'maxlength' => 150,
+                    'class' => 'metadesc_en',
                 ]
             ])
 

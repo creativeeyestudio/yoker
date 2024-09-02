@@ -10,13 +10,13 @@
     {{ form_start(form) }}
 
         <ul class="tabs-btn tabs">
-            {% for language in ['Français'] %}
+            {% for language in ['Français', 'English'] %}
                 <li><a class="tab {% if loop.index == 1 %}active{% endif %}" tabindex='2'>{{ language }}</a></li>
             {% endfor %}
         </ul>
 
         <div class="tab-panes">
-            {% for language, prefix in {'Français': 'fr'} %}
+            {% for language, prefix in {'Français': 'fr', 'English': 'en'} %}
                 <fieldset class="tab-pane {% if loop.index == 1 %}active{% endif %}">
                     <legend>Contenu en {{ language }}</legend>
                     <p>
