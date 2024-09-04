@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang='fr' dir="ltr">
-    
+
     <head>
         {% block head %}
             <meta charset="UTF-8">
@@ -17,103 +17,101 @@
             {% endblock %}   
         {% endblock %}    
     </head>
+
     <body class="admin-page">
-        <div id="app">
-            <!-- En-Tête -->
-            <header>
-                <h1>Interface d'administration</h1>
-            </header>
-            
-            <!-- Navigation -->
-            <nav class="navigation">
-                <span class="website-title">{{ site_name }}</span>
-                <ul>
-                    <li class="link">
-                        <a href="{{ path('app_admin') }}">Accueil</a>
-                    </li>
-                    <li class="link">
-                        <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
-                    </li>
-                    <li class="base">
-                        <span>Contenus</span>
-                        <ul>
-                            <li>
-                                <a href="{{ path('app_admin_nav') }}">Navigation</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('admin_pages') }}">Pages du site</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('admin_posts') }}">Actualités</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('app_admin_files') }}">Médias</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="base">
-                        <span>Extentions</span>
-                        <ul>
-                            <li>
-                                <a href="{{ path('codeweave') }}">CodeWeave</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('app_admin_social_manager') }}">Social Manager</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('app_admin_emails') }}">Mails Manager</a>
-                            </li>
-                            {# <li>
-                                <a target='_blank' rel='noopener'>Matomo</a>
-                            </li> #}
-                        </ul>
-                    </li>
-
-                    <li class="base">
-                        <span>Liens Google</span>
-                        <ul>
-                            <li>
-                                <a target='_blank' rel='noopener'>Google Analytics</a>
-                            </li> 
-                            <li>
-                                <a target='_blank' rel='noopener'>Google Search Console</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="base">
-                        <span>Paramétrage</span>
-                        <ul>
+        <!-- En-Tête -->
+        <header>
+            <h1>Interface d'administration</h1>
+        </header>
+        
+        <!-- Navigation -->
+        <nav class="navigation">
+            <span class="website-title">{{ site_name }}</span>
+            <ul>
+                <li class="link">
+                    <a href="{{ path('app_admin') }}">Accueil</a>
+                </li>
+                <li class="link">
+                    <a href="{{ path('web_index') }}" target='_blank' rel='noopener'>Voir le site</a>
+                </li>
+                <li class="base">
+                    <span>Contenus</span>
+                    <ul>
                         <li>
-                            <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
-                        </li>    
-                        {% if is_granted('ROLE_EDITOR') %}
-                        <li>
-                            <a href="{{ path('admin_users') }}">Utilisateurs</a>
+                            <a href="{{ path('app_admin_nav') }}">Navigation</a>
                         </li>
                         <li>
-                            <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
-                        </li>  
-                        {% endif %}
-                        </ul>
+                            <a href="{{ path('admin_pages') }}">Pages du site</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_posts') }}">Actualités</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_files') }}">Médias</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="base">
+                    <span>Extentions</span>
+                    <ul>
+                        <li>
+                            <a href="{{ path('codeweave') }}">CodeWeave</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_social_manager') }}">Social Manager</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_emails') }}">Mails Manager</a>
+                        </li>
+                        {# <li>
+                            <a target='_blank' rel='noopener'>Matomo</a>
+                        </li> #}
+                    </ul>
+                </li>
+                <li class="base">
+                    <span>Liens Google</span>
+                    <ul>
+                        <li>
+                            <a target='_blank' rel='noopener'>Google Analytics</a>
+                        </li> 
+                        <li>
+                            <a target='_blank' rel='noopener'>Google Search Console</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="base">
+                    <span>Paramétrage</span>
+                    <ul>
+                    <li>
+                        <a href="{{ path('app_admin_change_password') }}">Modifier mes informations</a>
+                    </li>    
+                    {% if is_granted('ROLE_EDITOR') %}
+                    <li>
+                        <a href="{{ path('admin_users') }}">Utilisateurs</a>
                     </li>
-                    <li class="link">
-                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                    </li>
-                </ul>
-            </nav>
-            
-            <!-- Contenu -->
-            <main>
-                {% block body %}{% endblock %}
-            </main>
-            
-            <!-- Pied de page -->
-            <footer>
-                <p>Dream Site - Version {{ version }}<br />
-                Conception et développement : Creative Eye Studio</p>
-            </footer>
-        </div>
+                    <li>
+                        <a href="{{ path('admin_settings') }}">Paramètrage du site</a>
+                    </li>  
+                    {% endif %}
+                    </ul>
+                </li>
+                <li class="link">
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Contenu -->
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+        
+        <!-- Pied de page -->
+        <footer>
+            <p>Dream Site - Version {{ version }}<br />
+            Conception et développement : Creative Eye Studio</p>
+        </footer>
+    
+        <script src=" https://cdn.jsdelivr.net/npm/ckeditor4@4.25.0/ckeditor.min.js "></script>
     </body>
 </html>

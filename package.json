@@ -14,7 +14,6 @@
         "@symfony/stimulus-bridge": "^3.2.2",
         "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/assets",
         "@symfony/ux-swup": "file:vendor/symfony/ux-swup/assets",
-        "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/ux-vue": "file:vendor/symfony/ux-vue/assets",
         "@symfony/webpack-encore": "^4.5.0",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",

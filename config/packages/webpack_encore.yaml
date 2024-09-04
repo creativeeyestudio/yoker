@@ -9,7 +9,7 @@ webpack_encore:
         defer: true
         # Uncomment (also under link_attributes) if using Turbo Drive
         # https://turbo.hotwired.dev/handbook/drive#reloading-when-assets-change
-        'data-turbo-track': reload
+        # 'data-turbo-track': reload
     link_attributes:
         # Uncomment if using Turbo Drive
         'data-turbo-track': reload

@@ -56,7 +56,6 @@
         "symfony/twig-bundle": "6.4.*",
         "symfony/ux-dropzone": "^2.13.2",
         "symfony/ux-swup": "^2.13",
-        "symfony/ux-turbo": "^2.17",
         "symfony/ux-vue": "^2.13.2",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",

@@ -75,7 +75,10 @@ class PagesService extends AbstractController
             $page = $form->getData();
 
             // Création du nom
-            $name = [$form->get('page_name_fr')->getData()];
+            $name = [
+                $form->get('page_name_fr')->getData(),
+                $form->get('page_name_en')->getData(),
+            ];
 
             // Création du slug
             $slugify = new Slugify();
@@ -93,13 +96,22 @@ class PagesService extends AbstractController
             $pageSlug = empty($form->get('page_url')->getData()) ? ($newPage ? $slugName : $page->getPageUrl()) : $slugUrl;
 
             // Création / Modification du Meta Title
-            $metaTitle = [$form->get('page_meta_title_fr')->getData() ?? $name[0]];
+            $metaTitle = [
+                $form->get('page_meta_title_fr')->getData() ?? $name[0],
+                $form->get('page_meta_title_en')->getData() ?? $name[1]
+            ];
 
             // Création / Modification du Meta Desc
-            $metaDesc = [$form->get('page_meta_desc_fr')->getData() ?? ''];
+            $metaDesc = [
+                $form->get('page_meta_desc_fr')->getData() ?? '',
+                $form->get('page_meta_desc_en')->getData() ?? '',
+            ];
 
             // Création / Modification du contenu
-            $pageContent = [htmlspecialchars($form->get('page_content_fr')->getData()) ?? "Contenu à ajouter"];
+            $pageContent = [
+                htmlspecialchars($form->get('page_content_fr')->getData()) ?? "Contenu à ajouter",
+                htmlspecialchars($form->get('page_content_en')->getData()) ?? "Contenu à ajouter",
+            ];
             
             $page
                 ->setPageName($name)

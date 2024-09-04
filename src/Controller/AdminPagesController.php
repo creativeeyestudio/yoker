@@ -75,6 +75,10 @@ class AdminPagesController extends AbstractController
             'pageContent_fr' => htmlspecialchars_decode($page->getPageContent()[0]),
             'metaTitle_fr' => $page->getPageMetaTitle()[0],
             'metaDesc_fr' => $page->getPageMetaDesc()[0],
+            'name_en' => $page->getPageName()[1] ?? "",
+            'pageContent_en' => htmlspecialchars_decode($page->getPageContent()[1] ?? ""),
+            'metaTitle_en' => $page->getPageMetaTitle()[1] ?? "",
+            'metaDesc_en' => $page->getPageMetaDesc()[1] ?? "",
         ]);
     }
 
